@@ -1,6 +1,6 @@
 /* ==========================================================================
    MA Institute of Design
-   강원 영서(嶺西)의 풍경을 디지털 인터페이스로 번역한다.
+   강원 영서(嶺西)의 겨울 풍경을 디지털 인터페이스로 번역한다.
 
    間(여백) · Material(재료) · Mind(사고)
 
@@ -8,28 +8,34 @@
    - 사진을 쓰지 않는다. 공기, 여백, 돌, 흙, 안개, 콘크리트, 겨울, 나무,
      종이, 선으로 화면을 만든다.
    - 정보보다 간격을 먼저 설계한다.
-   - 애니메이션은 최소한으로. 움직임 대신 정지와 여백으로 말한다.
+   - 재료 하나를 더한다: 유리. 안개 낀 아침 창처럼, 뒤가 비치되 흐리게.
+   - 애니메이션은 최소한으로. 움직임 대신 정지와 깊이로 말한다.
    ========================================================================== */
 
 :root {
-  /* 영서의 풍경에서 채집한 색 */
-  --yeongseo-fog: #e7e6e0;   /* 아침 안개 */
-  --dry-field: #b8ae9e;      /* 마른 논 */
-  --mountain-ink: #252a27;   /* 먹색 산 */
-  --moss: #59665a;           /* 이끼 */
-  --stone: #8d8b84;          /* 돌 */
-  --winter-soil: #6a5f53;    /* 겨울 흙 */
-  --paper: #f3f1ea;          /* 한지 */
+  /* 영서의 겨울에서 채집한 색 — 따뜻한 기운을 뺀 회청색 계열 */
+  --winter-haze: #eef1f2;   /* 겨울 안개 */
+  --ice-sheet: #dbe2e4;     /* 성엣장 */
+  --mountain-ink: #1c2325;  /* 먹색 산 */
+  --moss: #4b6560;          /* 이끼 */
+  --stone: #8a9296;         /* 돌 */
+  --winter-soil: #5d6a6d;   /* 겨울 흙 */
 
-  --c-bg: var(--paper);
-  --c-surface: var(--yeongseo-fog);
+  --c-bg: var(--winter-haze);
   --c-text: var(--mountain-ink);
   --c-muted: var(--stone);
-  --c-hairline: #d9d5ca;
-  --c-hairline-soft: #e3dfd5;
+  --c-hairline: rgba(28, 35, 37, 0.14);
+  --c-hairline-soft: rgba(28, 35, 37, 0.07);
   --c-accent: var(--moss);
-  --c-accent-hover: #45503f;
-  --c-error: #9c4f38;
+  --c-accent-hover: #354a46;
+  --c-error: #9a5347;
+
+  /* 유리 — 뒤가 비치되 흐리게 */
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --glass-bg-strong: rgba(255, 255, 255, 0.68);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-blur: blur(22px) saturate(150%);
+  --glass-shadow: 0 1px 1px rgba(28, 35, 37, 0.03), 0 8px 28px rgba(28, 35, 37, 0.06);
 
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", "Segoe UI", Roboto, "Malgun Gothic", sans-serif;
@@ -37,8 +43,9 @@
   --w-content: 38rem;
   --w-wide: 64rem;
 
-  /* 종이와 돌에는 둥근 모서리가 없다 */
-  --radius: 2px;
+  /* 유리는 살짝 둥글다 */
+  --radius: 14px;
+  --radius-sm: 8px;
 
   /* 간격 — 정보보다 먼저 설계된 값 */
   --gap-hairline: 0.5rem;
@@ -50,15 +57,19 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --c-bg: #1a1d1a;
-    --c-surface: #222622;
-    --c-text: #e9e7df;
-    --c-muted: #918e85;
-    --c-hairline: #333730;
-    --c-hairline-soft: #2a2e29;
-    --c-accent: #8b9c8b;
-    --c-accent-hover: #a3b3a3;
-    --c-error: #c07a60;
+    --c-bg: #12181a;
+    --c-text: #e6ecec;
+    --c-muted: #8a9296;
+    --c-hairline: rgba(230, 236, 236, 0.14);
+    --c-hairline-soft: rgba(230, 236, 236, 0.07);
+    --c-accent: #7ea19a;
+    --c-accent-hover: #9ab9b2;
+    --c-error: #c98876;
+
+    --glass-bg: rgba(255, 255, 255, 0.055);
+    --glass-bg-strong: rgba(255, 255, 255, 0.09);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --glass-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 28px rgba(0, 0, 0, 0.28);
   }
 }
 
@@ -93,12 +104,72 @@ body {
 }
 
 ::selection {
-  background: var(--c-text);
+  background: var(--c-accent);
   color: var(--c-bg);
 }
 
 /* ==========================================================================
-   헤더 — 얇은 선 하나로만 구분된다
+   대기 — 유리 뒤에서 번지는 빛. 고정되어 있고 움직이지 않는다.
+   ========================================================================== */
+
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.haze {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+}
+
+.haze-1 {
+  top: -14vh;
+  left: -6vw;
+  width: 58vw;
+  height: 58vw;
+  background: radial-gradient(circle, var(--ice-sheet) 0%, transparent 68%);
+  opacity: 0.85;
+}
+
+.haze-2 {
+  top: 24vh;
+  right: -14vw;
+  width: 52vw;
+  height: 52vw;
+  background: radial-gradient(circle, var(--moss) 0%, transparent 66%);
+  opacity: 0.16;
+}
+
+.haze-3 {
+  bottom: -22vh;
+  left: 22vw;
+  width: 64vw;
+  height: 46vw;
+  background: radial-gradient(circle, var(--winter-soil) 0%, transparent 70%);
+  opacity: 0.12;
+}
+
+@media (prefers-color-scheme: dark) {
+  .haze-1 {
+    background: radial-gradient(circle, #24363a 0%, transparent 68%);
+    opacity: 0.9;
+  }
+
+  .haze-2 {
+    opacity: 0.22;
+  }
+
+  .haze-3 {
+    opacity: 0.2;
+  }
+}
+
+/* ==========================================================================
+   헤더 — 유리 한 장
    ========================================================================== */
 
 .site-header {
@@ -109,10 +180,10 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 1.1rem clamp(1.25rem, 5vw, 3rem);
-  background: color-mix(in srgb, var(--c-bg) 88%, transparent);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--c-hairline);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .wordmark {
@@ -135,19 +206,23 @@ body {
 }
 
 .header-cta {
-  padding-bottom: 0.2rem;
-  border-bottom: 1px solid var(--c-text);
+  padding: 0.45rem 1.1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
   color: var(--c-text);
   font-size: 0.82rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-decoration: none;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .header-cta:hover {
-  color: var(--c-accent);
-  border-color: var(--c-accent);
+  background: var(--c-text);
+  color: var(--c-bg);
 }
 
 /* ==========================================================================
@@ -184,10 +259,9 @@ main {
 }
 
 /* ==========================================================================
-   히어로 — 큰 여백, 작은 목소리
+   히어로 — Apple의 제품 페이지처럼. 가운데, 큰 활자, 짧은 문장
    ========================================================================== */
 
-/* Apple의 제품 페이지처럼 — 가운데 정렬, 큰 활자, 짧은 문장 */
 .hero {
   padding-top: clamp(5rem, 14vw, 9rem);
   text-align: center;
@@ -231,7 +305,6 @@ main {
   color: var(--c-muted);
 }
 
-/* Apple식 인라인 링크 — 버튼 대신 화살표 */
 .hero-links {
   display: flex;
   flex-wrap: wrap;
@@ -258,23 +331,32 @@ main {
 }
 
 /* --------------------------------------------------------------------------
-   가레산스이 — 사진 대신 안개와 돌과 선으로 그린 풍경
+   가레산스이 — 사진 대신 안개와 돌과 선. 유리판 위에 놓인 마당
    -------------------------------------------------------------------------- */
 
 .landscape {
   position: relative;
   height: clamp(13rem, 30vw, 20rem);
   margin-top: clamp(4rem, 10vw, 7rem);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
   overflow: hidden;
 }
 
-/* 마당 위에 깔린 안개 */
 .landscape-fog {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(120% 80% at 50% 100%, var(--c-surface) 0%, transparent 70%),
-    linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--dry-field) 22%, transparent) 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.28) 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .landscape-fog {
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.05) 100%);
+  }
 }
 
 /* 모래 위에 그은 갈퀴 선 */
@@ -334,7 +416,7 @@ main {
 }
 
 /* ==========================================================================
-   세 개의 기둥 — 카드가 아니라 칸
+   세 개의 기둥 — 유리 세 장
    ========================================================================== */
 
 .pillar-list {
@@ -344,13 +426,23 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 1px;
-  background: var(--c-hairline);
-  border: 1px solid var(--c-hairline);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--c-hairline-soft);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
 }
 
 .pillar {
   padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.2rem);
-  background: var(--c-bg);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  transition: background-color 0.2s ease;
+}
+
+.pillar:hover {
+  background: var(--glass-bg-strong);
 }
 
 .pillar-glyph {
@@ -376,12 +468,12 @@ main {
 }
 
 /* ==========================================================================
-   재료 — 색은 풍경에서 채집한다
+   재료 — 색은 풍경에서 채집하고, 유리를 한 겹 얹는다
    ========================================================================== */
 
 .materials-desc {
   margin: 0 0 var(--gap-block);
-  max-width: 40ch;
+  max-width: 44ch;
   font-size: 0.92rem;
   color: var(--c-muted);
 }
@@ -404,11 +496,20 @@ main {
 .swatch {
   display: block;
   height: clamp(4rem, 9vw, 6rem);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--glass-shadow);
 }
 
 .swatch-line {
   border: 1px solid var(--c-hairline);
+}
+
+/* 유리 스와치 — 뒤의 안개가 비쳐 보인다 */
+.swatch-glass {
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
 }
 
 .material strong {
@@ -424,7 +525,7 @@ main {
 }
 
 /* ==========================================================================
-   지원 폼 — 명료함은 Apple과 Toss에게, 재질은 종이에게
+   지원 폼 — 유리판 위에 놓인 종이
    ========================================================================== */
 
 .apply {
@@ -444,9 +545,12 @@ main {
   gap: 0.7rem;
   margin-bottom: var(--gap-block);
   padding: 0.9rem 1.1rem;
-  border: 1px solid var(--c-hairline);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius);
-  background: var(--c-surface);
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
   font-size: 0.84rem;
 }
 
@@ -526,21 +630,22 @@ main {
   color: var(--c-muted);
 }
 
-/* 입력은 종이 위의 선 하나 */
+/* 입력창도 유리 */
 .field textarea,
 .field input[type="url"],
 .field select {
   width: 100%;
-  padding: 0.7rem 0;
-  border: none;
-  border-bottom: 1px solid var(--c-text);
-  border-radius: 0;
-  background: transparent;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
   color: var(--c-text);
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.85;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .field textarea {
@@ -552,7 +657,8 @@ main {
 .field input:focus,
 .field select:focus {
   outline: none;
-  border-bottom-color: var(--c-accent);
+  border-color: var(--c-accent);
+  background: var(--glass-bg-strong);
 }
 
 .field ::placeholder {
@@ -564,7 +670,7 @@ main {
   cursor: pointer;
   background-image: linear-gradient(45deg, transparent 50%, var(--c-muted) 50%),
     linear-gradient(135deg, var(--c-muted) 50%, transparent 50%);
-  background-position: calc(100% - 8px) calc(50% + 2px), calc(100% - 3px) calc(50% + 2px);
+  background-position: calc(100% - 20px) calc(50% + 2px), calc(100% - 15px) calc(50% + 2px);
   background-size: 5px 5px;
   background-repeat: no-repeat;
 }
@@ -602,14 +708,18 @@ main {
 /* 파일 업로드 */
 .file-row {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: var(--gap-inline);
 }
 
 .file-name {
   flex: 1;
-  padding: 0.7rem 0;
-  border-bottom: 1px solid var(--c-text);
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
   font-size: 0.95rem;
   color: var(--c-muted);
   overflow: hidden;
@@ -622,7 +732,7 @@ main {
 }
 
 .file-btn {
-  padding: 0.65rem 1.4rem;
+  padding: 0.75rem 1.4rem;
   border: 1px solid var(--c-text);
   border-radius: var(--radius);
   font-size: 0.82rem;
@@ -638,11 +748,16 @@ main {
   color: var(--c-bg);
 }
 
-/* 요약 — 건축 도면의 범례처럼 */
+/* 요약 — 유리판 */
 .summary {
   margin: 0 0 var(--gap-block);
-  padding: 0;
-  border-top: 1px solid var(--c-hairline);
+  padding: 0.2rem 1.3rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
 }
 
 .summary > div {
@@ -650,7 +765,11 @@ main {
   grid-template-columns: 8rem 1fr;
   gap: var(--gap-inline);
   padding: 1rem 0;
-  border-bottom: 1px solid var(--c-hairline);
+  border-bottom: 1px solid var(--c-hairline-soft);
+}
+
+.summary > div:last-child {
+  border-bottom: none;
 }
 
 .summary dt {
@@ -682,9 +801,11 @@ main {
 .btn {
   flex: 1;
   padding: 1rem 1.5rem;
-  border: 1px solid var(--c-text);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius);
-  background: transparent;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
   color: var(--c-text);
   font-family: inherit;
   font-size: 0.92rem;
@@ -694,18 +815,13 @@ main {
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-.btn-ghost {
-  border-color: var(--c-hairline);
-  color: var(--c-muted);
-}
-
 .btn-ghost:hover {
-  border-color: var(--c-text);
-  color: var(--c-text);
+  background: var(--glass-bg-strong);
 }
 
 .btn-solid {
   background: var(--c-text);
+  border-color: var(--c-text);
   color: var(--c-bg);
 }
 
@@ -770,18 +886,23 @@ main {
 }
 
 dialog {
-  border: 1px solid var(--c-text);
-  border-radius: var(--radius);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
   padding: clamp(2.5rem, 6vw, 3.5rem) 2rem 2rem;
   max-width: 22rem;
   width: calc(100vw - 3rem);
   text-align: center;
-  background: var(--c-bg);
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  backdrop-filter: blur(30px) saturate(150%);
+  box-shadow: 0 24px 64px rgba(28, 35, 37, 0.16);
   color: var(--c-text);
 }
 
 dialog::backdrop {
-  background: color-mix(in srgb, var(--mountain-ink) 55%, transparent);
+  background: rgba(28, 35, 37, 0.28);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 
 .done-mark {
@@ -825,6 +946,21 @@ dialog .btn {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* backdrop-filter 미지원 브라우저 — 불투명도를 올려 가독성을 지킨다 */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root {
+    --glass-bg: rgba(255, 255, 255, 0.82);
+    --glass-bg-strong: rgba(255, 255, 255, 0.92);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --glass-bg: rgba(30, 38, 40, 0.9);
+      --glass-bg-strong: rgba(36, 45, 47, 0.95);
+    }
+  }
 }
 
 /* ==========================================================================
