@@ -981,3 +981,97 @@ dialog .btn {
     display: none;
   }
 }
+
+/* ==========================================================================
+   Fluid — 누르는 즉시 반응하고, 잡으면 따라오고, 언제든 되돌릴 수 있게
+   (Apple, Designing Fluid Interfaces)
+   ========================================================================== */
+
+/* 반응은 click이 아니라 pointerdown에서. 기다리면 죽은 것처럼 느껴진다. */
+.btn,
+.file-btn,
+.header-cta,
+.hero-links a {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    transform 0.1s ease-out;
+  touch-action: manipulation; /* 300ms 탭 지연 제거 */
+}
+
+.btn.is-pressed,
+.file-btn.is-pressed,
+.header-cta.is-pressed {
+  transform: scale(0.975);
+}
+
+.hero-links a.is-pressed {
+  opacity: 0.6;
+}
+
+/* 제출 시트 — 잡을 수 있다는 걸 손잡이로 알린다 */
+.sheet-grabber {
+  width: 2.2rem;
+  height: 4px;
+  margin: -1.2rem auto 1.4rem;
+  border-radius: 999px;
+  background: var(--c-muted);
+  opacity: 0.4;
+}
+
+dialog {
+  /* 드래그가 스크롤로 새지 않게, 그리고 합성 레이어로 올린다 */
+  touch-action: none;
+  will-change: transform;
+}
+
+/* 시트가 내려가는 만큼 스크림도 함께 옅어진다 — 진행이 계속 보여야 한다 */
+dialog::backdrop {
+  background: rgba(28, 35, 37, calc(0.28 * var(--sheet-progress, 1)));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn.is-pressed,
+  .file-btn.is-pressed,
+  .header-cta.is-pressed {
+    transform: none;
+  }
+
+  .sheet-grabber {
+    display: none;
+  }
+
+  dialog {
+    transform: none !important;
+  }
+}
+
+/* 투명도를 줄이고 싶은 사용자 — 유리를 걷어내고 불투명하게 */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass-bg: rgba(255, 255, 255, 0.96);
+    --glass-bg-strong: #ffffff;
+    --glass-blur: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --glass-bg: #1a2224;
+      --glass-bg-strong: #222c2e;
+    }
+  }
+}
+
+/* 대비를 높이고 싶은 사용자 — 경계를 분명히 */
+@media (prefers-contrast: more) {
+  :root {
+    --glass-bg: #ffffff;
+    --glass-border: var(--c-text);
+    --c-muted: #4a5457;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --glass-bg: #12181a;
+      --c-muted: #b9c1c1;
+    }
+  }
+}

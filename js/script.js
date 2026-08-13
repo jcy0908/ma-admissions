@@ -1,6 +1,8 @@
 // MA Institute of Design — 지원 폼 데모
 // 3단계 이동, 글자 수 카운터, PDF 검증, localStorage 자동 저장/복원, 제출 다이얼로그
 
+import { Spring, project, rubberband, VelocityTracker, prefersReducedMotion } from './fluid.js';
+
 (function () {
   'use strict';
 
@@ -33,6 +35,12 @@
   let currentStep = 1;
   let saveTimer = null;
 
+  // 진행 바 — CSS transition은 도중에 붙잡을 수 없으므로 스프링으로 바꾼다
+  const progressSpring = new Spring({
+    damping: 1, response: 0.4, value: 33.3,
+    onUpdate: (v) => { progressFill.style.width = v + '%'; },
+  });
+
   // ---------- 단계 이동 ----------
 
   function showStep(step, scroll) {
@@ -44,7 +52,12 @@
     nextBtn.hidden = step === TOTAL_STEPS;
     submitBtn.hidden = step !== TOTAL_STEPS;
     progressStep.textContent = step + '/' + TOTAL_STEPS;
-    progressFill.style.width = (step / TOTAL_STEPS) * 100 + '%';
+    const pct = (step / TOTAL_STEPS) * 100;
+    if (prefersReducedMotion()) {
+      progressSpring.setValue(pct);
+    } else {
+      progressSpring.setTarget(pct);
+    }
     hideError();
     if (step === TOTAL_STEPS) renderSummary();
     if (scroll) {
@@ -266,10 +279,133 @@
       }
     }
     saveDraft();
-    doneDialog.showModal();
+    openSheet();
   });
 
-  doneClose.addEventListener('click', () => doneDialog.close());
+  doneClose.addEventListener('click', () => closeSheet());
+
+  // ------------------------------------------------------------------
+  // 제출 시트 — 손가락으로 잡아 내릴 수 있고, 언제든 되돌릴 수 있다
+  // ------------------------------------------------------------------
+
+  let sheetClosing = false;
+
+  const sheetSpring = new Spring({
+    damping: 1,
+    response: 0.35,
+    value: 0,
+    onUpdate: (y) => {
+      doneDialog.style.transform = 'translateY(' + y + 'px)';
+      const h = doneDialog.offsetHeight || 1;
+      // 내려갈수록 배경 스크림도 함께 옅어진다 — 진행 상황이 계속 보여야 한다
+      doneDialog.style.setProperty('--sheet-progress', String(Math.max(0, 1 - y / h)));
+    },
+    onRest: () => {
+      // 목표값 비교는 취약하다 — 닫으려는 '의도'를 명시적으로 본다
+      if (!sheetClosing) return;
+      sheetClosing = false;
+      doneDialog.close();
+      doneDialog.style.transform = '';
+      doneDialog.style.removeProperty('--sheet-progress');
+    },
+  });
+
+  function openSheet() {
+    sheetClosing = false;
+    doneDialog.showModal();
+    if (prefersReducedMotion()) {
+      sheetSpring.setValue(0);
+      return;
+    }
+    // 아래에서 올라오고, 닫힐 때도 같은 길로 내려간다 (경로 대칭)
+    sheetSpring.setValue(doneDialog.offsetHeight || 400);
+    sheetSpring.setTarget(0);
+  }
+
+  function closeSheet() {
+    if (prefersReducedMotion()) {
+      doneDialog.close();
+      return;
+    }
+    sheetClosing = true;
+    sheetSpring.setTarget(doneDialog.offsetHeight || 400);
+  }
+
+  // Esc 등 브라우저 기본 닫기와 상태를 맞춘다
+  doneDialog.addEventListener('cancel', (e) => {
+    e.preventDefault();
+    closeSheet();
+  });
+
+  const tracker = new VelocityTracker();
+  let dragging = false;
+  let startY = 0;
+  let startValue = 0;
+  let committed = false;
+
+  doneDialog.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('button')) return;      // 버튼 누르는 건 드래그가 아니다
+    if (prefersReducedMotion()) return;
+    dragging = true;
+    committed = false;
+    startY = e.clientY;
+    startValue = sheetSpring.value;
+    sheetSpring.stop();                           // 진행 중이어도 즉시 손가락에 넘긴다
+    tracker.reset();
+    tracker.add(e.clientY);
+    doneDialog.setPointerCapture(e.pointerId);
+  });
+
+  doneDialog.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const dy = e.clientY - startY;
+    if (!committed && Math.abs(dy) < 10) return;  // 10px 히스테리시스: 탭과 드래그를 가른다
+    committed = true;
+    tracker.add(e.clientY);
+
+    let y = startValue + dy;
+    // 위로는 거의 안 따라간다 — 딱 멈추면 고장 난 것처럼 보이므로 저항만 준다
+    if (y < 0) y = -rubberband(-y, doneDialog.offsetHeight || 400);
+    sheetSpring.setValue(y, tracker.velocity);
+  });
+
+  function endDrag(e) {
+    if (!dragging) return;
+    dragging = false;
+    doneDialog.releasePointerCapture?.(e.pointerId);
+    if (!committed) return;
+
+    const velocity = tracker.velocity;
+    const height = doneDialog.offsetHeight || 400;
+    // 놓은 지점이 아니라 "가고 있던 곳"으로 판단한다
+    const projected = sheetSpring.value + project(velocity);
+    const shouldClose = projected > height * 0.4;
+    sheetClosing = shouldClose;
+    // 던진 동작이었으니 약간의 탄성을 허용한다
+    sheetSpring.damping = 0.85;
+    sheetSpring.setTarget(shouldClose ? height : 0, velocity);
+    setTimeout(() => { sheetSpring.damping = 1; }, 600);
+  }
+
+  doneDialog.addEventListener('pointerup', endDrag);
+  doneDialog.addEventListener('pointercancel', endDrag);
+
+  // ------------------------------------------------------------------
+  // 누르는 즉시 반응한다 — click을 기다리면 죽은 것처럼 느껴진다
+  // ------------------------------------------------------------------
+  document.querySelectorAll('.btn, .file-btn, .header-cta, .hero-links a').forEach((el) => {
+    el.addEventListener('pointerdown', () => el.classList.add('is-pressed'));
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach((evt) =>
+      el.addEventListener(evt, () => el.classList.remove('is-pressed'))
+    );
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      sheetSpring.finish();
+      progressSpring.finish();
+    }
+  });
 
   showStep(1, false);
 })();

@@ -247,12 +247,13 @@
 
 <!-- 제출 완료 다이얼로그 -->
 <dialog id="done-dialog" aria-labelledby="done-title">
+  <div class="sheet-grabber" aria-hidden="true"></div>
   <p class="done-mark" aria-hidden="true">✓</p>
   <h2 id="done-title">지원이 완료되었습니다</h2>
   <p class="done-desc">작성해 주신 내용은 데모이므로 서버로 전송되지 않았습니다.<br>브라우저에 저장된 초안은 그대로 남아 있습니다.</p>
   <button type="button" class="btn btn-solid" id="done-close">닫기</button>
 </dialog>
 
-<script src="js/script.js"></script>
+<script type="module" src="js/script.js"></script>
 </body>
 </html>
