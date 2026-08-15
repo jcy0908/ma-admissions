@@ -858,202 +858,253 @@ main {
 }
 
 /* ==========================================================================
-   사진 — 실제 풍경. 색은 화면 규칙 안으로 눌러 둔다.
+   사진판 — 본문 흐름 속에 놓인 한 장. 갤러리가 아니라 호흡.
+   저작권 표시는 반드시 있되, 아주 얇게.
    ========================================================================== */
 
-.photo-list {
-  list-style: none;
-  padding: 0;
+.plate {
   margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-  gap: var(--gap-inline);
 }
 
-.photo figure {
-  margin: 0;
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  box-shadow: var(--glass-shadow);
-  overflow: hidden;
+/* 넓은 판 — 본문 폭을 벗어나 숨을 쉰다 */
+.plate-wide {
+  max-width: var(--w-wide);
+  margin: var(--gap-section) auto;
+  padding-inline: clamp(1.25rem, 5vw, 3rem);
 }
 
-.photo img {
+.plate-inline {
+  margin: var(--gap-block) 0;
+}
+
+.plate img {
   display: block;
   width: 100%;
-  height: clamp(11rem, 24vw, 15rem);
-  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-border);
   /* 원본은 계절도 시간도 제각각이다. 무채색으로 눌러 팔레트 안에 둔다. */
   filter: grayscale(1) contrast(1.04) brightness(1.02);
 }
 
-.photo figcaption {
-  display: block;
-  padding: var(--gap-inline) clamp(1rem, 2.5vw, 1.3rem) 1.1rem;
+.plate-wide img {
+  height: clamp(14rem, 40vw, 26rem);
+  object-fit: cover;
 }
 
-.photo figcaption b {
+.plate-inline img,
+.plate-pair img {
+  height: clamp(11rem, 24vw, 15rem);
+  object-fit: cover;
+}
+
+.plate figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.9rem;
+  margin-top: 0.85rem;
+}
+
+.plate-where {
+  font-size: 0.85rem;
+  letter-spacing: -0.005em;
+  color: var(--c-muted);
+}
+
+.plate-where b {
+  font-weight: 500;
+  color: var(--c-text);
+}
+
+.plate-cap {
+  flex: 1 1 20ch;
+  min-width: 0;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--c-muted);
+}
+
+/* 저작권 — 있어야 하지만 읽는 흐름을 막지 않는다.
+   작고 흐리게 두되, 다가가면 또렷해진다. */
+.plate-credit {
+  flex: 0 0 auto;
+  margin-left: auto;
+  font-size: 0.63rem;
+  letter-spacing: 0.04em;
+  color: var(--c-muted);
+  opacity: 0.5;
+  text-decoration: none;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.plate-credit:hover,
+.plate-credit:focus-visible {
+  opacity: 1;
+  color: var(--c-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 작은 판 넷 */
+.plate-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--gap-inline) var(--gap-inline);
+  margin-top: var(--gap-block);
+}
+
+/* ==========================================================================
+   번역 — 카드가 아니라 대구(對句). 큰 활자가 짝을 이룬다.
+   ========================================================================== */
+
+.turn-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--gap-block) 0 0;
+}
+
+.turn {
+  padding: clamp(2rem, 4.5vw, 3rem) 0;
+  border-top: 1px solid var(--c-hairline);
+}
+
+.turn:last-child {
+  border-bottom: 1px solid var(--c-hairline);
+}
+
+.turn-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6em;
+  margin: 0 0 var(--gap-inline);
+  font-size: clamp(1.5rem, 4.2vw, 2.3rem);
+  font-weight: 300;
+  /* 커질수록 트래킹은 좁아진다 */
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+
+.turn-from {
+  color: var(--c-muted);
+}
+
+.turn-from i {
+  font-style: normal;
+  font-size: 0.5em;
+  letter-spacing: 0.06em;
+}
+
+/* 화살표는 글자가 아니라 선으로 — 장식보다 관계를 보인다 */
+.turn-to {
+  position: relative;
+  padding-left: 2.4em;
+  font-weight: 500;
+  color: var(--c-accent);
+}
+
+.turn-to::before {
+  content: "";
+  position: absolute;
+  left: 0.6em;
+  top: 0.62em;
+  width: 1.3em;
+  height: 1px;
+  background: var(--c-accent);
+  opacity: 0.5;
+}
+
+.turn-body {
+  max-width: 46ch;
+  margin: 0;
   font-size: 0.95rem;
+  line-height: 1.95;
+  color: var(--c-muted);
+}
+
+/* ==========================================================================
+   색인 — 열여덟 곳. 카드 열여덟 개는 지루하다. 목록이 낫다.
+   ========================================================================== */
+
+.index {
+  margin-top: var(--gap-block);
+}
+
+.index-head {
+  margin: 0 0 var(--gap-hairline);
+  padding-bottom: var(--gap-hairline);
+  border-bottom: 1px solid var(--c-hairline);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.index-head span {
+  margin-left: 0.5em;
+  font-size: 0.74rem;
+  font-weight: 400;
+  color: var(--c-muted);
+}
+
+.index-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.index-list li {
+  display: grid;
+  grid-template-columns: 4.2rem 2.6rem 1fr;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.85rem 0.2rem;
+  border-bottom: 1px solid var(--c-hairline-soft);
+}
+
+.index-list li:last-child {
+  border-bottom: none;
+}
+
+.index-list b {
+  font-size: 1rem;
   font-weight: 500;
   letter-spacing: -0.01em;
 }
 
-.photo figcaption > span {
-  display: block;
-}
-
-.photo figcaption b + span {
-  display: inline;
-  margin-left: 0.45em;
-  font-size: 0.74rem;
-  letter-spacing: 0.08em;
-  color: var(--c-accent);
-}
-
-.photo-cap {
-  margin-top: 0.5rem;
-  font-size: 0.85rem;
-  line-height: 1.85;
-  color: var(--c-muted);
-}
-
-.photo-credit {
-  margin-top: 0.7rem;
-  padding-top: 0.6rem;
-  border-top: 1px solid var(--c-hairline);
-  font-size: 0.7rem;
-  letter-spacing: 0.02em;
-  color: var(--c-muted);
-}
-
-.photo-credit a {
-  color: var(--c-muted);
-  text-underline-offset: 3px;
-}
-
-.photo-credit a:hover {
-  color: var(--c-accent);
-}
-
-.photo-note {
-  max-width: 46ch;
-  margin: var(--gap-block) 0 0;
-  font-size: 0.78rem;
-  line-height: 1.85;
-  color: var(--c-muted);
-}
-
-.photo-note code {
-  font-size: 0.9em;
-  padding: 0.1em 0.35em;
-  border-radius: 4px;
-  background: var(--glass-bg-strong);
-}
-
-/* 대비를 높이고 싶은 사용자에게는 사진의 회색 처리를 풀어 준다 */
-@media (prefers-contrast: more) {
-  .photo img {
-    filter: none;
-  }
-}
-
-/* ==========================================================================
-   지역 — 아홉 곳의 지형
-   ========================================================================== */
-
-.region-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-  gap: 1px;
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  background: var(--c-hairline-soft);
-  box-shadow: var(--glass-shadow);
-  overflow: hidden;
-}
-
-.region {
-  display: flex;
-  flex-direction: column;
-  padding: clamp(1.6rem, 3.2vw, 2.1rem) clamp(1.4rem, 3vw, 1.9rem);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-}
-
-.region-tag {
-  margin: 0 0 0.9rem;
-  font-size: 0.66rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--c-accent);
-}
-
-.region h3 {
-  margin: 0 0 0.7rem;
-  font-size: 1.15rem;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-}
-
-.region h3 span {
-  margin-left: 0.4em;
-  font-size: 0.8rem;
-  font-weight: 400;
-  color: var(--c-muted);
-}
-
-.region-land {
-  margin: 0 0 var(--gap-inline);
-  font-size: 0.86rem;
-  line-height: 1.9;
-  color: var(--c-muted);
-}
-
-.region-lesson {
-  margin: auto 0 0;
-  padding-top: var(--gap-inline);
-  border-top: 1px solid var(--c-hairline);
-  font-size: 0.86rem;
-  line-height: 1.85;
-  color: var(--c-text);
-}
-
-.region-lesson b {
-  font-weight: 500;
-  color: var(--c-accent);
-}
-
-.region-group {
-  margin: var(--gap-block) 0 var(--gap-inline);
-  padding-bottom: var(--gap-hairline);
-  border-bottom: 1px solid var(--c-hairline);
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-
-.region-group:first-of-type {
-  margin-top: 0;
-}
-
-.region-group span {
-  margin-left: 0.5em;
-  font-size: 0.74rem;
-  font-weight: 400;
+.index-list i {
+  font-style: normal;
+  font-size: 0.75rem;
   letter-spacing: 0.04em;
+  color: var(--c-accent);
+}
+
+.index-list span {
+  font-size: 0.88rem;
+  line-height: 1.8;
   color: var(--c-muted);
 }
 
-.region-list + .region-group {
-  margin-top: var(--gap-section);
+@media (max-width: 560px) {
+  .index-list li {
+    grid-template-columns: 3.6rem 1fr;
+    row-gap: 0.15rem;
+  }
+
+  .index-list i {
+    display: none;
+  }
+
+  .index-list span {
+    grid-column: 2;
+  }
+
+  .turn-to {
+    padding-left: 0;
+  }
+
+  .turn-to::before {
+    display: none;
+  }
 }
 
 /* ==========================================================================
@@ -1138,72 +1189,6 @@ main {
 }
 
 /* ==========================================================================
-   번역 — 무엇이 무엇이 되었는가
-   ========================================================================== */
-
-.translation-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 1px;
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  background: var(--c-hairline-soft);
-  box-shadow: var(--glass-shadow);
-  overflow: hidden;
-}
-
-.translation {
-  display: grid;
-  grid-template-columns: 7.5rem 2rem 1fr;
-  align-items: start;
-  gap: var(--gap-inline);
-  padding: clamp(1.6rem, 3.5vw, 2.2rem) clamp(1.4rem, 3vw, 2rem);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-}
-
-.translation-from {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  color: var(--c-text);
-}
-
-.translation-from span {
-  display: block;
-  margin-top: 0.15rem;
-  font-size: 1.5rem;
-  font-weight: 200;
-  line-height: 1;
-  color: var(--c-accent);
-}
-
-.translation-arrow {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--c-muted);
-}
-
-.translation h3 {
-  margin: 0 0 0.4rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-
-.translation p:last-child {
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.9;
-  color: var(--c-muted);
-}
-
-/* ==========================================================================
    색 견본 — 좁은 화면에서 끌 수 있다. transition 금지(스프링이 움직인다).
    ========================================================================== */
 
@@ -1276,23 +1261,6 @@ main {
 
 .site-header.is-overlapping {
   border-bottom-color: var(--glass-border);
-}
-
-@media (max-width: 640px) {
-  .translation {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-
-  .translation-arrow {
-    display: none;
-  }
-
-  .translation-from span {
-    display: inline;
-    margin-left: 0.35em;
-    font-size: 1.1rem;
-  }
 }
 
 /* ==========================================================================
@@ -1375,6 +1343,15 @@ main {
   :root {
     --glass-border: var(--c-text);
     --c-muted: #46504f;
+  }
+
+  /* 회색 처리를 풀어 사진 자체의 대비를 살린다 */
+  .plate img {
+    filter: none;
+  }
+
+  .plate-credit {
+    opacity: 1;
   }
 }
 
