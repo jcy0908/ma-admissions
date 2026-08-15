@@ -23,7 +23,9 @@
 
   --c-bg: var(--winter-haze);
   --c-text: var(--mountain-ink);
-  --c-muted: var(--stone);
+  /* 돌색(#8a9296)을 그대로 글자에 쓰면 대비가 2.79:1로 AA에 못 미친다.
+     견본용 돌색은 그대로 두고, 읽는 글자만 한 단계 눌러 4.61:1을 맞춘다. */
+  --c-muted: #646e71;
   --c-hairline: rgba(28, 35, 37, 0.14);
   --c-hairline-soft: rgba(28, 35, 37, 0.07);
   --c-accent: var(--moss);
@@ -965,10 +967,10 @@ main {
 }
 
 /* 넓은 판 — 본문 폭을 벗어나 숨을 쉰다 */
+/* main이 이미 max-width와 padding을 갖고 있다. 여기서 또 걸면 '넓은 판'이
+   오히려 본문보다 좁아진다. main의 좌우 여백을 상쇄해 진짜로 넓게 만든다. */
 .plate-wide {
-  max-width: var(--w-wide);
-  margin: var(--gap-section) auto;
-  padding-inline: clamp(1.25rem, 5vw, 3rem);
+  margin: var(--gap-section) calc(clamp(1.25rem, 5vw, 3rem) * -1);
 }
 
 .plate-inline {
@@ -1024,13 +1026,15 @@ main {
 
 /* 저작권 — 있어야 하지만 읽는 흐름을 막지 않는다.
    작고 흐리게 두되, 다가가면 또렷해진다. */
+/* 저작권은 읽는 흐름을 막지 않되, 표기로서 기능해야 한다.
+   0.5 불투명도는 실효 대비가 1.6:1까지 떨어져 표기 구실을 못 했다. */
 .plate-credit {
   flex: 0 0 auto;
   margin-left: auto;
-  font-size: 0.63rem;
-  letter-spacing: 0.04em;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
   color: var(--c-muted);
-  opacity: 0.5;
+  opacity: 0.75;
   text-decoration: none;
   transition: opacity 0.2s ease, color 0.2s ease;
 }
