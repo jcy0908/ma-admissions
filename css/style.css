@@ -858,6 +858,183 @@ main {
 }
 
 /* ==========================================================================
+   지역 — 아홉 곳의 지형
+   ========================================================================== */
+
+.region-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--c-hairline-soft);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+}
+
+.region {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.6rem, 3.2vw, 2.1rem) clamp(1.4rem, 3vw, 1.9rem);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+.region-tag {
+  margin: 0 0 0.9rem;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+}
+
+.region h3 {
+  margin: 0 0 0.7rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.region h3 span {
+  margin-left: 0.4em;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--c-muted);
+}
+
+.region-land {
+  margin: 0 0 var(--gap-inline);
+  font-size: 0.86rem;
+  line-height: 1.9;
+  color: var(--c-muted);
+}
+
+.region-lesson {
+  margin: auto 0 0;
+  padding-top: var(--gap-inline);
+  border-top: 1px solid var(--c-hairline);
+  font-size: 0.86rem;
+  line-height: 1.85;
+  color: var(--c-text);
+}
+
+.region-lesson b {
+  font-weight: 500;
+  color: var(--c-accent);
+}
+
+.region-group {
+  margin: var(--gap-block) 0 var(--gap-inline);
+  padding-bottom: var(--gap-hairline);
+  border-bottom: 1px solid var(--c-hairline);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.region-group:first-of-type {
+  margin-top: 0;
+}
+
+.region-group span {
+  margin-left: 0.5em;
+  font-size: 0.74rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--c-muted);
+}
+
+.region-list + .region-group {
+  margin-top: var(--gap-section);
+}
+
+/* ==========================================================================
+   그림 — 영동 두 장
+   ========================================================================== */
+
+/* 수평선 — 가장 길고 흔들리지 않는 선 하나 */
+.draw-horizon .sea {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42%;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--ice-sheet) 90%, transparent) 0%,
+    color-mix(in srgb, var(--stone) 45%, transparent) 100%);
+}
+
+.draw-horizon .line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 42%;
+  height: 1px;
+  background: var(--mountain-ink);
+  opacity: 0.7;
+}
+
+/* 솔숲 — 가로선을 받치는 세로선 */
+.draw-horizon .pine {
+  position: absolute;
+  bottom: 42%;
+  width: 1px;
+  background: var(--mountain-ink);
+  opacity: 0.55;
+}
+
+.draw-horizon .p1 { left: 16%; height: 26%; }
+.draw-horizon .p2 { left: 22%; height: 34%; }
+.draw-horizon .p3 { left: 79%; height: 30%; }
+.draw-horizon .p4 { left: 85%; height: 22%; }
+
+/* 지층 — 평평해 보여도 앞뒤가 있다 */
+.draw-strata span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: var(--mountain-ink);
+}
+
+.draw-strata span:nth-child(1) { bottom: 0;   height: 22%; opacity: 0.9; }
+.draw-strata span:nth-child(2) { bottom: 22%; height: 14%; opacity: 0.55; }
+.draw-strata span:nth-child(3) { bottom: 36%; height: 19%; opacity: 0.34; }
+.draw-strata span:nth-child(4) { bottom: 55%; height: 11%; opacity: 0.2; }
+.draw-strata span:nth-child(5) { bottom: 66%; height: 16%; opacity: 0.1; }
+
+/* 해안에서 잘려 단면이 드러난다 */
+/* 절벽이 한쪽에서 잘려 단면이 드러난다 — 가운데를 지우면 층이 두 동강 난다 */
+.draw-strata .cut {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 34%;
+  background: var(--c-bg);
+  border-left: 1px solid var(--mountain-ink);
+  transform: skewX(-9deg);
+  transform-origin: bottom left;
+}
+
+@media (prefers-color-scheme: dark) {
+  .draw-horizon .line,
+  .draw-horizon .pine,
+  .draw-strata span {
+    background: #cfd8d8;
+  }
+
+  .draw-strata .cut {
+    background: #12181a;
+    border-left-color: #cfd8d8;
+  }
+}
+
+/* ==========================================================================
    번역 — 무엇이 무엇이 되었는가
    ========================================================================== */
 
