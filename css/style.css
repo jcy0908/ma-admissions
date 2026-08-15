@@ -858,6 +858,109 @@ main {
 }
 
 /* ==========================================================================
+   사진 — 실제 풍경. 색은 화면 규칙 안으로 눌러 둔다.
+   ========================================================================== */
+
+.photo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: var(--gap-inline);
+}
+
+.photo figure {
+  margin: 0;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  height: clamp(11rem, 24vw, 15rem);
+  object-fit: cover;
+  /* 원본은 계절도 시간도 제각각이다. 무채색으로 눌러 팔레트 안에 둔다. */
+  filter: grayscale(1) contrast(1.04) brightness(1.02);
+}
+
+.photo figcaption {
+  display: block;
+  padding: var(--gap-inline) clamp(1rem, 2.5vw, 1.3rem) 1.1rem;
+}
+
+.photo figcaption b {
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.photo figcaption > span {
+  display: block;
+}
+
+.photo figcaption b + span {
+  display: inline;
+  margin-left: 0.45em;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  color: var(--c-accent);
+}
+
+.photo-cap {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  line-height: 1.85;
+  color: var(--c-muted);
+}
+
+.photo-credit {
+  margin-top: 0.7rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--c-hairline);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--c-muted);
+}
+
+.photo-credit a {
+  color: var(--c-muted);
+  text-underline-offset: 3px;
+}
+
+.photo-credit a:hover {
+  color: var(--c-accent);
+}
+
+.photo-note {
+  max-width: 46ch;
+  margin: var(--gap-block) 0 0;
+  font-size: 0.78rem;
+  line-height: 1.85;
+  color: var(--c-muted);
+}
+
+.photo-note code {
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: var(--glass-bg-strong);
+}
+
+/* 대비를 높이고 싶은 사용자에게는 사진의 회색 처리를 풀어 준다 */
+@media (prefers-contrast: more) {
+  .photo img {
+    filter: none;
+  }
+}
+
+/* ==========================================================================
    지역 — 아홉 곳의 지형
    ========================================================================== */
 
