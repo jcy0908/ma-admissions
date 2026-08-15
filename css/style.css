@@ -249,75 +249,155 @@ main {
 }
 
 /* ==========================================================================
-   히어로 — Apple의 제품 페이지처럼. 가운데, 큰 활자, 짧은 문장
+   첫 화면 — 능선이 글자 뒤에서 솟는다.
+   여백만으로는 임팩트가 나지 않는다. 형태가 있어야 한다.
    ========================================================================== */
 
 .hero {
-  padding-top: clamp(5rem, 14vw, 9rem);
-  text-align: center;
+  position: relative;
+  /* svh: 모바일 주소창이 접혀도 튀지 않는다 */
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-content: center;
+  margin-inline: calc(clamp(1.25rem, 5vw, 3rem) * -1);
+  padding: clamp(5rem, 12vw, 8rem) clamp(1.25rem, 5vw, 3rem) 2rem;
+  overflow: hidden;
+}
+
+/* 능선 — 뒤로 갈수록 옅어진다. 거리가 곧 농도. */
+.hero-scape {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* 히어로 아래로 살짝 내려 잘린 이음매가 보이지 않게 */
+  bottom: -1px;
+  height: min(52vh, 26rem);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hr {
+  position: absolute;
+  bottom: 0;
+  background: var(--mountain-ink);
+}
+
+/* 능선은 넓고 낮다. 높고 둥글면 산이 아니라 돔이 된다.
+   앞줄일수록 짙고 낮게, 뒷줄일수록 옅고 높게 — 거리가 곧 농도. */
+.hr1 { left: -26%; width: 104%; height: 17%; border-radius: 56% 44% 0 0 / 100% 88% 0 0; opacity: 0.14; }
+.hr2 { left:  22%; width:  96%; height: 23%; border-radius: 42% 58% 0 0 / 90% 100% 0 0; opacity: 0.1; }
+.hr3 { left: -14%; width: 118%; height: 30%; border-radius: 52% 48% 0 0 / 100% 92% 0 0; opacity: 0.075; }
+.hr4 { left:  34%; width: 110%; height: 38%; border-radius: 46% 54% 0 0 / 86% 100% 0 0; opacity: 0.05; }
+.hr5 { left: -34%; width: 132%; height: 47%; border-radius: 50% 50% 0 0 / 100% 90% 0 0; opacity: 0.032; }
+
+/* 능선 아래로 고이는 안개 — 글자가 놓일 자리를 비워 준다 */
+.hr-fog {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    var(--c-bg) 0%,
+    color-mix(in srgb, var(--c-bg) 55%, transparent) 42%,
+    transparent 100%);
+}
+
+.hero-body {
+  position: relative;
+  z-index: 1;
+  align-self: center;
 }
 
 .hero-eyebrow {
-  margin: 0 0 clamp(1.5rem, 4vw, 2.5rem);
-  font-size: 0.72rem;
+  margin: 0 0 clamp(1.6rem, 4vw, 2.4rem);
+  font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.32em;
+  /* 작은 글자는 트래킹을 벌려야 읽힌다 */
+  letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--c-muted);
 }
 
 .hero h1 {
-  margin: 0 0 clamp(1.2rem, 3vw, 1.8rem);
-  font-size: clamp(2.8rem, 9vw, 5.5rem);
-  font-weight: 300;
-  line-height: 1.15;
-  letter-spacing: -0.04em;
+  margin: 0 0 clamp(1.6rem, 3.5vw, 2.2rem);
+  /* 첫 화면의 무게중심 — 크게, 그리고 확실하게 */
+  font-size: clamp(3.2rem, 13vw, 8rem);
+  font-weight: 500;
+  /* 커질수록 트래킹은 좁아지고 행간도 좁아진다 */
+  line-height: 0.98;
+  letter-spacing: -0.055em;
 }
 
-.hero .accent {
-  font-weight: 500;
+.hero h1 em {
+  font-style: normal;
+  font-weight: 200;
   color: var(--c-accent);
 }
 
 .hero-tagline {
-  margin: 0 0 clamp(1.5rem, 3vw, 2rem);
-  font-size: clamp(1.05rem, 2.2vw, 1.45rem);
+  margin: 0;
+  max-width: 30ch;
+  font-size: clamp(0.98rem, 1.8vw, 1.25rem);
   font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: -0.015em;
-}
-
-.hero-sub {
-  margin: 0 auto clamp(2rem, 4vw, 2.8rem);
-  max-width: 40ch;
-  font-size: 0.95rem;
-  line-height: 1.9;
+  line-height: 1.65;
+  letter-spacing: -0.012em;
   color: var(--c-muted);
 }
 
-.hero-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  margin: 0;
+.br-wide {
+  display: none;
 }
 
-.hero-links a {
-  color: var(--c-accent);
-  font-size: 0.98rem;
+@media (min-width: 720px) {
+  .br-wide {
+    display: inline;
+  }
+}
+
+/* 아래로 — 계속 읽을 곳이 있음을 알린다 */
+.hero-scroll {
+  position: relative;
+  z-index: 1;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0;
+  color: var(--c-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, transform 0.1s ease-out;
 }
 
-.hero-links a::after {
-  content: " ›";
+.hero-scroll i {
+  display: block;
+  width: 1px;
+  height: 2.6rem;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--c-muted) 80%, transparent) 0%,
+    transparent 100%);
 }
 
-.hero-links a:hover {
-  color: var(--c-accent-hover);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+.hero-scroll:hover,
+.hero-scroll:focus-visible {
+  color: var(--c-accent);
+}
+
+.hero-scroll:hover i {
+  background: linear-gradient(180deg, var(--c-accent), transparent);
+}
+
+.hero-scroll.is-pressed {
+  transform: scale(0.97);
+}
+
+/* 도입 문단 — 본문보다 한 단계 크게 */
+.lead {
+  font-size: 1.08rem;
+  line-height: 1.9;
+  color: var(--c-text);
 }
 
 /* --------------------------------------------------------------------------
@@ -549,6 +629,24 @@ main {
   margin: 0 0 var(--gap-hairline);
   font-size: 0.85rem;
   letter-spacing: 0.02em;
+}
+
+.footer-by {
+  margin: 0 0 var(--gap-inline) !important;
+  font-size: 0.85rem !important;
+  font-weight: 400 !important;
+  color: var(--c-muted);
+}
+
+.footer-by b {
+  font-weight: 500;
+  color: var(--c-text);
+}
+
+.footer-by span {
+  margin-left: 0.15em;
+  font-size: 0.9em;
+  color: var(--c-muted);
 }
 
 .footer-small {

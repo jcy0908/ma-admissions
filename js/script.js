@@ -1,4 +1,4 @@
-// MA — 강원 영서의 풍경을 화면으로 옮기는 법
+// MA — 강원도의 풍경을 화면으로 옮기는 법
 //
 // 이 페이지는 읽는 페이지입니다. 그래서 움직임은 두 곳에만 있습니다.
 //   1. 누르는 순간의 반응 (click을 기다리면 죽은 것처럼 느껴진다)
@@ -17,7 +17,7 @@ import {
 // 1. 즉각 반응 — 반응은 click이 아니라 pointerdown에서
 // ==========================================================================
 
-document.querySelectorAll('.header-cta, .hero-links a, .wordmark').forEach((el) => {
+document.querySelectorAll('.header-cta, .hero-scroll, .plate-credit, .wordmark').forEach((el) => {
   el.addEventListener('pointerdown', () => el.classList.add('is-pressed'));
   ['pointerup', 'pointercancel', 'pointerleave'].forEach((evt) =>
     el.addEventListener(evt, () => el.classList.remove('is-pressed'))
@@ -125,7 +125,7 @@ if (strip && track) {
   // 제스처만으로 갇히지 않도록 키보드로도 넘길 수 있어야 한다
   strip.setAttribute('tabindex', '0');
   strip.setAttribute('role', 'group');
-  strip.setAttribute('aria-label', '영서에서 채집한 색 — 좌우 방향키로 이동');
+  strip.setAttribute('aria-label', '강원도에서 채집한 색 — 좌우 방향키로 이동');
   strip.addEventListener('keydown', (e) => {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
     e.preventDefault();

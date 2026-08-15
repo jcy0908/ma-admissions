@@ -25,30 +25,30 @@
 <main id="top">
 
   <!-- Hero -->
+  <!-- 첫 화면 — 능선이 글자 뒤로 솟는다 -->
   <section class="hero">
-    <p class="hero-eyebrow">강원특별자치도 · 江原</p>
-    <h1>안개는<br><span class="accent">유리가 된다.</span></h1>
-    <p class="hero-tagline">백두대간 등성이가 잇는 열여덟 표정을 화면으로 옮기는 법.</p>
-    <p class="hero-sub">
-      좋은 화면은 어디선가 옵니다. MA는 그 어딘가를 강원도에 두었습니다.
-      철원의 평야에서 태백의 고원까지, 양양의 파도에서 홍천의 숲까지,
-      여기 있는 색과 간격과 재질은 전부 한 땅에서 채집한 것입니다.
-    </p>
+    <div class="hero-scape" aria-hidden="true">
+      <span class="hr hr5"></span>
+      <span class="hr hr4"></span>
+      <span class="hr hr3"></span>
+      <span class="hr hr2"></span>
+      <span class="hr hr1"></span>
+      <span class="hr-fog"></span>
+    </div>
 
-    <!-- 다랑논의 등고선과 돌무지 — 사진 대신 선·돌·안개로 그린 풍경 -->
-    <figure class="landscape" aria-labelledby="landscape-cap">
-      <div class="landscape-inner" aria-hidden="true">
-        <div class="landscape-fog"></div>
-        <span class="stone stone-1"></span>
-        <span class="stone stone-2"></span>
-        <span class="stone stone-3"></span>
-        <div class="horizon"></div>
-      </div>
-      <figcaption id="landscape-cap">
-        겨울 다랑논의 등고선과 밭머리에 쌓인 돌무지, 그 위에 고인 안개.
-        사진이 아니라 CSS로 그렸습니다.
-      </figcaption>
-    </figure>
+    <div class="hero-body">
+      <p class="hero-eyebrow">강원특별자치도 · 江原</p>
+      <h1>안개는<br><em>유리가</em> 된다</h1>
+      <p class="hero-tagline">
+        백두대간 등성이가 잇는 열여덟 표정을<br class="br-wide">
+        화면으로 옮기는 법.
+      </p>
+    </div>
+
+    <a class="hero-scroll" href="#gangwon">
+      <span>읽기</span>
+      <i aria-hidden="true"></i>
+    </a>
   </section>
 
   <!-- 잇는다 -->
@@ -56,6 +56,11 @@
     <p class="section-label">Place</p>
     <h2 class="section-title" id="gangwon-title">대관령은 가르지 않고 잇는다</h2>
     <div class="prose">
+      <p class="lead">
+        좋은 화면은 어디선가 옵니다. MA는 그 어딘가를 강원도에 두었습니다.
+        철원의 평야에서 태백의 고원까지, 양양의 파도에서 홍천의 숲까지,
+        여기 있는 색과 간격과 재질은 전부 한 땅에서 채집한 것입니다.
+      </p>
       <p>
         강원도 한가운데를 백두대간이 세로로 지납니다. 흔히 이 등성이를 두고
         영서와 영동을 나눈다고 말하지만, 산은 무엇을 자르는 물건이 아닙니다.
@@ -137,6 +142,20 @@
       여섯 장 모두 사진이 아니라 CSS로 그렸습니다. 도형과 그라디언트와 선뿐입니다.
       화면의 재료로 풍경을 그릴 수 있다면, 그 반대도 됩니다.
     </p>
+
+    <figure class="landscape" aria-labelledby="landscape-cap">
+      <div class="landscape-inner" aria-hidden="true">
+        <div class="landscape-fog"></div>
+        <span class="stone stone-1"></span>
+        <span class="stone stone-2"></span>
+        <span class="stone stone-3"></span>
+        <div class="horizon"></div>
+      </div>
+      <figcaption id="landscape-cap">
+        겨울 다랑논의 등고선과 밭머리에 쌓인 돌무지, 그 위에 고인 안개.
+        아래 여섯 장과 마찬가지로 사진이 아니라 CSS로 그렸습니다.
+      </figcaption>
+    </figure>
 
     <ul class="drawing-list">
       <li class="drawing">
@@ -374,6 +393,7 @@
 
 <footer class="site-footer">
   <p>MA — 강원도에서 태어난 디자인 언어</p>
+  <p class="footer-by">설계와 제작 · <b>정찬용</b> <span>鄭纂湧</span></p>
   <p class="footer-small">
     프레임워크 없이 HTML, CSS, JavaScript로만 만들었습니다. 화면의 형태는
     공기·여백·돌·흙·안개·콘크리트·겨울·나무·종이·선에서 가져왔고, 그림은 전부 CSS로 그렸습니다.
