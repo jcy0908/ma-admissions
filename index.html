@@ -3,256 +3,271 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MA Institute of Design — 지원하기</title>
-<meta name="description" content="MA Institute of Design (間 · Material · Mind) 지원 폼 데모. 강원 영서(嶺西), 원주.">
+<title>MA — 강원 영서의 풍경을 화면으로 옮기는 법</title>
+<meta name="description" content="대관령 서쪽, 강원 영서(嶺西)의 겨울 풍경을 디지털 인터페이스로 번역한 디자인 기록. 안개는 유리가 되고, 능선은 여백이 되고, 이끼는 화면의 유일한 색이 됩니다.">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- 안개 — 유리 뒤에서 번지는 빛. 애니메이션 없음 -->
+<!-- 안개 — 유리 뒤에서 번지는 빛. 고정되어 있고 움직이지 않는다. -->
 <div class="atmosphere" aria-hidden="true">
   <span class="haze haze-1"></span>
   <span class="haze haze-2"></span>
   <span class="haze haze-3"></span>
 </div>
 
-<header class="site-header">
-  <a class="wordmark" href="#top">MA<span class="wordmark-sub">Institute of Design</span></a>
-  <a class="header-cta" href="#apply">지원하기</a>
+<header class="site-header" id="site-header">
+  <a class="wordmark" href="#top">MA<span class="wordmark-sub">間 · Material · Mind</span></a>
+  <a class="header-cta" href="#translation">번역 보기</a>
 </header>
 
 <main id="top">
 
   <!-- Hero -->
   <section class="hero">
-    <p class="hero-eyebrow">MA Institute of Design</p>
-    <h1>여백이<br><span class="accent">먼저다.</span></h1>
-    <p class="hero-tagline">강원 영서(嶺西)의 풍경을 디지털 인터페이스로 번역합니다.</p>
+    <p class="hero-eyebrow">강원 영서 · 嶺西</p>
+    <h1>안개는<br><span class="accent">유리가 된다.</span></h1>
+    <p class="hero-tagline">대관령 서쪽의 겨울 풍경을 화면으로 옮기는 법.</p>
     <p class="hero-sub">
-      비움의 간격(間), 재료의 정직함(Material), 명료한 사고(Mind).
-      대관령 서쪽, 원주의 산 속에 있는 1년제 디자인 학교입니다.
+      좋은 화면은 어디선가 옵니다. MA는 그 어딘가를 강원 영서에 두었습니다.
+      여기 있는 색과 간격과 재질은 전부 이 땅에서 채집한 것입니다.
     </p>
     <p class="hero-links">
-      <a href="#apply">지원하기</a>
-      <a href="#concept">더 알아보기</a>
+      <a href="#yeongseo">영서는 어떤 곳인가</a>
+      <a href="#translation">풍경이 화면이 되는 법</a>
     </p>
 
-    <!-- 가레산스이 — 사진 대신 선·돌·안개로 그린 풍경 -->
-    <div class="landscape" aria-hidden="true">
-      <div class="landscape-fog"></div>
-      <span class="stone stone-1"></span>
-      <span class="stone stone-2"></span>
-      <span class="stone stone-3"></span>
-      <div class="horizon"></div>
+    <!-- 다랑논의 등고선과 돌무지 — 사진 대신 선·돌·안개로 그린 풍경 -->
+    <figure class="landscape" aria-labelledby="landscape-cap">
+      <div class="landscape-inner" aria-hidden="true">
+        <div class="landscape-fog"></div>
+        <span class="stone stone-1"></span>
+        <span class="stone stone-2"></span>
+        <span class="stone stone-3"></span>
+        <div class="horizon"></div>
+      </div>
+      <figcaption id="landscape-cap">
+        사진이 아닙니다. 겨울 다랑논의 등고선과 밭머리에 쌓인 돌무지,
+        그 위에 고인 안개. 이 페이지에는 사진이 한 장도 없습니다.
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 영서란 -->
+  <section class="section" id="yeongseo" aria-labelledby="yeongseo-title">
+    <p class="section-label">Place</p>
+    <h2 class="section-title" id="yeongseo-title">영서(嶺西)는 어떤 곳인가</h2>
+    <div class="prose">
+      <p>
+        강원도는 대관령을 등뼈 삼아 동과 서로 나뉩니다. 고개 동쪽이 영동,
+        서쪽이 영서입니다. 영동이 바다를 보고 산다면, 영서는 산과 분지를 보고 삽니다.
+        원주, 횡성, 춘천이 여기 있습니다.
+      </p>
+      <p>
+        영서의 겨울은 조용합니다. 눈이 많이 오는 쪽은 오히려 영동이고,
+        영서에는 마른 바람과 서리와 안개가 옵니다. 아침이면 분지에 안개가 고여
+        산의 아랫도리를 지우고, 능선만 몇 겹으로 떠 있습니다.
+        <strong>가까운 산은 짙고 먼 산은 옅어서, 거리가 곧 농도가 됩니다.</strong>
+      </p>
+      <p>
+        이 페이지의 화면 언어는 그 아침에서 나왔습니다.
+        뒤가 있다는 건 알지만 또렷하지는 않은 상태, 그것이 유리입니다.
+        산이 채워서가 아니라 비워서 형태를 갖는 것, 그것이 여백입니다.
+      </p>
     </div>
   </section>
 
-  <!-- Concept -->
-  <section class="section concept" id="concept" aria-labelledby="concept-title">
+  <!-- 그림 — 전부 CSS로 그렸습니다. 사진 없음. -->
+  <section class="section" id="drawings" aria-labelledby="drawings-title">
+    <p class="section-label">Drawings</p>
+    <h2 class="section-title" id="drawings-title">영서를 그리면 이렇게 됩니다</h2>
+    <p class="section-desc">
+      네 장 모두 사진이 아니라 CSS로 그렸습니다. 도형과 그라디언트와 선뿐입니다.
+      화면의 재료로 풍경을 그릴 수 있다면, 그 반대도 됩니다.
+    </p>
+
+    <ul class="drawing-list">
+      <li class="drawing">
+        <div class="draw draw-ridges" aria-hidden="true">
+          <span class="ridge r4"></span>
+          <span class="ridge r3"></span>
+          <span class="ridge r2"></span>
+          <span class="ridge r1"></span>
+        </div>
+        <h3>겹친 능선</h3>
+        <p>안개가 아랫도리를 지우면 능선만 몇 겹으로 남습니다.
+        가까울수록 짙고 멀수록 옅어서, <strong>거리가 곧 농도</strong>가 됩니다.
+        화면에서 위계를 만드는 방식과 같습니다.</p>
+      </li>
+
+      <li class="drawing">
+        <div class="draw draw-terrace" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <h3>다랑논</h3>
+        <p>산비탈에 사람이 그은 등고선입니다. 겨울에는 비어 있지만 선은 그대로 남습니다.
+        <strong>자유로운 배치보다 정직한 격자</strong>가 이 땅에 어울린다고 본 이유입니다.</p>
+      </li>
+
+      <li class="drawing">
+        <div class="draw draw-cairn" aria-hidden="true">
+          <span class="c1"></span><span class="c2"></span><span class="c3"></span><span class="c4"></span>
+          <i class="ground"></i>
+        </div>
+        <h3>돌무지</h3>
+        <p>밭을 갈다 나온 돌을 밭머리에 쌓아 둔 것, 고갯마루 서낭당에 하나씩 얹은 것.
+        <strong>의도를 가지고 놓인 몇 개</strong>가 넓은 빈 곳을 견디게 합니다.</p>
+      </li>
+
+      <li class="drawing">
+        <div class="draw draw-frost" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <i class="glint"></i>
+        </div>
+        <h3>서리</h3>
+        <p>아주 얇고, 빛이 닿는 각도에서만 보입니다.
+        <strong>항상 그어져 있는 줄은 서리가 아니라 페인트</strong>입니다.
+        그래서 이 화면의 경계선은 필요할 때만 나타납니다.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 번역 -->
+  <section class="section" id="translation" aria-labelledby="translation-title">
+    <p class="section-label">Translation</p>
+    <h2 class="section-title" id="translation-title">풍경이 화면이 되는 법</h2>
+    <p class="section-desc">
+      영감을 받았다는 말은 대개 아무것도 설명하지 못합니다.
+      그래서 무엇이 무엇이 되었는지 하나씩 적었습니다.
+    </p>
+
+    <ul class="translation-list">
+      <li class="translation">
+        <p class="translation-from">안개 <span>霧</span></p>
+        <p class="translation-arrow" aria-hidden="true">→</p>
+        <h3>유리</h3>
+        <p>안개는 가리지 않고 흐립니다. 뒤에 무엇이 있는지는 알지만 또렷하지는
+        않습니다. 헤더와 카드가 반투명한 이유입니다. 불투명한 막대는 뒤를 지우지만,
+        유리는 뒤를 남겨 둡니다.</p>
+      </li>
+      <li class="translation">
+        <p class="translation-from">능선 <span>稜</span></p>
+        <p class="translation-arrow" aria-hidden="true">→</p>
+        <h3>여백</h3>
+        <p>산은 무엇을 더해서가 아니라 하늘을 비워서 모양을 갖습니다.
+        그래서 이 화면은 정보를 배치하기 전에 간격부터 정했습니다.
+        섹션 사이가 넓은 것은 게을러서가 아니라 그게 형태이기 때문입니다.</p>
+      </li>
+      <li class="translation">
+        <p class="translation-from">이끼 <span>苔</span></p>
+        <p class="translation-arrow" aria-hidden="true">→</p>
+        <h3>단 하나의 색</h3>
+        <p>겨울 영서에서 색을 가진 것은 이끼뿐입니다. 나머지는 회청색과 먹색입니다.
+        화면도 같습니다. 색이 나타나는 자리가 곧 눌러야 할 자리가 되도록,
+        색을 아껴서 비싸게 만들었습니다.</p>
+      </li>
+      <li class="translation">
+        <p class="translation-from">서리 <span>霜</span></p>
+        <p class="translation-arrow" aria-hidden="true">→</p>
+        <h3>1px 선</h3>
+        <p>서리는 아주 얇고, 빛이 닿는 각도에서만 보입니다. 이 화면의 경계선도
+        평소에는 없다가 내용이 유리 밑으로 들어갈 때만 나타납니다.
+        항상 그어져 있는 줄은 서리가 아니라 페인트입니다.</p>
+      </li>
+      <li class="translation">
+        <p class="translation-from">마른 논 <span>畓</span></p>
+        <p class="translation-arrow" aria-hidden="true">→</p>
+        <h3>정렬</h3>
+        <p>겨울 논은 비어 있지만 자로 잰 듯 반듯합니다. 사람이 그은 선이
+        자연 속에 놓인 모습입니다. 자유로운 배치보다 정직한 격자가
+        이 땅에 더 어울린다고 생각했습니다.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 세 개의 기둥 -->
+  <section class="section" id="concept" aria-labelledby="concept-title">
     <p class="section-label">Concept</p>
     <h2 class="section-title" id="concept-title">세 개의 기둥</h2>
+    <p class="section-desc">
+      MA는 間(마·여백), Material(재료), Mind(사고)의 앞 글자입니다.
+      이 셋이 위 번역을 떠받칩니다.
+    </p>
     <ul class="pillar-list">
       <li class="pillar">
         <p class="pillar-glyph">間</p>
         <h3>Ma — 여백</h3>
-        <p>교토의 가레산스이(枯山水)가 돌 몇 개를 위해
-        마당 전체를 비우듯, 화면과 공간에서 무엇을 뺄지 먼저 배웁니다.</p>
+        <p>겨울 다랑논이 돌무지 몇 개를 위해 논바닥을 비우듯,
+        무엇을 뺄지 먼저 정합니다. 여백은 안 채운 자리가 아니라 치운 자리입니다.</p>
       </li>
       <li class="pillar">
         <p class="pillar-glyph">材</p>
         <h3>Material — 재료</h3>
-        <p>알루미늄의 온도, 콘크리트 위의 빛, 픽셀의 밀도.
-        재료가 스스로 말하게 하는 법을 배웁니다.</p>
+        <p>콘크리트 위의 빛, 알루미늄의 온도, 픽셀의 밀도.
+        재료가 스스로 말하게 두면 장식을 얹을 이유가 사라집니다.</p>
       </li>
       <li class="pillar">
         <p class="pillar-glyph">心</p>
         <h3>Mind — 사고</h3>
-        <p>좋다는 감각을 언어로 쪼개는 훈련.
-        문제를 다시 정의할 때까지 파고드는 법을 배웁니다.</p>
+        <p>좋다는 감각을 언어로 쪼개는 훈련. "영감을 받았다"에서 멈추지 않고
+        무엇이 왜 좋았는지 문장이 될 때까지 파고듭니다.</p>
       </li>
     </ul>
   </section>
 
-  <!-- Apply -->
-  <section class="section apply" id="apply" aria-labelledby="apply-title">
-    <p class="section-label">Admissions</p>
-    <h2 class="section-title" id="apply-title">지원하기</h2>
-    <p class="apply-note">과제를 제출하면 지원이 완료됩니다. 작성 내용은 이 브라우저에 자동 저장됩니다.</p>
-
-    <div class="save-banner" id="save-banner" role="status" aria-live="polite" hidden>
-      <span class="save-check" aria-hidden="true">✓</span>
-      <span id="save-banner-text"></span>
-    </div>
-
-    <div class="progress" aria-hidden="true">
-      <span class="progress-step" id="progress-step">1/3</span>
-      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-    </div>
-
-    <form id="apply-form" novalidate>
-
-      <!-- Step 1: 기본 정보 -->
-      <fieldset class="form-step" data-step="1" aria-labelledby="step1-title">
-        <legend class="step-title" id="step1-title">1. 기본 정보</legend>
-
-        <div class="field">
-          <label for="motivation">지원 동기</label>
-          <textarea id="motivation" name="motivation" rows="5" maxlength="300"
-            placeholder="MA에 지원하는 이유를 적어 주세요." required
-            aria-describedby="motivation-counter"></textarea>
-          <p class="counter" id="motivation-counter" aria-live="polite">0/300</p>
-        </div>
-
-        <div class="field">
-          <label for="job">현재 직업 / 직군</label>
-          <select id="job" name="job" required>
-            <option value="" disabled selected>선택해 주세요</option>
-            <option>대학생 (디자인 전공)</option>
-            <option>대학생 (디자인 전공 아님)</option>
-            <option>디자이너 (재직 중)</option>
-            <option>개발자 / 엔지니어</option>
-            <option>기타</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="career">경력 연차</label>
-          <select id="career" name="career" required>
-            <option value="" disabled selected>선택해 주세요</option>
-            <option>경력 없음</option>
-            <option>1–3년</option>
-            <option>4–7년</option>
-            <option>8년 이상</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="channel">MA를 알게 된 경로</label>
-          <select id="channel" name="channel" required>
-            <option value="" disabled selected>선택해 주세요</option>
-            <option>인스타그램</option>
-            <option>친구 / 지인 추천</option>
-            <option>검색</option>
-            <option>블로그 / 뉴스레터</option>
-            <option>기타</option>
-          </select>
-        </div>
-      </fieldset>
-
-      <!-- Step 2: 과제 -->
-      <fieldset class="form-step" data-step="2" hidden aria-labelledby="step2-title">
-        <legend class="step-title" id="step2-title">2. 과제 — 감각의 해상도</legend>
-        <p class="step-desc">
-          본인이 직접 만든 결과물 중 심미적으로 가장 뛰어나다고 생각하는
-          단 하나의 작업을 제출해 주세요. URL 혹은 PDF 중 하나는 필수입니다.
-        </p>
-
-        <div class="field">
-          <label for="work-url">작업물 URL</label>
-          <input type="url" id="work-url" name="workUrl" inputmode="url"
-            placeholder="http로 시작하는 주소를 적어 주세요">
-          <p class="hint">Behance, Figma, Notion, 개인 사이트 등 어떤 링크도 가능해요.</p>
-        </div>
-
-        <div class="field">
-          <label for="work-pdf">작업물 PDF 파일</label>
-          <div class="file-row">
-            <span class="file-name" id="file-name">파일을 업로드해 주세요</span>
-            <label class="file-btn" for="work-pdf">파일 선택</label>
-          </div>
-          <input type="file" id="work-pdf" name="workPdf" accept="application/pdf" class="visually-hidden">
-          <p class="hint">PDF만 가능하며, 최대 200MB까지 업로드할 수 있습니다.</p>
-          <p class="field-error" id="file-error" role="alert" hidden></p>
-        </div>
-
-        <div class="field">
-          <label for="essay">에세이</label>
-          <textarea id="essay" name="essay" rows="10" maxlength="2000"
-            placeholder="이 작업에서 가장 잘 됐다고 생각하는 부분 하나를 짚고, 그것이 왜 좋은지 설명해 주세요.
-
-그 설명을 바탕으로, 당신이 '심미적으로 좋다'고 할 때 그것이 무엇을 뜻하는지 한 문단으로 정리해 주세요.
-
-끝내 만족스럽지 않은 부분 하나를 짚고, 무엇이 왜 부족한지 작성해 주세요." required
-            aria-describedby="essay-counter"></textarea>
-          <p class="counter" id="essay-counter" aria-live="polite">0/2000</p>
-          <p class="hint">최소 500자 이상 작성해 주세요. 에세이에 이름 등 개인정보가 들어가지 않도록 유의해 주세요.</p>
-        </div>
-
-        <div class="field">
-          <label for="ai-usage">AI 도구 사용 내역</label>
-          <textarea id="ai-usage" name="aiUsage" rows="4"
-            placeholder="생성형 AI 도구를 사용했다면 어디에 어떻게 사용했는지 작성해 주세요. 사용하지 않았다면 '사용하지 않음'이라고 적어 주세요."></textarea>
-          <p class="hint">사용 여부 자체는 평가에 영향을 주지 않아요.</p>
-        </div>
-      </fieldset>
-
-      <!-- Step 3: 확인 -->
-      <fieldset class="form-step" data-step="3" hidden aria-labelledby="step3-title">
-        <legend class="step-title" id="step3-title">3. 확인 후 제출</legend>
-        <p class="step-desc">제출 전에 작성 내용을 확인해 주세요. 제출 후에는 마감 전까지 수정할 수 있습니다.</p>
-        <dl class="summary" id="summary"></dl>
-        <p class="hint">이 페이지는 프론트엔드 데모입니다. 실제 서버로 전송되지 않습니다.</p>
-      </fieldset>
-
-      <p class="field-error form-error" id="form-error" role="alert" hidden></p>
-
-      <div class="form-nav">
-        <button type="button" class="btn btn-ghost" id="prev-btn" hidden>이전 페이지</button>
-        <button type="button" class="btn btn-solid" id="next-btn">다음</button>
-        <button type="submit" class="btn btn-solid btn-accent" id="submit-btn" hidden>제출하기</button>
-      </div>
-    </form>
-  </section>
-
-  <!-- Materials -->
-  <section class="section materials" aria-labelledby="materials-title">
+  <!-- 재료 -->
+  <section class="section" id="materials" aria-labelledby="materials-title">
     <p class="section-label">Materials</p>
-    <h2 class="section-title" id="materials-title">영서의 재료</h2>
-    <p class="materials-desc">사진을 쓰지 않습니다. 화면의 모든 색은 영서의 겨울 풍경에서 채집했고, 그 위에 유리 한 겹을 얹었습니다.</p>
-    <ul class="material-list">
-      <li class="material"><span class="swatch swatch-line" style="background:#eef1f2"></span><strong>겨울 안개 霧</strong><small>#EEF1F2</small></li>
-      <li class="material"><span class="swatch" style="background:#dbe2e4"></span><strong>성엣장 氷</strong><small>#DBE2E4</small></li>
-      <li class="material"><span class="swatch" style="background:#1c2325"></span><strong>먹색 산 山</strong><small>#1C2325</small></li>
-      <li class="material"><span class="swatch" style="background:#4b6560"></span><strong>이끼 苔</strong><small>#4B6560</small></li>
-      <li class="material"><span class="swatch" style="background:#8a9296"></span><strong>돌 石</strong><small>#8A9296</small></li>
-      <li class="material"><span class="swatch" style="background:#5d6a6d"></span><strong>겨울 흙 土</strong><small>#5D6A6D</small></li>
-      <li class="material"><span class="swatch swatch-glass"></span><strong>유리 硝</strong><small>rgba 투과</small></li>
-    </ul>
+    <h2 class="section-title" id="materials-title">영서에서 채집한 색</h2>
+    <p class="section-desc">
+      예쁜 색에서 고르지 않았습니다. 겨울 영서의 아침에서 여섯을 집어 왔고,
+      그중 색을 가진 것은 이끼 하나뿐입니다. 좁은 화면에서는 옆으로 끌어보세요.
+    </p>
+
+    <div class="swatch-strip" id="swatch-strip">
+      <ul class="swatch-track" id="swatch-track">
+        <li class="material"><span class="swatch swatch-line" style="background:#eef1f2"></span><strong>겨울 안개 霧</strong><small>#EEF1F2</small><em>화면의 바탕</em></li>
+        <li class="material"><span class="swatch" style="background:#dbe2e4"></span><strong>성엣장 氷</strong><small>#DBE2E4</small><em>한 겹 낮은 면</em></li>
+        <li class="material"><span class="swatch" style="background:#1c2325"></span><strong>먹색 산 山</strong><small>#1C2325</small><em>글자와 돌</em></li>
+        <li class="material"><span class="swatch" style="background:#4b6560"></span><strong>이끼 苔</strong><small>#4B6560</small><em>유일한 색</em></li>
+        <li class="material"><span class="swatch" style="background:#8a9296"></span><strong>돌 石</strong><small>#8A9296</small><em>보조 글자</em></li>
+        <li class="material"><span class="swatch" style="background:#5d6a6d"></span><strong>겨울 흙 土</strong><small>#5D6A6D</small><em>낮게 앉은 돌</em></li>
+        <li class="material"><span class="swatch swatch-glass"></span><strong>유리 硝</strong><small>rgba 투과</small><em>일곱 번째 재료</em></li>
+      </ul>
+    </div>
   </section>
 
-  <!-- Campus -->
-  <section class="section campus" aria-labelledby="campus-title">
+  <!-- 캠퍼스 -->
+  <section class="section" id="campus" aria-labelledby="campus-title">
     <p class="section-label">Campus</p>
     <h2 class="section-title" id="campus-title">산 속의 교실</h2>
-    <p class="campus-desc">
-      강원 영서(嶺西), 원주. 치악산이 보이는 능선 위에 있습니다.
-      가레산스이(枯山水)가 모래 위에 물을 그리듯, 아침 안개가 마른 논 위에
-      산의 윤곽을 그리는 곳. 노출 콘크리트 벽이 하루의 빛을 받아내는
-      교실에서 종이와 픽셀을 함께 다룹니다.
+    <div class="prose">
+      <p>
+        원주, 치악산이 보이는 능선 위에 있습니다. 노출 콘크리트 벽이 하루의 빛을
+        받아내는 곳입니다. 콘크리트는 사진으로 보면 차갑지만 그 안에 서 있으면
+        차갑지 않습니다. 벽이 무표정해서 빛의 표정이 보이기 때문입니다.
+      </p>
+      <p>
+        배경이 무표정해야 내용이 표정을 가집니다. 안도 다다오가 빛을 설계하려고
+        벽을 설계했듯, 우리는 글이 읽히게 하려고 화면을 비웁니다.
+      </p>
+    </div>
+    <p class="campus-address">
+      강원특별자치도 원주시 · KTX 원주역, 시외버스터미널에서 셔틀
     </p>
-    <p class="campus-address">강원특별자치도 원주시 · 셔틀 — KTX 원주역, 시외버스터미널</p>
   </section>
 
 </main>
 
 <footer class="site-footer">
-  <p>MA Institute of Design — 강원 영서(嶺西)에서 태어난 디지털 브랜드</p>
+  <p>MA — 강원 영서(嶺西)에서 태어난 디자인 언어</p>
   <p class="footer-small">
-    이 페이지는 HTML/CSS/JavaScript로 만든 프론트엔드 데모입니다. 실제 지원서와 파일을
-    받으려면 백엔드, 저장소, 인증, 개인정보처리방침이 필요합니다. 특정 브랜드를 복제하지 않은
-    독립 디자인 연습입니다.
+    프레임워크 없이 HTML, CSS, JavaScript로만 만들었습니다.
+    사진을 쓰지 않고 공기·여백·돌·흙·안개·콘크리트·겨울·나무·종이·선으로 화면을 만듭니다.
+    실재하지 않는 기관을 가정한 디자인 연습이며, 특정 브랜드를 복제하지 않았습니다.
   </p>
 </footer>
-
-<!-- 제출 완료 다이얼로그 -->
-<dialog id="done-dialog" aria-labelledby="done-title">
-  <div class="sheet-grabber" aria-hidden="true"></div>
-  <p class="done-mark" aria-hidden="true">✓</p>
-  <h2 id="done-title">지원이 완료되었습니다</h2>
-  <p class="done-desc">작성해 주신 내용은 데모이므로 서버로 전송되지 않았습니다.<br>브라우저에 저장된 초안은 그대로 남아 있습니다.</p>
-  <button type="button" class="btn btn-solid" id="done-close">닫기</button>
-</dialog>
 
 <script type="module" src="js/script.js"></script>
 </body>
