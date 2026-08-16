@@ -5,10 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MA — 강원도의 풍경을 화면으로 옮기는 법</title>
 <meta name="description" content="백두대간 등성이가 잇는 강원 18개 시군 — 철원의 평야부터 태백의 고원, 양양의 파도까지. 한 지형이 만든 열여덟 표정을 디지털 인터페이스로 번역한 디자인 기록.">
+<meta name="theme-color" content="#f2efe7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#181715" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body id="top">
+
+<a class="skip-link" href="#content">본문 바로가기</a>
 
 <!-- 안개 — 유리 뒤에서 번지는 빛. 고정되어 있고 움직이지 않는다. -->
 <div class="atmosphere" aria-hidden="true">
@@ -19,14 +23,21 @@
 
 <header class="site-header" id="site-header">
   <a class="wordmark" href="#top">MA<span class="wordmark-sub">間 · Material · Mind</span></a>
-  <a class="header-cta" href="#regions">지역 보기</a>
+  <nav class="site-nav" aria-label="주요 섹션">
+    <a href="#gangwon">개요</a>
+    <a href="#translation">방법</a>
+    <a href="#regions">지역</a>
+    <a href="#materials">재료</a>
+    <a href="#campus">캠퍼스</a>
+  </nav>
+  <a class="header-cta" href="#regions"><span>지역 보기</span><i aria-hidden="true">↘</i></a>
 </header>
 
-<main id="top">
+<main id="content" tabindex="-1">
 
   <!-- Hero -->
   <!-- 첫 화면 — 능선이 글자 뒤로 솟는다 -->
-  <section class="hero">
+  <section class="hero" aria-labelledby="hero-title">
     <div class="hero-scape" aria-hidden="true">
       <span class="hr hr5"></span>
       <span class="hr hr4"></span>
@@ -38,7 +49,7 @@
 
     <div class="hero-body">
       <p class="hero-eyebrow">강원특별자치도 · 江原</p>
-      <h1>안개는<br><em>유리가</em> 된다</h1>
+      <h1 id="hero-title">안개는<br><em>유리가</em> 된다</h1>
       <p class="hero-tagline">
         백두대간 등성이가 잇는 열여덟 표정을<br class="br-wide">
         화면으로 옮기는 법.
@@ -392,7 +403,7 @@
 </main>
 
 <footer class="site-footer">
-  <p>MA — 강원도에서 태어난 디자인 언어</p>
+  <p class="footer-mark">MA — 강원도에서 태어난 디자인 언어</p>
   <p class="footer-by">설계와 제작 · <b>정찬용</b> <span>鄭纂湧</span></p>
   <p class="footer-small">
     프레임워크 없이 HTML, CSS, JavaScript로만 만들었습니다. 화면의 형태는

@@ -17,7 +17,7 @@ import {
 // 1. 즉각 반응 — 반응은 click이 아니라 pointerdown에서
 // ==========================================================================
 
-document.querySelectorAll('.header-cta, .hero-scroll, .plate-credit, .wordmark').forEach((el) => {
+document.querySelectorAll('.header-cta, .hero-scroll, .plate-credit, .wordmark, .site-nav a').forEach((el) => {
   el.addEventListener('pointerdown', () => el.classList.add('is-pressed'));
   ['pointerup', 'pointercancel', 'pointerleave'].forEach((evt) =>
     el.addEventListener(evt, () => el.classList.remove('is-pressed'))
