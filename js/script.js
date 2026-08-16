@@ -1,9 +1,10 @@
 // MA — 강원도의 풍경을 화면으로 옮기는 법
 //
-// 이 페이지는 읽는 페이지입니다. 그래서 움직임은 두 곳에만 있습니다.
-//   1. 누르는 순간의 반응 (click을 기다리면 죽은 것처럼 느껴진다)
-//   2. 좁은 화면에서 색 견본을 옆으로 끄는 것 (일곱 개가 한 줄에 안 들어간다)
-// 나머지는 정지해 있습니다.
+// 이 페이지는 읽는 페이지입니다. 움직임은 설명을 검증하는 곳에만 둡니다.
+//   1. 누르는 순간의 반응
+//   2. 좁은 화면의 색 견본 드래그
+//   3. 풍경의 성질을 수치로 바꾸는 번역 실험
+//   4. 열여덟 지역을 다시 읽는 디자인 렌즈
 
 import {
   Spring,
@@ -125,7 +126,7 @@ if (strip && track) {
   // 제스처만으로 갇히지 않도록 키보드로도 넘길 수 있어야 한다
   strip.setAttribute('tabindex', '0');
   strip.setAttribute('role', 'group');
-  strip.setAttribute('aria-label', '강원도에서 채집한 색 — 좌우 방향키로 이동');
+  strip.setAttribute('aria-label', '강원도 공개 자료에서 번역한 색 — 좌우 방향키로 이동');
   strip.addEventListener('keydown', (e) => {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
     e.preventDefault();
@@ -168,4 +169,100 @@ if (header) {
     { passive: true }
   );
   sync();
+}
+
+// ==========================================================================
+// 4. 번역 실험 — 감각어를 조절 가능한 CSS 값으로 드러낸다
+// ==========================================================================
+
+const labForm = document.getElementById('translation-lab');
+const labPreview = document.getElementById('lab-preview');
+const labStatus = document.getElementById('lab-status');
+
+if (labForm && labPreview && labStatus) {
+  const controls = {
+    fog: labForm.elements.namedItem('fog'),
+    spacing: labForm.elements.namedItem('spacing'),
+    rule: labForm.elements.namedItem('rule'),
+    accent: labForm.elements.namedItem('accent'),
+  };
+  const outputs = {
+    fog: document.getElementById('lab-fog-output'),
+    spacing: document.getElementById('lab-spacing-output'),
+    rule: document.getElementById('lab-rule-output'),
+    accent: document.getElementById('lab-accent-output'),
+  };
+  const marks = [...labPreview.querySelectorAll('.lab-mark')];
+
+  const readValue = (control, fallback) => {
+    const value = Number.parseFloat(control?.value);
+    return Number.isFinite(value) ? value : fallback;
+  };
+
+  const syncLab = () => {
+    const fog = readValue(controls.fog, 46);
+    const spacing = readValue(controls.spacing, 48);
+    const rule = readValue(controls.rule, 1);
+    const accent = Math.round(readValue(controls.accent, 1));
+    const blur = Math.round((fog / 90) * 18);
+
+    labPreview.style.setProperty('--lab-fog-alpha', String(fog / 100));
+    labPreview.style.setProperty('--lab-blur', `${blur}px`);
+    labPreview.style.setProperty('--lab-gap', `${spacing}px`);
+    labPreview.style.setProperty('--lab-rule', `${rule}px`);
+
+    marks.forEach((mark, index) => mark.classList.toggle('is-accent', index < accent));
+
+    if (outputs.fog) outputs.fog.textContent = `${fog}%`;
+    if (outputs.spacing) outputs.spacing.textContent = `${spacing}px`;
+    if (outputs.rule) outputs.rule.textContent = `${rule}px`;
+    if (outputs.accent) outputs.accent.textContent = `${accent} / ${marks.length}`;
+
+    controls.fog?.setAttribute('aria-valuetext', `안개 농도 ${fog}퍼센트`);
+    controls.spacing?.setAttribute('aria-valuetext', `능선 간격 ${spacing}픽셀`);
+    controls.rule?.setAttribute('aria-valuetext', `서리 선 ${rule}픽셀`);
+    controls.accent?.setAttribute('aria-valuetext', `이끼색 ${accent}개`);
+    labStatus.textContent = `안개 ${fog}%, 간격 ${spacing}px, 선 ${rule}px, 이끼색 ${accent}개`;
+  };
+
+  labForm.addEventListener('input', syncLab);
+  labForm.addEventListener('reset', () => requestAnimationFrame(syncLab));
+  syncLab();
+}
+
+// ==========================================================================
+// 5. 지역 디자인 렌즈 — 공인 분류가 아닌 프로젝트의 읽기 방식
+// ==========================================================================
+
+const lensButtons = [...document.querySelectorAll('.lens-filter [data-lens]')];
+const regionRows = [...document.querySelectorAll('.index-list li[data-lenses]')];
+const regionStatus = document.getElementById('region-filter-status');
+
+if (lensButtons.length && regionRows.length && regionStatus) {
+  const applyLens = (lens, label) => {
+    let visibleCount = 0;
+
+    regionRows.forEach((row) => {
+      const lenses = (row.dataset.lenses || '').split(/\s+/).filter(Boolean);
+      const visible = lens === 'all' || lenses.includes(lens);
+      row.hidden = !visible;
+      if (visible) visibleCount += 1;
+    });
+
+    lensButtons.forEach((button) => {
+      const active = button.dataset.lens === lens;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+
+    regionStatus.textContent = lens === 'all'
+      ? `${visibleCount}개 지역 모두 표시 중`
+      : `${label} 렌즈로 ${visibleCount}개 지역 표시 중`;
+  };
+
+  lensButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      applyLens(button.dataset.lens || 'all', button.textContent.trim());
+    });
+  });
 }
