@@ -226,7 +226,9 @@ if (labForm && labPreview && labStatus) {
   };
 
   labForm.addEventListener('input', syncLab);
-  labForm.addEventListener('reset', () => requestAnimationFrame(syncLab));
+  // reset 이벤트는 폼 컨트롤이 기본값으로 돌아가기 전에 발생한다.
+  // 다음 태스크에서 읽어야 값과 표시가 항상 함께 초기화된다.
+  labForm.addEventListener('reset', () => setTimeout(syncLab, 0));
   syncLab();
 }
 
