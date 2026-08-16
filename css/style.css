@@ -1,78 +1,26 @@
-/* ==========================================================================
-   MA Institute of Design
-   강원 영서(嶺西)의 겨울 풍경을 디지털 인터페이스로 번역한다.
-
-   間(여백) · Material(재료) · Mind(사고)
-
-   원칙
-   - 사진을 쓰지 않는다. 공기, 여백, 돌, 흙, 안개, 콘크리트, 겨울, 나무,
-     종이, 선으로 화면을 만든다.
-   - 정보보다 간격을 먼저 설계한다.
-   - 재료 하나를 더한다: 유리. 안개 낀 아침 창처럼, 뒤가 비치되 흐리게.
-   - 애니메이션은 최소한으로. 움직임 대신 정지와 깊이로 말한다.
-   ========================================================================== */
+/*
+   MA — 강원도의 풍경을 화면으로 옮기는 법
+   Quiet editorial system: warm paper, ink, one signal red, and honest rules.
+*/
 
 :root {
-  /* 영서의 겨울에서 채집한 색 — 따뜻한 기운을 뺀 회청색 계열 */
-  --winter-haze: #eef1f2;   /* 겨울 안개 */
-  --ice-sheet: #dbe2e4;     /* 성엣장 */
-  --mountain-ink: #1c2325;  /* 먹색 산 */
-  --moss: #4b6560;          /* 이끼 */
-  --stone: #8a9296;         /* 돌 */
-  --winter-soil: #5d6a6d;   /* 겨울 흙 */
-
-  --c-bg: var(--winter-haze);
-  --c-text: var(--mountain-ink);
-  /* 돌색(#8a9296)을 그대로 글자에 쓰면 대비가 2.79:1로 AA에 못 미친다.
-     견본용 돌색은 그대로 두고, 읽는 글자만 한 단계 눌러 4.61:1을 맞춘다. */
-  --c-muted: #646e71;
-  --c-hairline: rgba(28, 35, 37, 0.14);
-  --c-hairline-soft: rgba(28, 35, 37, 0.07);
-  --c-accent: var(--moss);
-  --c-accent-hover: #354a46;
-  --c-error: #9a5347;
-
-  /* 유리 — 뒤가 비치되 흐리게 */
-  --glass-bg: rgba(255, 255, 255, 0.5);
-  --glass-bg-strong: rgba(255, 255, 255, 0.68);
-  --glass-border: rgba(255, 255, 255, 0.65);
-  --glass-blur: blur(22px) saturate(150%);
-  --glass-shadow: 0 1px 1px rgba(28, 35, 37, 0.03), 0 8px 28px rgba(28, 35, 37, 0.06);
-
+  color-scheme: light;
+  --paper: #f2efe7;
+  --paper-deep: #e8e2d5;
+  --paper-light: #f8f6f0;
+  --ink: #1a1a1a;
+  --ink-soft: #5d5a53;
+  --red: #c7322e;
+  --red-dark: #97231f;
+  --olive: #5e6347;
+  --rule: #c8c2b0;
+  --rule-soft: rgba(74, 70, 60, 0.17);
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
-    "Apple SD Gothic Neo", "Segoe UI", Roboto, "Malgun Gothic", sans-serif;
-
-  --w-content: 38rem;
-  --w-wide: 64rem;
-
-  /* 유리는 살짝 둥글다 */
-  --radius: 14px;
-  --radius-sm: 8px;
-
-  /* 간격 — 정보보다 먼저 설계된 값 */
-  --gap-hairline: 0.5rem;
-  --gap-inline: 1rem;
-  --gap-block: 2rem;
-  --gap-field: 3rem;
-  --gap-section: clamp(7rem, 16vw, 12rem);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --c-bg: #12181a;
-    --c-text: #e6ecec;
-    --c-muted: #8a9296;
-    --c-hairline: rgba(230, 236, 236, 0.14);
-    --c-hairline-soft: rgba(230, 236, 236, 0.07);
-    --c-accent: #7ea19a;
-    --c-accent-hover: #9ab9b2;
-    --c-error: #c98876;
-
-    --glass-bg: rgba(255, 255, 255, 0.055);
-    --glass-bg-strong: rgba(255, 255, 255, 0.09);
-    --glass-border: rgba(255, 255, 255, 0.12);
-    --glass-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 28px rgba(0, 0, 0, 0.28);
-  }
+    "Apple SD Gothic Neo", "Segoe UI", "Malgun Gothic", sans-serif;
+  --page: 74rem;
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --section-space: clamp(7.5rem, 14vw, 12rem);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
@@ -81,581 +29,60 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--paper);
 }
 
 body {
   margin: 0;
+  min-width: 20rem;
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans);
   font-size: 1rem;
   font-weight: 400;
-  line-height: 1.9;
-  letter-spacing: -0.005em;
-  background: var(--c-bg);
-  color: var(--c-text);
+  line-height: 1.78;
+  letter-spacing: -0.012em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: var(--c-accent);
-  color: var(--c-bg);
+  background: var(--red);
+  color: var(--paper-light);
 }
 
-/* ==========================================================================
-   대기 — 유리 뒤에서 번지는 빛. 고정되어 있고 움직이지 않는다.
-   ========================================================================== */
+a {
+  color: inherit;
+}
 
-.atmosphere {
+img {
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
+}
+
+.skip-link {
   position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.haze {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-}
-
-.haze-1 {
-  top: -14vh;
-  left: -6vw;
-  width: 58vw;
-  height: 58vw;
-  background: radial-gradient(circle, var(--ice-sheet) 0%, transparent 68%);
-  opacity: 0.85;
-}
-
-.haze-2 {
-  top: 24vh;
-  right: -14vw;
-  width: 52vw;
-  height: 52vw;
-  background: radial-gradient(circle, var(--moss) 0%, transparent 66%);
-  opacity: 0.16;
-}
-
-.haze-3 {
-  bottom: -22vh;
-  left: 22vw;
-  width: 64vw;
-  height: 46vw;
-  background: radial-gradient(circle, var(--winter-soil) 0%, transparent 70%);
-  opacity: 0.12;
-}
-
-@media (prefers-color-scheme: dark) {
-  .haze-1 {
-    background: radial-gradient(circle, #24363a 0%, transparent 68%);
-    opacity: 0.9;
-  }
-
-  .haze-2 {
-    opacity: 0.22;
-  }
-
-  .haze-3 {
-    opacity: 0.2;
-  }
-}
-
-/* ==========================================================================
-   헤더 — 유리 한 장
-   ========================================================================== */
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.1rem clamp(1.25rem, 5vw, 3rem);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  border-bottom: 1px solid var(--glass-border);
-}
-
-.wordmark {
-  display: flex;
-  align-items: baseline;
-  gap: 0.7em;
-  font-weight: 500;
-  font-size: 1.1rem;
-  letter-spacing: 0.06em;
-  color: var(--c-text);
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1000;
+  padding: 0.65rem 0.85rem;
+  background: var(--ink);
+  color: var(--paper-light);
+  font-size: 0.78rem;
+  font-weight: 600;
   text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 160ms ease-out;
 }
 
-.wordmark-sub {
-  font-weight: 400;
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--c-muted);
-}
-
-.header-cta {
-  padding: 0.45rem 1.1rem;
-  border: 1px solid var(--glass-border);
-  border-radius: 999px;
-  background: var(--glass-bg-strong);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  color: var(--c-text);
-  font-size: 0.82rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.header-cta:hover {
-  background: var(--c-text);
-  color: var(--c-bg);
-}
-
-/* ==========================================================================
-   레이아웃 — 간격이 먼저다
-   ========================================================================== */
-
-main {
-  max-width: var(--w-wide);
-  margin-inline: auto;
-  padding: 0 clamp(1.25rem, 5vw, 3rem) var(--gap-section);
-}
-
-.section {
-  margin-top: var(--gap-section);
-}
-
-.section-label {
-  margin: 0 0 var(--gap-inline);
-  padding-bottom: var(--gap-hairline);
-  border-bottom: 1px solid var(--c-hairline);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--c-muted);
-}
-
-.section-title {
-  margin: 0 0 var(--gap-block);
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.4;
-}
-
-/* ==========================================================================
-   첫 화면 — 능선이 글자 뒤에서 솟는다.
-   여백만으로는 임팩트가 나지 않는다. 형태가 있어야 한다.
-   ========================================================================== */
-
-.hero {
-  position: relative;
-  /* svh: 모바일 주소창이 접혀도 튀지 않는다 */
-  min-height: 100svh;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  align-content: center;
-  margin-inline: calc(clamp(1.25rem, 5vw, 3rem) * -1);
-  padding: clamp(5rem, 12vw, 8rem) clamp(1.25rem, 5vw, 3rem) 2rem;
-  overflow: hidden;
-}
-
-/* 능선 — 뒤로 갈수록 옅어진다. 거리가 곧 농도. */
-.hero-scape {
-  position: absolute;
-  left: 0;
-  right: 0;
-  /* 히어로 아래로 살짝 내려 잘린 이음매가 보이지 않게 */
-  bottom: -1px;
-  height: min(52vh, 26rem);
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hr {
-  position: absolute;
-  bottom: 0;
-  background: var(--mountain-ink);
-}
-
-/* 능선은 넓고 낮다. 높고 둥글면 산이 아니라 돔이 된다.
-   앞줄일수록 짙고 낮게, 뒷줄일수록 옅고 높게 — 거리가 곧 농도. */
-.hr1 { left: -26%; width: 104%; height: 17%; border-radius: 56% 44% 0 0 / 100% 88% 0 0; opacity: 0.14; }
-.hr2 { left:  22%; width:  96%; height: 23%; border-radius: 42% 58% 0 0 / 90% 100% 0 0; opacity: 0.1; }
-.hr3 { left: -14%; width: 118%; height: 30%; border-radius: 52% 48% 0 0 / 100% 92% 0 0; opacity: 0.075; }
-.hr4 { left:  34%; width: 110%; height: 38%; border-radius: 46% 54% 0 0 / 86% 100% 0 0; opacity: 0.05; }
-.hr5 { left: -34%; width: 132%; height: 47%; border-radius: 50% 50% 0 0 / 100% 90% 0 0; opacity: 0.032; }
-
-/* 능선 아래로 고이는 안개 — 글자가 놓일 자리를 비워 준다 */
-.hr-fog {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg,
-    var(--c-bg) 0%,
-    color-mix(in srgb, var(--c-bg) 55%, transparent) 42%,
-    transparent 100%);
-}
-
-.hero-body {
-  position: relative;
-  z-index: 1;
-  align-self: center;
-}
-
-.hero-eyebrow {
-  margin: 0 0 clamp(1.6rem, 4vw, 2.4rem);
-  font-size: 0.7rem;
-  font-weight: 500;
-  /* 작은 글자는 트래킹을 벌려야 읽힌다 */
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: var(--c-muted);
-}
-
-.hero h1 {
-  margin: 0 0 clamp(1.6rem, 3.5vw, 2.2rem);
-  /* 첫 화면의 무게중심 — 크게, 그리고 확실하게 */
-  font-size: clamp(3.2rem, 13vw, 8rem);
-  font-weight: 500;
-  /* 커질수록 트래킹은 좁아지고 행간도 좁아진다 */
-  line-height: 0.98;
-  letter-spacing: -0.055em;
-}
-
-.hero h1 em {
-  font-style: normal;
-  font-weight: 200;
-  color: var(--c-accent);
-}
-
-.hero-tagline {
-  margin: 0;
-  max-width: 30ch;
-  font-size: clamp(0.98rem, 1.8vw, 1.25rem);
-  font-weight: 400;
-  line-height: 1.65;
-  letter-spacing: -0.012em;
-  color: var(--c-muted);
-}
-
-.br-wide {
-  display: none;
-}
-
-@media (min-width: 720px) {
-  .br-wide {
-    display: inline;
-  }
-}
-
-/* 아래로 — 계속 읽을 곳이 있음을 알린다 */
-.hero-scroll {
-  position: relative;
-  z-index: 1;
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.6rem 0;
-  color: var(--c-muted);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: color 0.2s ease, transform 0.1s ease-out;
-}
-
-.hero-scroll i {
-  display: block;
-  width: 1px;
-  height: 2.6rem;
-  background: linear-gradient(180deg,
-    color-mix(in srgb, var(--c-muted) 80%, transparent) 0%,
-    transparent 100%);
-}
-
-.hero-scroll:hover,
-.hero-scroll:focus-visible {
-  color: var(--c-accent);
-}
-
-.hero-scroll:hover i {
-  background: linear-gradient(180deg, var(--c-accent), transparent);
-}
-
-.hero-scroll.is-pressed {
-  transform: scale(0.97);
-}
-
-/* 도입 문단 — 본문보다 한 단계 크게 */
-.lead {
-  font-size: 1.08rem;
-  line-height: 1.9;
-  color: var(--c-text);
-}
-
-/* --------------------------------------------------------------------------
-   가레산스이 — 사진 대신 안개와 돌과 선. 유리판 위에 놓인 마당
-   -------------------------------------------------------------------------- */
-
-.landscape {
-  position: relative;
-  height: clamp(13rem, 30vw, 20rem);
-  margin-top: clamp(4rem, 10vw, 7rem);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  box-shadow: var(--glass-shadow);
-  overflow: hidden;
-}
-
-.landscape-fog {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.28) 100%);
-}
-
-@media (prefers-color-scheme: dark) {
-  .landscape-fog {
-    background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.05) 100%);
-  }
-}
-
-/* 모래 위에 그은 갈퀴 선 */
-.landscape::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    180deg,
-    var(--c-hairline) 0,
-    var(--c-hairline) 1px,
-    transparent 1px,
-    transparent 12px
-  );
-  -webkit-mask-image: linear-gradient(180deg, transparent 6%, #000 58%, #000 100%);
-  mask-image: linear-gradient(180deg, transparent 6%, #000 58%, #000 100%);
-}
-
-/* 돌 — 셋, 홀수로. 낮고 옆으로 앉은 형태 */
-.stone {
-  position: absolute;
-  bottom: 0;
-  background: var(--c-text);
-}
-
-.stone-1 {
-  left: 17%;
-  width: clamp(5rem, 13vw, 8.5rem);
-  height: clamp(1.6rem, 3.6vw, 2.4rem);
-  border-radius: 62% 38% 30% 70% / 96% 88% 6% 8%;
-}
-
-.stone-2 {
-  left: 34%;
-  width: clamp(2.2rem, 5.5vw, 3.4rem);
-  height: clamp(0.8rem, 1.8vw, 1.1rem);
-  border-radius: 44% 56% 40% 60% / 92% 96% 6% 8%;
-  background: var(--winter-soil);
-}
-
-.stone-3 {
-  left: 63%;
-  width: clamp(3.4rem, 8.5vw, 5.4rem);
-  height: clamp(2.4rem, 5.5vw, 3.6rem);
-  border-radius: 38% 62% 34% 66% / 82% 90% 10% 14%;
-  background: var(--c-accent);
-}
-
-/* 지평선 */
-.horizon {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: var(--c-text);
-}
-
-/* ==========================================================================
-   세 개의 기둥 — 유리 세 장
-   ========================================================================== */
-
-.pillar-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: 1px;
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  background: var(--c-hairline-soft);
-  box-shadow: var(--glass-shadow);
-  overflow: hidden;
-}
-
-.pillar {
-  padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.2rem);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  transition: background-color 0.2s ease;
-}
-
-.pillar:hover {
-  background: var(--glass-bg-strong);
-}
-
-.pillar-glyph {
-  margin: 0 0 clamp(2rem, 5vw, 3.5rem);
-  font-size: 2.2rem;
-  font-weight: 200;
-  line-height: 1;
-  color: var(--c-accent);
-}
-
-.pillar h3 {
-  margin: 0 0 var(--gap-hairline);
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-
-.pillar p:last-child {
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.9;
-  color: var(--c-muted);
-}
-
-/* ==========================================================================
-   재료 — 색은 풍경에서 채집하고, 유리를 한 겹 얹는다
-   ========================================================================== */
-
-.materials-desc {
-  margin: 0 0 var(--gap-block);
-  max-width: 44ch;
-  font-size: 0.92rem;
-  color: var(--c-muted);
-}
-
-.material-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-  gap: var(--gap-inline);
-}
-
-.material {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-hairline);
-}
-
-.swatch {
-  display: block;
-  height: clamp(4rem, 9vw, 6rem);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--glass-shadow);
-}
-
-.swatch-line {
-  border: 1px solid var(--c-hairline);
-}
-
-/* 유리 스와치 — 뒤의 안개가 비쳐 보인다 */
-.swatch-glass {
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-}
-
-.material strong {
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-
-.material small {
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  color: var(--c-muted);
-}
-
-/* ==========================================================================
-   캠퍼스
-   ========================================================================== */
-
-.campus-desc {
-  margin: 0 0 var(--gap-inline);
-  max-width: 42ch;
-  font-size: 0.98rem;
-  line-height: 1.95;
-}
-
-.campus-address {
-  margin: 0;
-  padding-top: var(--gap-inline);
-  border-top: 1px solid var(--c-hairline);
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
-  color: var(--c-muted);
-}
-
-/* ==========================================================================
-   푸터 · 다이얼로그
-   ========================================================================== */
-
-.site-footer {
-  max-width: var(--w-wide);
-  margin-inline: auto;
-  padding: var(--gap-block) clamp(1.25rem, 5vw, 3rem) clamp(4rem, 9vw, 6rem);
-  border-top: 1px solid var(--c-hairline);
-}
-
-.site-footer p {
-  margin: 0 0 var(--gap-hairline);
-  font-size: 0.85rem;
-  letter-spacing: 0.02em;
-}
-
-.footer-by {
-  margin: 0 0 var(--gap-inline) !important;
-  font-size: 0.85rem !important;
-  font-weight: 400 !important;
-  color: var(--c-muted);
-}
-
-.footer-by b {
-  font-weight: 500;
-  color: var(--c-text);
-}
-
-.footer-by span {
-  margin-left: 0.15em;
-  font-size: 0.9em;
-  color: var(--c-muted);
-}
-
-.footer-small {
-  max-width: 52ch;
-  font-size: 0.74rem !important;
-  line-height: 1.85;
-  color: var(--c-muted);
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 .visually-hidden {
@@ -670,252 +97,685 @@ main {
   border: 0;
 }
 
-/* backdrop-filter 미지원 브라우저 — 불투명도를 올려 가독성을 지킨다 */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  :root {
-    --glass-bg: rgba(255, 255, 255, 0.82);
-    --glass-bg-strong: rgba(255, 255, 255, 0.92);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --glass-bg: rgba(30, 38, 40, 0.9);
-      --glass-bg-strong: rgba(36, 45, 47, 0.95);
-    }
-  }
+/* The old haze layer remains in the document for backwards compatibility.
+   The paper surface now carries the atmosphere without blur or decoration. */
+.atmosphere {
+  display: none;
 }
 
-/* ==========================================================================
-   본문 — 읽는 페이지의 단
-   ========================================================================== */
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: minmax(14rem, 1fr) auto minmax(9rem, 1fr);
+  align-items: center;
+  min-height: 4.5rem;
+  padding: 0 var(--gutter);
+  background: var(--paper);
+  border-bottom: 1px solid transparent;
+  transition: border-color 220ms ease;
+}
 
-.prose {
-  max-width: 40ch;
+.site-header.is-overlapping {
+  border-bottom-color: var(--rule);
+}
+
+.wordmark {
+  justify-self: start;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.wordmark-sub {
+  color: var(--ink-soft);
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 2.2vw, 2rem);
+}
+
+.site-nav a {
+  position: relative;
+  padding: 0.35rem 0;
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 240ms var(--ease);
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible {
+  color: var(--ink);
+}
+
+.site-nav a:hover::after,
+.site-nav a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.header-cta {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--ink);
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: color 180ms ease, border-color 180ms ease, transform 100ms ease-out;
+  touch-action: manipulation;
+}
+
+.header-cta i {
+  color: var(--red);
+  font-size: 0.9rem;
+  font-style: normal;
+}
+
+.header-cta:hover,
+.header-cta:focus-visible {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.header-cta.is-pressed,
+.wordmark.is-pressed,
+.hero-scroll.is-pressed,
+.plate-credit.is-pressed,
+.site-nav a.is-pressed {
+  transform: translateY(1px);
+}
+
+/* Shared layout */
+main {
+  counter-reset: ma-section;
+  width: min(100%, var(--page));
+  margin-inline: auto;
+  padding: 0 var(--gutter) var(--section-space);
+}
+
+.section {
+  counter-increment: ma-section;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(0.75rem, 1.8vw, 1.5rem);
+  margin-top: var(--section-space);
+  scroll-margin-top: 6rem;
+}
+
+.section-label {
+  grid-column: 1 / 3;
+  align-self: start;
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 0;
+  padding-top: 0.25rem;
+  color: var(--ink-soft);
+  font-size: 0.64rem;
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.section-label::before {
+  content: "0" counter(ma-section);
+  color: var(--red);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+.section-title {
+  grid-column: 4 / 11;
+  margin: 0 0 clamp(2.4rem, 5vw, 4rem);
+  font-size: clamp(2rem, 4.6vw, 4.25rem);
+  font-weight: 620;
+  line-height: 1.13;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.prose,
+.section-desc {
+  grid-column: 4 / 10;
+  max-width: 42rem;
 }
 
 .prose p {
-  margin: 0 0 var(--gap-inline);
-  font-size: 1rem;
-  line-height: 1.95;
+  margin: 0 0 1.25rem;
+  font-size: clamp(1rem, 1.25vw, 1.08rem);
+  line-height: 1.92;
 }
 
 .prose p:last-child {
   margin-bottom: 0;
 }
 
-.prose strong {
-  font-weight: 500;
-  color: var(--c-text);
-  /* 유리 위에서는 회색 대신 무게로 강조한다 */
-  letter-spacing: -0.004em;
+.prose .lead {
+  margin-bottom: 2rem;
+  font-size: clamp(1.08rem, 1.7vw, 1.28rem);
+  font-weight: 520;
+  line-height: 1.75;
+  letter-spacing: -0.02em;
+}
+
+.prose strong,
+.drawing strong {
+  color: var(--ink);
+  font-weight: 650;
 }
 
 .section-desc {
-  max-width: 42ch;
-  margin: 0 0 var(--gap-block);
+  margin: 0 0 2.5rem;
+  color: var(--ink-soft);
   font-size: 0.95rem;
-  line-height: 1.9;
-  color: var(--c-muted);
+  line-height: 1.85;
 }
 
-/* ==========================================================================
-   풍경 그림 — 사진 대신 선과 돌
-   ========================================================================== */
+/* Hero */
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr) auto;
+  column-gap: clamp(0.75rem, 1.8vw, 1.5rem);
+  min-height: calc(100svh - 4.5rem);
+  padding: clamp(6rem, 12vh, 9rem) 0 2.25rem;
+  border-bottom: 1px solid var(--rule);
+  overflow: hidden;
+}
 
+.hero-body {
+  position: relative;
+  z-index: 2;
+  grid-column: 1 / 9;
+  grid-row: 1;
+  align-self: center;
+  animation: editorial-enter 650ms var(--ease) both;
+}
+
+.hero-eyebrow {
+  margin: 0;
+  font-size: 0.65rem;
+  font-weight: 650;
+  line-height: 1.4;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+}
+
+.hero-eyebrow {
+  margin-bottom: clamp(2rem, 4.5vw, 3.5rem);
+  color: var(--ink-soft);
+}
+
+.hero h1 {
+  margin: 0 0 clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(4.5rem, 10.4vw, 8.75rem);
+  font-weight: 720;
+  line-height: 0.88;
+  letter-spacing: -0.082em;
+}
+
+.hero h1 em {
+  color: var(--red);
+  font-style: normal;
+  font-weight: 260;
+}
+
+.hero-tagline {
+  max-width: 32ch;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 1.65vw, 1.22rem);
+  font-weight: 450;
+  line-height: 1.62;
+  letter-spacing: -0.02em;
+}
+
+.hero-scroll {
+  position: relative;
+  z-index: 2;
+  grid-column: 1 / 3;
+  grid-row: 2;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  color: var(--ink-soft);
+  font-size: 0.63rem;
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 180ms ease, transform 100ms ease-out;
+}
+
+.hero-scroll i {
+  width: 2.75rem;
+  height: 1px;
+  background: var(--red);
+  transition: width 220ms var(--ease);
+}
+
+.hero-scroll:hover,
+.hero-scroll:focus-visible {
+  color: var(--red);
+}
+
+.hero-scroll:hover i {
+  width: 4rem;
+}
+
+.br-wide {
+  display: none;
+}
+
+.hero-scape {
+  position: absolute;
+  right: -2rem;
+  bottom: 4.75rem;
+  left: 40%;
+  z-index: 1;
+  height: min(34vh, 19rem);
+  pointer-events: none;
+}
+
+.hr {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 1px;
+  border-top: 1px solid var(--rule);
+  transform-origin: right center;
+}
+
+.hr1 { bottom: 11%; transform: rotate(-1.5deg); border-color: var(--ink); }
+.hr2 { bottom: 28%; left: 7%; transform: rotate(2.5deg); }
+.hr3 { bottom: 46%; left: 18%; transform: rotate(-3.5deg); }
+.hr4 { bottom: 64%; left: 31%; transform: rotate(4deg); }
+.hr5 { bottom: 82%; left: 48%; transform: rotate(-5deg); border-color: var(--red); }
+.hr-fog { display: none; }
+
+@keyframes editorial-enter {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Editorial image plates */
+.plate {
+  margin: 0;
+}
+
+main > .plate-wide {
+  width: min(92%, 68rem);
+  margin: var(--section-space) 0 var(--section-space) auto;
+}
+
+main > .plate-wide:nth-of-type(even) {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.section > .plate-inline,
+.section > .plate-pair {
+  grid-column: 4 / -1;
+}
+
+.plate-inline {
+  margin: clamp(3rem, 6vw, 5rem) 0;
+}
+
+.plate img {
+  display: block;
+  width: 100%;
+  background: var(--paper-deep);
+  filter: grayscale(1) sepia(0.08) contrast(1.06) brightness(0.98);
+  transition: filter 300ms ease;
+}
+
+.plate:hover img {
+  filter: grayscale(0.82) sepia(0.05) contrast(1.05) brightness(0.99);
+}
+
+.plate-wide img {
+  height: clamp(19rem, 49vw, 37rem);
+  object-fit: cover;
+}
+
+.plate-inline img,
+.plate-pair img {
+  height: clamp(14rem, 28vw, 21rem);
+  object-fit: cover;
+}
+
+.plate figcaption {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.75fr) minmax(12rem, 2fr) auto;
+  gap: 1rem;
+  align-items: start;
+  margin: 0;
+  padding: 0.85rem 0 0;
+  border-top: 1px solid var(--ink);
+}
+
+.plate-where,
+.plate-cap,
+.plate-credit {
+  font-size: 0.7rem;
+  line-height: 1.55;
+}
+
+.plate-where {
+  color: var(--ink-soft);
+  letter-spacing: 0.01em;
+}
+
+.plate-where b {
+  display: block;
+  color: var(--ink);
+  font-weight: 680;
+}
+
+.plate-cap {
+  color: var(--ink-soft);
+}
+
+.plate-credit {
+  justify-self: end;
+  max-width: 15rem;
+  color: var(--ink-soft);
+  text-align: right;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 0.2rem;
+  transition: color 180ms ease, transform 100ms ease-out;
+}
+
+.plate-credit:hover,
+.plate-credit:focus-visible {
+  color: var(--red);
+  text-decoration-color: currentColor;
+}
+
+.plate-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2.5rem, 5vw, 5rem) clamp(1rem, 2.5vw, 2rem);
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+/* Translation rows */
+.turn-list {
+  grid-column: 4 / -1;
+  list-style: none;
+  padding: 0;
+  margin: clamp(3rem, 6vw, 5rem) 0 0;
+  border-top: 1px solid var(--ink);
+}
+
+.turn {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.85fr) minmax(18rem, 1.15fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  padding: clamp(1.75rem, 3.5vw, 3rem) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.turn-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0;
+  font-size: clamp(1.45rem, 2.7vw, 2.25rem);
+  font-weight: 430;
+  line-height: 1.2;
+  letter-spacing: -0.045em;
+}
+
+.turn-from {
+  color: var(--ink-soft);
+}
+
+.turn-from i {
+  color: var(--olive);
+  font-size: 0.45em;
+  font-style: normal;
+  letter-spacing: 0.06em;
+}
+
+.turn-to {
+  color: var(--red);
+  font-weight: 680;
+}
+
+.turn-to::before {
+  content: "→";
+  margin-right: 0.55rem;
+  color: var(--rule);
+  font-weight: 350;
+}
+
+.turn-body {
+  max-width: 43rem;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.9;
+}
+
+/* CSS landscape */
 .landscape {
-  margin: clamp(4rem, 10vw, 7rem) 0 0;
+  grid-column: 2 / -1;
+  height: auto;
+  margin: clamp(3.5rem, 8vw, 7rem) 0 0;
 }
 
 .landscape-inner {
   position: relative;
-  height: clamp(13rem, 30vw, 20rem);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  box-shadow: var(--glass-shadow);
+  height: clamp(16rem, 35vw, 26rem);
+  background: var(--paper-deep);
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
   overflow: hidden;
+}
+
+.landscape-inner::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 2.25rem;
+  left: 0;
+  height: 3.75rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.landscape-inner::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 4.1rem;
+  left: 0;
+  height: 3.75rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  opacity: 0.62;
+}
+
+.landscape-fog {
+  position: absolute;
+  top: 0;
+  right: 17%;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.stone {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  background: var(--ink);
+}
+
+.stone-1 { left: 17%; width: clamp(5rem, 13vw, 9rem); height: clamp(1.6rem, 3.6vw, 2.5rem); border-radius: 62% 38% 30% 70% / 96% 88% 6% 8%; }
+.stone-2 { left: 35%; width: clamp(2.2rem, 5.5vw, 3.5rem); height: clamp(0.8rem, 1.8vw, 1.2rem); border-radius: 44% 56% 40% 60% / 92% 96% 6% 8%; background: var(--ink-soft); }
+.stone-3 { left: 66%; width: clamp(3.4rem, 8.5vw, 5.6rem); height: clamp(2.4rem, 5.5vw, 3.8rem); border-radius: 38% 62% 34% 66% / 82% 90% 10% 14%; background: var(--red); }
+
+.horizon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  height: 1px;
+  background: var(--ink);
 }
 
 .landscape figcaption {
-  max-width: 44ch;
-  margin: var(--gap-inline) auto 0;
-  font-size: 0.8rem;
-  line-height: 1.8;
-  color: var(--c-muted);
+  width: min(100%, 42rem);
+  margin: 0;
+  padding: 0.85rem 0 0;
+  border-top: 1px solid var(--ink);
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  line-height: 1.7;
 }
 
-/* ==========================================================================
-   그림 — 전부 CSS. 사진 없음. 도형과 그라디언트와 선뿐이다.
-   ========================================================================== */
-
+/* Six CSS studies */
 .drawing-list {
+  grid-column: 4 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   list-style: none;
   padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-  gap: 1px;
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  background: var(--c-hairline-soft);
-  box-shadow: var(--glass-shadow);
-  overflow: hidden;
+  margin: clamp(4rem, 8vw, 7rem) 0 0;
+  border-top: 1px solid var(--ink);
 }
 
 .drawing {
-  padding: clamp(1.5rem, 3vw, 2rem);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
+  padding: 1.25rem 1.25rem 3rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.drawing:not(:nth-child(3n + 1)) {
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--rule);
+}
+
+.draw {
+  position: relative;
+  height: 10rem;
+  background: var(--paper-deep);
+  overflow: hidden;
 }
 
 .drawing h3 {
-  margin: var(--gap-inline) 0 0.4rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  margin: 1.25rem 0 0.55rem;
+  font-size: 0.9rem;
+  font-weight: 680;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
 }
 
 .drawing p {
   margin: 0;
-  font-size: 0.85rem;
-  line-height: 1.9;
-  color: var(--c-muted);
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.8;
 }
 
-.drawing p strong {
-  color: var(--c-text);
-  font-weight: 500;
-}
-
-/* 그림판 공통 */
-.draw {
-  position: relative;
-  height: 9.5rem;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(180deg,
-    color-mix(in srgb, var(--winter-haze) 70%, transparent) 0%,
-    transparent 100%);
-  overflow: hidden;
-}
-
-/* --- 1. 겹친 능선 — 거리가 곧 농도 --- */
 .ridge {
   position: absolute;
   bottom: 0;
-  background: var(--mountain-ink);
+  background: var(--ink);
 }
 
-.draw-ridges .r1 {
-  left: -12%;
-  width: 78%;
-  height: 42%;
-  border-radius: 50% 46% 0 0 / 100% 92% 0 0;
-  opacity: 0.92;
-}
+.draw-ridges .r1 { left: -12%; width: 78%; height: 42%; border-radius: 50% 46% 0 0 / 100% 92% 0 0; opacity: 0.92; }
+.draw-ridges .r2 { left: 34%; width: 66%; height: 54%; border-radius: 44% 52% 0 0 / 94% 100% 0 0; opacity: 0.55; }
+.draw-ridges .r3 { left: 6%; width: 72%; height: 58%; border-radius: 48% 44% 0 0 / 100% 88% 0 0; opacity: 0.28; }
+.draw-ridges .r4 { left: 48%; width: 74%; height: 68%; border-radius: 40% 50% 0 0 / 90% 100% 0 0; opacity: 0.13; }
 
-.draw-ridges .r2 {
-  left: 34%;
-  width: 66%;
-  height: 54%;
-  border-radius: 44% 52% 0 0 / 94% 100% 0 0;
-  opacity: 0.55;
-}
-
-.draw-ridges .r3 {
-  left: 6%;
-  width: 72%;
-  height: 58%;
-  border-radius: 48% 44% 0 0 / 100% 88% 0 0;
-  opacity: 0.28;
-}
-
-.draw-ridges .r4 {
-  left: 48%;
-  width: 74%;
-  height: 68%;
-  border-radius: 40% 50% 0 0 / 90% 100% 0 0;
-  opacity: 0.13;
-}
-
-/* --- 2. 다랑논 — 비탈에 사람이 그은 등고선 --- */
 .draw-terrace span {
   position: absolute;
-  left: -10%;
   right: -10%;
+  left: -10%;
   height: 1px;
-  background: var(--c-text);
+  background: var(--ink);
   opacity: 0.5;
-  border-radius: 50%;
 }
 
-.draw-terrace span:nth-child(1) { bottom: 12%; transform: rotate(-3deg) scaleY(3); }
-.draw-terrace span:nth-child(2) { bottom: 26%; transform: rotate(-3.6deg) scaleY(3); opacity: 0.42; }
-.draw-terrace span:nth-child(3) { bottom: 40%; transform: rotate(-4.2deg) scaleY(3); opacity: 0.34; }
-.draw-terrace span:nth-child(4) { bottom: 54%; transform: rotate(-4.8deg) scaleY(3); opacity: 0.26; }
-.draw-terrace span:nth-child(5) { bottom: 68%; transform: rotate(-5.4deg) scaleY(3); opacity: 0.18; }
-.draw-terrace span:nth-child(6) { bottom: 82%; transform: rotate(-6deg) scaleY(3); opacity: 0.1; }
+.draw-terrace span:nth-child(1) { bottom: 12%; transform: rotate(-3deg); }
+.draw-terrace span:nth-child(2) { bottom: 26%; transform: rotate(-3.6deg); opacity: 0.42; }
+.draw-terrace span:nth-child(3) { bottom: 40%; transform: rotate(-4.2deg); opacity: 0.34; }
+.draw-terrace span:nth-child(4) { bottom: 54%; transform: rotate(-4.8deg); opacity: 0.26; }
+.draw-terrace span:nth-child(5) { bottom: 68%; transform: rotate(-5.4deg); opacity: 0.18; }
+.draw-terrace span:nth-child(6) { bottom: 82%; transform: rotate(-6deg); opacity: 0.1; }
 
-/* --- 3. 돌무지 — 의도를 가지고 놓인 몇 개 --- */
 .draw-cairn span {
   position: absolute;
   left: 50%;
-  background: var(--mountain-ink);
+  background: var(--ink);
 }
 
-.draw-cairn .c1 {
-  bottom: 8%;
-  width: 5.2rem;
-  height: 1.5rem;
-  margin-left: -2.6rem;
-  border-radius: 46% 54% 34% 66% / 90% 86% 14% 10%;
-}
-
-.draw-cairn .c2 {
-  bottom: calc(8% + 1.5rem);
-  width: 3.6rem;
-  height: 1.15rem;
-  margin-left: -1.9rem;
-  border-radius: 52% 48% 40% 60% / 86% 90% 12% 14%;
-  background: var(--winter-soil);
-}
-
-.draw-cairn .c3 {
-  bottom: calc(8% + 2.65rem);
-  width: 2.5rem;
-  height: 0.95rem;
-  margin-left: -1.15rem;
-  border-radius: 44% 56% 38% 62% / 88% 84% 16% 12%;
-  background: var(--stone);
-}
-
-.draw-cairn .c4 {
-  bottom: calc(8% + 3.6rem);
-  width: 1.5rem;
-  height: 0.75rem;
-  margin-left: -0.7rem;
-  border-radius: 50% 50% 40% 60% / 90% 88% 12% 10%;
-  background: var(--moss);
-}
+.draw-cairn .c1 { bottom: 8%; width: 5.2rem; height: 1.5rem; margin-left: -2.6rem; border-radius: 46% 54% 34% 66% / 90% 86% 14% 10%; }
+.draw-cairn .c2 { bottom: calc(8% + 1.5rem); width: 3.6rem; height: 1.15rem; margin-left: -1.9rem; border-radius: 52% 48% 40% 60% / 86% 90% 12% 14%; background: var(--ink-soft); }
+.draw-cairn .c3 { bottom: calc(8% + 2.65rem); width: 2.5rem; height: 0.95rem; margin-left: -1.15rem; border-radius: 44% 56% 38% 62% / 88% 84% 16% 12%; background: var(--rule); }
+.draw-cairn .c4 { bottom: calc(8% + 3.6rem); width: 1.5rem; height: 0.75rem; margin-left: -0.7rem; border-radius: 50% 50% 40% 60% / 90% 88% 12% 10%; background: var(--red); }
 
 .draw-cairn .ground {
   position: absolute;
-  left: 12%;
   right: 12%;
   bottom: 8%;
+  left: 12%;
   height: 1px;
-  background: var(--c-text);
+  background: var(--ink);
   opacity: 0.35;
 }
 
-/* --- 4. 서리 — 빛이 닿는 각도에서만 보인다 --- */
 .draw-frost span {
   position: absolute;
   height: 1px;
-  background: var(--c-text);
-  border-radius: 999px;
+  background: var(--ink);
 }
 
 .draw-frost span:nth-child(1) { left: 14%; width: 30%; top: 34%; opacity: 0.5; }
@@ -923,325 +783,40 @@ main {
 .draw-frost span:nth-child(3) { left: 20%; width: 44%; top: 58%; opacity: 0.16; }
 .draw-frost span:nth-child(4) { left: 52%; width: 26%; top: 70%; opacity: 0.08; }
 
-/* 각도가 맞는 곳에서만 반짝인다 */
 .draw-frost .glint {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg,
-    transparent 32%,
-    color-mix(in srgb, #ffffff 70%, transparent) 46%,
-    transparent 60%);
+  top: -20%;
+  bottom: -20%;
+  left: 48%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.86);
+  transform: rotate(15deg);
 }
 
-@media (prefers-color-scheme: dark) {
-  .draw {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, transparent 100%);
-  }
-
-  .ridge,
-  .draw-cairn .c1 {
-    background: #cfd8d8;
-  }
-
-  .draw-terrace span,
-  .draw-frost span,
-  .draw-cairn .ground {
-    background: #cfd8d8;
-  }
-
-  .draw-frost .glint {
-    background: linear-gradient(105deg,
-      transparent 32%,
-      rgba(255, 255, 255, 0.16) 46%,
-      transparent 60%);
-  }
-}
-
-/* ==========================================================================
-   사진판 — 본문 흐름 속에 놓인 한 장. 갤러리가 아니라 호흡.
-   저작권 표시는 반드시 있되, 아주 얇게.
-   ========================================================================== */
-
-.plate {
-  margin: 0;
-}
-
-/* 넓은 판 — 본문 폭을 벗어나 숨을 쉰다 */
-/* main이 이미 max-width와 padding을 갖고 있다. 여기서 또 걸면 '넓은 판'이
-   오히려 본문보다 좁아진다. main의 좌우 여백을 상쇄해 진짜로 넓게 만든다. */
-.plate-wide {
-  margin: var(--gap-section) calc(clamp(1.25rem, 5vw, 3rem) * -1);
-}
-
-.plate-inline {
-  margin: var(--gap-block) 0;
-}
-
-.plate img {
-  display: block;
-  width: 100%;
-  border-radius: var(--radius);
-  border: 1px solid var(--glass-border);
-  /* 원본은 계절도 시간도 제각각이다. 무채색으로 눌러 팔레트 안에 둔다. */
-  filter: grayscale(1) contrast(1.04) brightness(1.02);
-}
-
-.plate-wide img {
-  height: clamp(14rem, 40vw, 26rem);
-  object-fit: cover;
-}
-
-.plate-inline img,
-.plate-pair img {
-  height: clamp(11rem, 24vw, 15rem);
-  object-fit: cover;
-}
-
-.plate figcaption {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.5rem 0.9rem;
-  margin-top: 0.85rem;
-}
-
-.plate-where {
-  font-size: 0.85rem;
-  letter-spacing: -0.005em;
-  color: var(--c-muted);
-}
-
-.plate-where b {
-  font-weight: 500;
-  color: var(--c-text);
-}
-
-.plate-cap {
-  flex: 1 1 20ch;
-  min-width: 0;
-  font-size: 0.85rem;
-  line-height: 1.8;
-  color: var(--c-muted);
-}
-
-/* 저작권 — 있어야 하지만 읽는 흐름을 막지 않는다.
-   작고 흐리게 두되, 다가가면 또렷해진다. */
-/* 저작권은 읽는 흐름을 막지 않되, 표기로서 기능해야 한다.
-   0.5 불투명도는 실효 대비가 1.6:1까지 떨어져 표기 구실을 못 했다. */
-.plate-credit {
-  flex: 0 0 auto;
-  margin-left: auto;
-  font-size: 0.68rem;
-  letter-spacing: 0.03em;
-  color: var(--c-muted);
-  opacity: 0.75;
-  text-decoration: none;
-  transition: opacity 0.2s ease, color 0.2s ease;
-}
-
-.plate-credit:hover,
-.plate-credit:focus-visible {
-  opacity: 1;
-  color: var(--c-accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* 작은 판 넷 */
-.plate-pair {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: var(--gap-inline) var(--gap-inline);
-  margin-top: var(--gap-block);
-}
-
-/* ==========================================================================
-   번역 — 카드가 아니라 대구(對句). 큰 활자가 짝을 이룬다.
-   ========================================================================== */
-
-.turn-list {
-  list-style: none;
-  padding: 0;
-  margin: var(--gap-block) 0 0;
-}
-
-.turn {
-  padding: clamp(2rem, 4.5vw, 3rem) 0;
-  border-top: 1px solid var(--c-hairline);
-}
-
-.turn:last-child {
-  border-bottom: 1px solid var(--c-hairline);
-}
-
-.turn-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.6em;
-  margin: 0 0 var(--gap-inline);
-  font-size: clamp(1.5rem, 4.2vw, 2.3rem);
-  font-weight: 300;
-  /* 커질수록 트래킹은 좁아진다 */
-  letter-spacing: -0.035em;
-  line-height: 1.2;
-}
-
-.turn-from {
-  color: var(--c-muted);
-}
-
-.turn-from i {
-  font-style: normal;
-  font-size: 0.5em;
-  letter-spacing: 0.06em;
-}
-
-/* 화살표는 글자가 아니라 선으로 — 장식보다 관계를 보인다 */
-.turn-to {
-  position: relative;
-  padding-left: 2.4em;
-  font-weight: 500;
-  color: var(--c-accent);
-}
-
-.turn-to::before {
-  content: "";
-  position: absolute;
-  left: 0.6em;
-  top: 0.62em;
-  width: 1.3em;
-  height: 1px;
-  background: var(--c-accent);
-  opacity: 0.5;
-}
-
-.turn-body {
-  max-width: 46ch;
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.95;
-  color: var(--c-muted);
-}
-
-/* ==========================================================================
-   색인 — 열여덟 곳. 카드 열여덟 개는 지루하다. 목록이 낫다.
-   ========================================================================== */
-
-.index {
-  margin-top: var(--gap-block);
-}
-
-.index-head {
-  margin: 0 0 var(--gap-hairline);
-  padding-bottom: var(--gap-hairline);
-  border-bottom: 1px solid var(--c-hairline);
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-
-.index-head span {
-  margin-left: 0.5em;
-  font-size: 0.74rem;
-  font-weight: 400;
-  color: var(--c-muted);
-}
-
-.index-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.index-list li {
-  display: grid;
-  grid-template-columns: 4.2rem 2.6rem 1fr;
-  align-items: baseline;
-  gap: 0.6rem;
-  padding: 0.85rem 0.2rem;
-  border-bottom: 1px solid var(--c-hairline-soft);
-}
-
-.index-list li:last-child {
-  border-bottom: none;
-}
-
-.index-list b {
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-}
-
-.index-list i {
-  font-style: normal;
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  color: var(--c-accent);
-}
-
-.index-list span {
-  font-size: 0.88rem;
-  line-height: 1.8;
-  color: var(--c-muted);
-}
-
-@media (max-width: 560px) {
-  .index-list li {
-    grid-template-columns: 3.6rem 1fr;
-    row-gap: 0.15rem;
-  }
-
-  .index-list i {
-    display: none;
-  }
-
-  .index-list span {
-    grid-column: 2;
-  }
-
-  .turn-to {
-    padding-left: 0;
-  }
-
-  .turn-to::before {
-    display: none;
-  }
-}
-
-/* ==========================================================================
-   그림 — 영동 두 장
-   ========================================================================== */
-
-/* 수평선 — 가장 길고 흔들리지 않는 선 하나 */
 .draw-horizon .sea {
   position: absolute;
-  left: 0;
   right: 0;
   bottom: 0;
+  left: 0;
   height: 42%;
-  background: linear-gradient(180deg,
-    color-mix(in srgb, var(--ice-sheet) 90%, transparent) 0%,
-    color-mix(in srgb, var(--stone) 45%, transparent) 100%);
+  background: var(--rule);
 }
 
 .draw-horizon .line {
   position: absolute;
-  left: 0;
   right: 0;
   bottom: 42%;
+  left: 0;
   height: 1px;
-  background: var(--mountain-ink);
-  opacity: 0.7;
+  background: var(--ink);
 }
 
-/* 솔숲 — 가로선을 받치는 세로선 */
 .draw-horizon .pine {
   position: absolute;
   bottom: 42%;
   width: 1px;
-  background: var(--mountain-ink);
-  opacity: 0.55;
+  background: var(--ink);
+  opacity: 0.58;
 }
 
 .draw-horizon .p1 { left: 16%; height: 26%; }
@@ -1249,74 +824,122 @@ main {
 .draw-horizon .p3 { left: 79%; height: 30%; }
 .draw-horizon .p4 { left: 85%; height: 22%; }
 
-/* 지층 — 평평해 보여도 앞뒤가 있다 */
 .draw-strata span {
   position: absolute;
-  left: 0;
   right: 0;
-  background: var(--mountain-ink);
+  left: 0;
+  background: var(--ink);
 }
 
-.draw-strata span:nth-child(1) { bottom: 0;   height: 22%; opacity: 0.9; }
+.draw-strata span:nth-child(1) { bottom: 0; height: 22%; opacity: 0.9; }
 .draw-strata span:nth-child(2) { bottom: 22%; height: 14%; opacity: 0.55; }
 .draw-strata span:nth-child(3) { bottom: 36%; height: 19%; opacity: 0.34; }
 .draw-strata span:nth-child(4) { bottom: 55%; height: 11%; opacity: 0.2; }
 .draw-strata span:nth-child(5) { bottom: 66%; height: 16%; opacity: 0.1; }
 
-/* 해안에서 잘려 단면이 드러난다 */
-/* 절벽이 한쪽에서 잘려 단면이 드러난다 — 가운데를 지우면 층이 두 동강 난다 */
 .draw-strata .cut {
   position: absolute;
   top: 0;
+  right: -3%;
   bottom: 0;
-  right: 0;
-  width: 34%;
-  background: var(--c-bg);
-  border-left: 1px solid var(--mountain-ink);
+  width: 37%;
+  background: var(--paper-deep);
+  border-left: 1px solid var(--red);
   transform: skewX(-9deg);
   transform-origin: bottom left;
 }
 
-@media (prefers-color-scheme: dark) {
-  .draw-horizon .line,
-  .draw-horizon .pine,
-  .draw-strata span {
-    background: #cfd8d8;
-  }
-
-  .draw-strata .cut {
-    background: #12181a;
-    border-left-color: #cfd8d8;
-  }
+/* Regional index */
+.index {
+  grid-column: 4 / -1;
+  margin-top: clamp(3.5rem, 7vw, 6rem);
 }
 
-/* ==========================================================================
-   색 견본 — 좁은 화면에서 끌 수 있다. transition 금지(스프링이 움직인다).
-   ========================================================================== */
+.index-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  padding: 0 0 0.75rem;
+  border-bottom: 1px solid var(--ink);
+  font-size: 0.88rem;
+  font-weight: 680;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
 
+.index-head span {
+  color: var(--ink-soft);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.index-list {
+  counter-reset: region;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.index-list li {
+  counter-increment: region;
+  display: grid;
+  grid-template-columns: 2.5rem 4.5rem 3rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.index-list li::before {
+  content: counter(region, decimal-leading-zero);
+  color: var(--red);
+  font-size: 0.58rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+}
+
+.index-list b {
+  font-size: 0.94rem;
+  font-weight: 680;
+}
+
+.index-list i {
+  color: var(--olive);
+  font-size: 0.68rem;
+  font-style: normal;
+  letter-spacing: 0.07em;
+}
+
+.index-list span {
+  color: var(--ink-soft);
+  font-size: 0.83rem;
+  line-height: 1.75;
+}
+
+/* Material swatches */
 .swatch-strip {
+  grid-column: 4 / -1;
+  margin-top: clamp(3rem, 6vw, 5rem);
   overflow: hidden;
-  margin-inline: calc(clamp(1.25rem, 5vw, 3rem) * -1);
-  padding-inline: clamp(1.25rem, 5vw, 3rem);
-  border-radius: var(--radius);
 }
 
 .swatch-strip:focus-visible {
-  outline: 2px solid var(--c-accent);
-  outline-offset: 4px;
+  outline-offset: 0.4rem;
 }
 
 .swatch-track {
   display: flex;
-  gap: var(--gap-inline);
+  gap: 0;
   list-style: none;
-  padding: 0.25rem 0;
+  padding: 0;
   margin: 0;
+  border-top: 1px solid var(--ink);
   cursor: grab;
-  /* 세로 스크롤은 살리고 가로 제스처만 가져간다 */
   touch-action: pan-y;
   will-change: transform;
-  /* transition 없음 — 도중에 붙잡을 수 없기 때문 */
 }
 
 .swatch-track:active {
@@ -1324,141 +947,264 @@ main {
 }
 
 .material {
-  flex: 0 0 clamp(8.5rem, 22vw, 10.5rem);
+  flex: 0 0 clamp(9rem, 18vw, 11.5rem);
   display: flex;
   flex-direction: column;
-  gap: var(--gap-hairline);
+  gap: 0.15rem;
+  padding: 0.8rem 0.8rem 0.75rem 0;
+  border-right: 1px solid var(--rule);
   user-select: none;
 }
 
-.material em {
-  font-size: 0.72rem;
-  font-style: normal;
-  line-height: 1.6;
-  color: var(--c-muted);
+.material + .material {
+  padding-left: 0.8rem;
 }
 
-/* ==========================================================================
-   캠퍼스
-   ========================================================================== */
+.swatch {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin-bottom: 0.65rem;
+  border: 1px solid transparent;
+}
+
+.swatch-line,
+.swatch-glass {
+  border-color: var(--rule);
+}
+
+.swatch-glass {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.material strong {
+  font-size: 0.73rem;
+  font-weight: 680;
+  line-height: 1.45;
+}
+
+.material small,
+.material em {
+  color: var(--ink-soft);
+  font-size: 0.6rem;
+  font-style: normal;
+  line-height: 1.55;
+  letter-spacing: 0.05em;
+}
+
+/* Three principles */
+.pillar-list {
+  grid-column: 4 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.pillar {
+  min-height: 21rem;
+  padding: 1.5rem 1.5rem 2rem 0;
+}
+
+.pillar + .pillar {
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--rule);
+}
+
+.pillar-glyph {
+  margin: 0 0 clamp(4rem, 9vw, 7rem);
+  color: var(--red);
+  font-size: 2.4rem;
+  font-weight: 250;
+  line-height: 1;
+}
+
+.pillar h3 {
+  margin: 0 0 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 680;
+  line-height: 1.35;
+}
+
+.pillar p:last-child {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  line-height: 1.85;
+}
 
 .campus-address {
-  max-width: 40ch;
-  margin: var(--gap-block) 0 0;
-  padding-top: var(--gap-inline);
-  border-top: 1px solid var(--c-hairline);
-  font-size: 0.8rem;
-  letter-spacing: 0.03em;
-  color: var(--c-muted);
+  grid-column: 4 / 10;
+  margin: 0;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
 }
 
-/* ==========================================================================
-   스크롤 엣지 — 겹칠 때만 경계가 생긴다 (서리는 각도가 맞을 때만 보인다)
-   ========================================================================== */
-
-.site-header {
-  border-bottom-color: transparent;
-  transition: border-color 0.25s ease;
+/* Footer */
+.site-footer {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(0.75rem, 1.8vw, 1.5rem);
+  width: min(100%, var(--page));
+  margin-inline: auto;
+  padding: 2rem var(--gutter) clamp(4rem, 8vw, 7rem);
+  border-top: 1px solid var(--ink);
 }
 
-.site-header.is-overlapping {
-  border-bottom-color: var(--glass-border);
+.site-footer p {
+  margin: 0;
 }
 
-/* ==========================================================================
-   반응형
-   ========================================================================== */
+.footer-mark {
+  grid-column: 1 / 5;
+  font-size: 0.82rem;
+  font-weight: 680;
+  line-height: 1.6;
+}
+
+.footer-by {
+  grid-column: 5 / 8;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  line-height: 1.65;
+}
+
+.footer-by b {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.footer-by span {
+  color: var(--olive);
+}
+
+.footer-small {
+  grid-column: 8 / -1;
+  color: var(--ink-soft);
+  font-size: 0.64rem;
+  line-height: 1.75;
+}
+
+/* Responsive */
+@media (min-width: 720px) {
+  .br-wide { display: inline; }
+}
+
+@media (max-width: 940px) {
+  .site-header { grid-template-columns: 1fr auto; }
+  .site-nav { display: none; }
+  .section-title { grid-column: 4 / -1; }
+  .prose, .section-desc { grid-column: 4 / 11; }
+  .hero-body { grid-column: 1 / 9; }
+  .drawing-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .drawing:not(:nth-child(3n + 1)) { padding-left: 0; border-left: 0; }
+  .drawing:nth-child(even) { padding-left: 1.25rem; border-left: 1px solid var(--rule); }
+  .drawing:nth-child(odd) { padding-right: 1.25rem; }
+}
+
+@media (max-width: 720px) {
+  :root { --section-space: clamp(6.5rem, 24vw, 9rem); }
+  body { line-height: 1.72; }
+  .site-header { min-height: 4rem; }
+  .wordmark-sub { display: none; }
+  main { padding-bottom: var(--section-space); }
+  .hero, .section { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 0.8rem; }
+  .hero { grid-template-rows: minmax(0, 1fr) auto; min-height: calc(100svh - 4rem); padding-top: clamp(5rem, 13vh, 8rem); }
+  .hero-body { grid-column: 1 / -1; grid-row: 1; align-self: start; }
+  .hero h1 { font-size: clamp(4rem, 20vw, 6.3rem); }
+  .hero-scroll { grid-column: 1 / 3; grid-row: 2; }
+  .hero-scape { right: -3rem; bottom: 8rem; left: 28%; height: 13rem; }
+  .section-label, .section-title, .prose, .section-desc, .turn-list, .drawing-list,
+  .index, .swatch-strip, .pillar-list, .campus-address, .section > .plate-inline,
+  .section > .plate-pair { grid-column: 1 / -1; }
+  .section-label { margin-bottom: 1.5rem; }
+  .section-title { margin-bottom: 2.5rem; }
+  .landscape { grid-column: 1 / -1; }
+  .turn { grid-template-columns: 1fr; gap: 1.25rem; }
+  .turn-body { max-width: 38rem; }
+  .plate figcaption { grid-template-columns: 1fr 2fr; }
+  .plate-credit { grid-column: 1 / -1; justify-self: start; text-align: left; }
+  main > .plate-wide { width: 100%; }
+  .pillar { min-height: auto; }
+  .pillar-glyph { margin-bottom: 3rem; }
+  .site-footer { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 2rem; }
+  .footer-mark, .footer-by, .footer-small { grid-column: 1 / -1; }
+}
 
 @media (max-width: 560px) {
-  .wordmark-sub {
-    display: none;
+  .header-cta span { display: none; }
+  .header-cta { border-bottom: 0; font-size: 1rem; }
+  .index-head { display: block; }
+  .index-head span { display: block; margin-top: 0.25rem; }
+  .index-list li { grid-template-columns: 2rem 3.7rem minmax(0, 1fr); gap: 0.5rem; }
+  .index-list i { display: none; }
+  .index-list span { font-size: 0.79rem; }
+  .drawing-list, .plate-pair, .pillar-list { grid-template-columns: 1fr; }
+  .drawing, .drawing:nth-child(even), .drawing:nth-child(odd) { padding: 1.25rem 0 2.5rem; border-left: 0; }
+  .pillar { padding: 1.5rem 0 2.5rem; }
+  .pillar + .pillar { padding-left: 0; border-top: 1px solid var(--rule); border-left: 0; }
+  .plate-pair img { height: clamp(16rem, 80vw, 24rem); }
+  .plate-wide img { height: clamp(18rem, 105vw, 31rem); }
+  .plate figcaption { grid-template-columns: 1fr; gap: 0.5rem; }
+  .plate-credit { grid-column: 1; }
+}
+
+/* The same editorial hierarchy in a night-reading palette. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #181715;
+    --paper-deep: #24221d;
+    --paper-light: #f2efe7;
+    --ink: #f0ede5;
+    --ink-soft: #bbb5a9;
+    --red: #e05a50;
+    --red-dark: #ef776e;
+    --olive: #a0a47d;
+    --rule: #575146;
+    --rule-soft: rgba(240, 237, 229, 0.14);
+  }
+
+  .landscape-fog,
+  .draw-frost .glint {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .swatch-glass {
+    background: rgba(255, 255, 255, 0.08);
   }
 }
 
-/* ==========================================================================
-   Fluid — 누르는 즉시 반응하고, 잡으면 따라오고, 언제든 되돌릴 수 있게
-   (Apple, Designing Fluid Interfaces)
-   ========================================================================== */
-
-/* 반응은 click이 아니라 pointerdown에서. 기다리면 죽은 것처럼 느껴진다. */
-.header-cta,
-.hero-links a {
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease,
-    transform 0.1s ease-out;
-  touch-action: manipulation; /* 300ms 탭 지연 제거 */
-}
-
-.header-cta.is-pressed {
-  transform: scale(0.975);
-}
-
-.hero-links a.is-pressed {
-  opacity: 0.6;
-}
-
-/* ==========================================================================
-   접근성 — 줄인 움직임 / 줄인 투명도 / 높은 대비
-   ========================================================================== */
-
-/* 움직임을 줄이는 것이지 피드백을 없애는 게 아니다.
-   위치가 바뀌는 것만 끄고, 이해를 돕는 색·투명도 변화는 남긴다. */
+/* Accessibility preferences */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-
-  .header-cta.is-pressed,
-  .hero-links a.is-pressed,
-  .wordmark.is-pressed {
-    transform: none;
-  }
-
-  .swatch-track {
-    transform: none !important;
-    overflow-x: auto;
-    cursor: default;
-  }
+  .swatch-track { transform: none !important; overflow-x: auto; cursor: default; }
 }
 
-/* 투명도를 줄이고 싶은 사용자 — 유리를 걷어내고 불투명하게 */
-@media (prefers-reduced-transparency: reduce) {
-  :root {
-    --glass-bg: rgba(255, 255, 255, 0.96);
-    --glass-bg-strong: #ffffff;
-    --glass-blur: none;
-  }
-
-  .atmosphere {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-transparency: reduce) and (prefers-color-scheme: dark) {
-  :root {
-    --glass-bg: #1a2224;
-    --glass-bg-strong: #222c2e;
-  }
-}
-
-/* 대비를 높이고 싶은 사용자 — 경계를 분명히 */
 @media (prefers-contrast: more) {
-  :root {
-    --glass-border: var(--c-text);
-    --c-muted: #46504f;
-  }
-
-  /* 회색 처리를 풀어 사진 자체의 대비를 살린다 */
-  .plate img {
-    filter: none;
-  }
-
-  .plate-credit {
-    opacity: 1;
-  }
+  :root { --ink-soft: #34322e; --rule: #5f5a4e; --rule-soft: rgba(26, 26, 26, 0.45); }
+  .plate img { filter: none; }
 }
 
-@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
-  :root {
-    --c-muted: #bcc4c4;
-  }
+@media print {
+  :root { --paper: #ffffff; --paper-deep: #f1eee7; }
+  html, body { background: #ffffff; }
+  .site-header, .hero-scroll { display: none; }
+  .hero { min-height: 90vh; }
+  .section, .plate, .turn, .drawing, .pillar { break-inside: avoid; }
+  .plate img { filter: grayscale(1); }
 }
