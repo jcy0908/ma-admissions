@@ -4,7 +4,7 @@
 // 그래서 움직임은 네 곳에만 있습니다.
 //   1. 누르는 순간의 반응 (click을 기다리면 죽은 것처럼 느껴진다)
 //   2. 좁은 화면에서 색 견본을 옆으로 끄는 것 (일곱 개가 한 줄에 안 들어간다)
-//   3. 지원 폼의 진행 바 (단계를 오갈 때 도중에 붙잡을 수 있어야 한다)
+//   3. 지원 폼의 진행 능선 (단계를 오갈 때 도중에 붙잡을 수 있어야 한다)
 //   4. 제출 시트 (아래에서 올라오고, 잡아서 내릴 수 있다)
 // 나머지는 정지해 있습니다.
 
@@ -192,7 +192,7 @@ if (form) {
   const nextBtn = document.getElementById('next-btn');
   const submitBtn = document.getElementById('submit-btn');
   const progressStep = document.getElementById('progress-step');
-  const progressFill = document.getElementById('progress-fill');
+  const ridges = Array.from(document.querySelectorAll('#progress-ridges .pridge'));
   const formError = document.getElementById('form-error');
 
   const saveBanner = document.getElementById('save-banner');
@@ -210,15 +210,27 @@ if (form) {
   let currentStep = 1;
   let saveTimer = null;
 
-  // 진행 바 — CSS transition은 도중에 붙잡을 수 없으므로 스프링으로 움직인다
+  // 진행 — 겹친 능선. Drawings에 적어 둔 규칙을 그대로 쓴다:
+  // "가까울수록 짙고 멀수록 옅어서 거리가 곧 농도가 된다."
+  // 지금 단계의 능선이 가장 앞에 오고, 지나온 것과 남은 것은 뒤로 물러난다.
+  // 값은 단계 번호(1~3)이며, 스프링이라 이동 중에도 붙잡아 되돌릴 수 있다.
+  function paintRidges(list, position) {
+    list.forEach((el, i) => {
+      const distance = Math.abs(i + 1 - position);
+      el.style.opacity = String(Math.max(0.12, 1 - distance * 0.42));
+      el.style.transform =
+        'translateY(' + distance * 5 + 'px) scaleX(' + (1 - distance * 0.05) + ')';
+    });
+  }
+
   const progressSpring = new Spring({
     damping: 1,
     response: 0.4,
-    value: 33.3,
-    onUpdate: (v) => {
-      progressFill.style.width = v + '%';
-    },
+    value: 1,
+    onUpdate: (v) => paintRidges(ridges, v),
   });
+
+  paintRidges(ridges, 1);
 
   // ---------- 단계 이동 ----------
 
@@ -232,9 +244,8 @@ if (form) {
     submitBtn.hidden = step !== TOTAL_STEPS;
     progressStep.textContent = step + '/' + TOTAL_STEPS;
 
-    const pct = (step / TOTAL_STEPS) * 100;
-    if (prefersReducedMotion()) progressSpring.setValue(pct);
-    else progressSpring.setTarget(pct);
+    if (prefersReducedMotion()) progressSpring.setValue(step);
+    else progressSpring.setTarget(step);
 
     hideError();
     if (step === TOTAL_STEPS) renderSummary();

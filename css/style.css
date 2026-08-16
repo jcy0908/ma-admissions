@@ -1459,7 +1459,10 @@ main {
   }
 }
 /* ==========================================================================
-   지원 폼 — 유리판 위에 놓인 종이
+   지원 — 읽던 페이지가 쓰는 페이지가 되는 자리
+
+   이 섹션은 앞의 글들과 같은 재료로 만든다. 상자를 쌓지 않는다.
+   입력은 서리처럼 한 줄이고, 진행은 겹친 능선이고, 요약은 지층이다.
    ========================================================================== */
 
 .apply {
@@ -1468,87 +1471,127 @@ main {
 
 .apply-note {
   margin: 0 0 var(--gap-block);
-  max-width: 38ch;
-  color: var(--c-muted);
+  max-width: 34ch;
   font-size: 0.92rem;
+  line-height: 1.9;
+  color: var(--c-muted);
 }
 
-.save-banner {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  margin-bottom: var(--gap-block);
-  padding: 0.9rem 1.1rem;
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  background: var(--glass-bg-strong);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  box-shadow: var(--glass-shadow);
-  font-size: 0.84rem;
-}
-
-.save-check {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.1rem;
-  height: 1.1rem;
-  border-radius: 999px;
-  background: var(--c-accent);
-  color: var(--c-bg);
-  font-size: 0.62rem;
-  flex-shrink: 0;
-}
+/* ---------- 진행 — 겹친 능선. 가까울수록 짙고 멀수록 옅다 ---------- */
 
 .progress {
   display: flex;
-  align-items: center;
-  gap: var(--gap-inline);
-  margin-bottom: clamp(3rem, 7vw, 4.5rem);
+  align-items: flex-end;
+  gap: 1.1rem;
+  margin-bottom: var(--gap-field);
+  padding-bottom: var(--gap-inline);
+  border-bottom: 1px solid var(--c-hairline-soft);
+}
+
+.progress-ridges {
+  position: relative;
+  flex: 1;
+  height: 2.4rem;
+  overflow: hidden;
+}
+
+/* 능선 하나. 위치와 곡률은 Drawings의 '겹친 능선'과 같은 계열이다. */
+.pridge {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  background: var(--c-accent);
+  border-radius: 50% 46% 0 0 / 100% 92% 0 0;
+  transform-origin: 50% 100%;
+  will-change: opacity, transform;
+}
+
+.pridge:nth-child(1) {
+  left: -10%;
+  width: 62%;
+  height: 74%;
+  border-radius: 50% 46% 0 0 / 100% 92% 0 0;
+}
+
+.pridge:nth-child(2) {
+  left: 22%;
+  width: 58%;
+  height: 92%;
+  border-radius: 44% 52% 0 0 / 94% 100% 0 0;
+}
+
+.pridge:nth-child(3) {
+  left: 52%;
+  width: 60%;
+  height: 66%;
+  border-radius: 48% 44% 0 0 / 100% 88% 0 0;
 }
 
 .progress-step {
-  font-weight: 400;
-  font-size: 0.8rem;
-  letter-spacing: 0.14em;
+  flex: none;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--c-muted);
   font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 저장 배너 — 알림이 아니라 여백에 적힌 메모 ---------- */
+
+.save-banner {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: var(--gap-block);
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
   color: var(--c-muted);
 }
 
-.progress-track {
-  flex: 1;
-  height: 1px;
-  background: var(--c-hairline);
+.save-check {
+  color: var(--c-accent);
+  font-size: 0.7rem;
 }
 
-.progress-fill {
-  height: 1px;
-  width: 33.3%;
-  background: var(--c-text);
-  transition: width 0.3s ease;
-}
+/* ---------- 단계 ---------- */
 
 .form-step {
-  border: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 .step-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin: 0 0 var(--gap-inline);
   padding: 0;
-  margin: 0 0 var(--gap-hairline);
-  font-size: 1.15rem;
+  font-size: 1.28rem;
   font-weight: 500;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+}
+
+/* 단계 번호는 지역 색인과 같은 방식으로 — 작고, 벌어지고, 옅게 */
+.step-title .no {
+  flex: none;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--c-accent);
+  font-variant-numeric: tabular-nums;
 }
 
 .step-desc {
-  margin: 0 0 clamp(2.5rem, 6vw, 3.5rem);
-  max-width: 38ch;
-  font-size: 0.9rem;
+  margin: 0 0 var(--gap-field);
+  max-width: 40ch;
+  font-size: 0.92rem;
+  line-height: 1.95;
   color: var(--c-muted);
 }
+
+/* ---------- 입력 — 상자가 아니라 선 ---------- */
 
 .field {
   margin-bottom: var(--gap-field);
@@ -1556,109 +1599,124 @@ main {
 
 .field label {
   display: block;
-  margin-bottom: 0.7rem;
-  font-size: 0.78rem;
+  margin-bottom: 0.55rem;
+  font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.18em;
   color: var(--c-muted);
+  transition: color 0.2s ease;
 }
 
-/* 입력창도 유리 */
 .field textarea,
-.field input[type="url"],
+.field input[type='url'],
 .field select {
+  display: block;
   width: 100%;
-  padding: 0.85rem 1rem;
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
+  padding: 0.35rem 0 0.6rem;
+  border: 0;
+  border-bottom: 1px solid var(--c-hairline);
+  border-radius: 0;
+  background: transparent;
   color: var(--c-text);
-  font-family: inherit;
+  font: inherit;
   font-size: 1rem;
   line-height: 1.85;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease;
 }
 
 .field textarea {
   resize: vertical;
-  min-height: 8rem;
+  min-height: 6rem;
 }
 
+/* 서리는 각도가 맞을 때만 보인다. 포커스가 그 각도다. */
 .field textarea:focus,
 .field input:focus,
 .field select:focus {
   outline: none;
-  border-color: var(--c-accent);
-  background: var(--glass-bg-strong);
+  border-bottom-color: var(--c-accent);
+}
+
+.field:focus-within label {
+  color: var(--c-accent);
 }
 
 .field ::placeholder {
   color: var(--c-muted);
+  opacity: 0.65;
 }
 
 .field select {
   appearance: none;
+  padding-right: 1.5rem;
   cursor: pointer;
-  background-image: linear-gradient(45deg, transparent 50%, var(--c-muted) 50%),
-    linear-gradient(135deg, var(--c-muted) 50%, transparent 50%);
-  background-position: calc(100% - 20px) calc(50% + 2px), calc(100% - 15px) calc(50% + 2px);
-  background-size: 5px 5px;
+  /* 화살표도 선 두 개로 그린다 */
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-size: 5px 5px, 5px 5px;
+  background-position: right 8px center, right 3px center;
   background-repeat: no-repeat;
+  color: var(--c-text);
 }
 
-.counter {
-  margin: var(--gap-hairline) 0 0;
-  text-align: right;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  font-variant-numeric: tabular-nums;
+/* 아직 고르지 않았을 때는 자리표시자처럼 옅게 */
+.field select:invalid {
   color: var(--c-muted);
 }
 
+.counter {
+  margin: 0.5rem 0 0;
+  text-align: right;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--c-muted);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.2s ease;
+}
+
 .counter.is-warning {
-  color: var(--c-accent);
+  color: var(--c-error, #9a5347);
 }
 
 .hint {
-  margin: var(--gap-hairline) 0 0;
-  font-size: 0.78rem;
+  margin: 0.6rem 0 0;
+  max-width: 44ch;
+  font-size: 0.76rem;
   line-height: 1.8;
   color: var(--c-muted);
 }
 
 .field-error {
-  margin: var(--gap-hairline) 0 0;
-  font-size: 0.82rem;
-  color: var(--c-error);
+  margin: 0.6rem 0 0;
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--c-error, #9a5347);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--c-error, #9a5347);
 }
 
 .form-error {
-  margin-bottom: var(--gap-inline);
+  margin: 0 0 var(--gap-block);
 }
 
-/* 파일 업로드 */
+/* ---------- 파일 — 한 줄에 이름과 버튼 ---------- */
+
 .file-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--gap-inline);
+  padding: 0.35rem 0 0.6rem;
+  border-bottom: 1px solid var(--c-hairline);
 }
 
 .file-name {
-  flex: 1;
-  padding: 0.85rem 1rem;
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  font-size: 0.95rem;
-  color: var(--c-muted);
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 0.92rem;
+  color: var(--c-muted);
 }
 
 .file-name.has-file {
@@ -1666,91 +1724,91 @@ main {
 }
 
 .file-btn {
-  padding: 0.75rem 1.4rem;
-  border: 1px solid var(--c-text);
-  border-radius: var(--radius);
-  font-size: 0.82rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  flex: none;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--c-hairline);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  color: var(--c-text);
   cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  background: transparent;
 }
 
 .file-btn:hover {
-  background: var(--c-text);
-  color: var(--c-bg);
+  border-color: var(--c-accent);
+  color: var(--c-accent);
 }
 
-/* 요약 — 유리판 */
+/* ---------- 요약 — 지층. 얇은 선이 켜켜이 쌓인다 ---------- */
+
 .summary {
   margin: 0 0 var(--gap-block);
-  padding: 0.2rem 1.3rem;
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  box-shadow: var(--glass-shadow);
+  border-top: 1px solid var(--c-hairline);
 }
 
 .summary > div {
   display: grid;
-  grid-template-columns: 8rem 1fr;
+  grid-template-columns: 8.5rem 1fr;
   gap: var(--gap-inline);
-  padding: 1rem 0;
+  padding: var(--gap-inline) 0;
   border-bottom: 1px solid var(--c-hairline-soft);
 }
 
 .summary > div:last-child {
-  border-bottom: none;
+  border-bottom: 1px solid var(--c-hairline);
 }
 
 .summary dt {
-  font-size: 0.74rem;
+  margin: 0;
+  font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.16em;
   color: var(--c-muted);
+  line-height: 2.1;
 }
 
 .summary dd {
   margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.8;
-  overflow-wrap: anywhere;
+  font-size: 0.92rem;
+  line-height: 1.85;
+  word-break: break-word;
 }
 
 .summary dd.empty {
   color: var(--c-muted);
 }
 
-/* 버튼 */
+/* ---------- 버튼 ---------- */
+
 .form-nav {
   display: flex;
   gap: var(--gap-inline);
-  margin-top: clamp(3rem, 7vw, 4.5rem);
+  padding-top: var(--gap-block);
+  border-top: 1px solid var(--c-hairline-soft);
 }
 
 .btn {
   flex: 1;
-  padding: 1rem 1.5rem;
-  border: 1px solid var(--glass-border);
+  padding: 0.95rem 1.4rem;
+  border: 1px solid transparent;
   border-radius: var(--radius);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  color: var(--c-text);
-  font-family: inherit;
-  font-size: 0.92rem;
-  font-weight: 500;
+  font: inherit;
+  font-size: 0.9rem;
   letter-spacing: 0.02em;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  background: transparent;
+  color: var(--c-text);
+}
+
+.btn-ghost {
+  border-color: var(--c-hairline);
+  color: var(--c-muted);
 }
 
 .btn-ghost:hover {
-  background: var(--glass-bg-strong);
+  border-color: var(--c-text);
+  color: var(--c-text);
 }
 
 .btn-solid {
@@ -1760,14 +1818,14 @@ main {
 }
 
 .btn-solid:hover {
-  background: var(--c-accent);
-  border-color: var(--c-accent);
+  background: #000;
+  border-color: #000;
 }
 
 .btn-accent {
   background: var(--c-accent);
   border-color: var(--c-accent);
-  color: var(--c-bg);
+  color: #fff;
 }
 
 .btn-accent:hover {
@@ -1799,17 +1857,37 @@ dialog::backdrop {
   backdrop-filter: blur(6px);
 }
 
-.done-mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
+/* 완료 표시는 체크가 아니라 진행 표시의 끝 상태다.
+   같은 능선 셋이 앞으로 나온 모습 — 멀던 것이 다 가까워졌다. */
+.done-ridges {
+  position: relative;
+  width: 6rem;
+  height: 2.1rem;
   margin: 0 auto var(--gap-block);
-  border: 1px solid var(--c-accent);
-  border-radius: 999px;
-  color: var(--c-accent);
-  font-size: 1rem;
+  overflow: hidden;
+}
+
+/* 진행 중에는 한 봉우리만 가깝지만, 끝나면 셋이 모두 제자리를 얻는다.
+   상자 안에 다 들어오도록 폭을 다시 잡는다. */
+.done-ridges .pridge:nth-child(1) {
+  left: 0;
+  width: 48%;
+  height: 74%;
+  opacity: 0.95;
+}
+
+.done-ridges .pridge:nth-child(2) {
+  left: 26%;
+  width: 48%;
+  height: 100%;
+  opacity: 0.72;
+}
+
+.done-ridges .pridge:nth-child(3) {
+  left: 52%;
+  width: 48%;
+  height: 62%;
+  opacity: 0.5;
 }
 
 dialog h2 {
