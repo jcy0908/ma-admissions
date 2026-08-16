@@ -1458,3 +1458,451 @@ main {
     --c-muted: #bcc4c4;
   }
 }
+/* ==========================================================================
+   지원 폼 — 유리판 위에 놓인 종이
+   ========================================================================== */
+
+.apply {
+  max-width: var(--w-content);
+}
+
+.apply-note {
+  margin: 0 0 var(--gap-block);
+  max-width: 38ch;
+  color: var(--c-muted);
+  font-size: 0.92rem;
+}
+
+.save-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: var(--gap-block);
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  font-size: 0.84rem;
+}
+
+.save-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 999px;
+  background: var(--c-accent);
+  color: var(--c-bg);
+  font-size: 0.62rem;
+  flex-shrink: 0;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-inline);
+  margin-bottom: clamp(3rem, 7vw, 4.5rem);
+}
+
+.progress-step {
+  font-weight: 400;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-muted);
+}
+
+.progress-track {
+  flex: 1;
+  height: 1px;
+  background: var(--c-hairline);
+}
+
+.progress-fill {
+  height: 1px;
+  width: 33.3%;
+  background: var(--c-text);
+  transition: width 0.3s ease;
+}
+
+.form-step {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.step-title {
+  padding: 0;
+  margin: 0 0 var(--gap-hairline);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.step-desc {
+  margin: 0 0 clamp(2.5rem, 6vw, 3.5rem);
+  max-width: 38ch;
+  font-size: 0.9rem;
+  color: var(--c-muted);
+}
+
+.field {
+  margin-bottom: var(--gap-field);
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+/* 입력창도 유리 */
+.field textarea,
+.field input[type="url"],
+.field select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  color: var(--c-text);
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.85;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.field textarea:focus,
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--c-accent);
+  background: var(--glass-bg-strong);
+}
+
+.field ::placeholder {
+  color: var(--c-muted);
+}
+
+.field select {
+  appearance: none;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--c-muted) 50%),
+    linear-gradient(135deg, var(--c-muted) 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(50% + 2px), calc(100% - 15px) calc(50% + 2px);
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.counter {
+  margin: var(--gap-hairline) 0 0;
+  text-align: right;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-muted);
+}
+
+.counter.is-warning {
+  color: var(--c-accent);
+}
+
+.hint {
+  margin: var(--gap-hairline) 0 0;
+  font-size: 0.78rem;
+  line-height: 1.8;
+  color: var(--c-muted);
+}
+
+.field-error {
+  margin: var(--gap-hairline) 0 0;
+  font-size: 0.82rem;
+  color: var(--c-error);
+}
+
+.form-error {
+  margin-bottom: var(--gap-inline);
+}
+
+/* 파일 업로드 */
+.file-row {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-inline);
+}
+
+.file-name {
+  flex: 1;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  font-size: 0.95rem;
+  color: var(--c-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-name.has-file {
+  color: var(--c-text);
+}
+
+.file-btn {
+  padding: 0.75rem 1.4rem;
+  border: 1px solid var(--c-text);
+  border-radius: var(--radius);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.file-btn:hover {
+  background: var(--c-text);
+  color: var(--c-bg);
+}
+
+/* 요약 — 유리판 */
+.summary {
+  margin: 0 0 var(--gap-block);
+  padding: 0.2rem 1.3rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+
+.summary > div {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: var(--gap-inline);
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--c-hairline-soft);
+}
+
+.summary > div:last-child {
+  border-bottom: none;
+}
+
+.summary dt {
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+.summary dd {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.summary dd.empty {
+  color: var(--c-muted);
+}
+
+/* 버튼 */
+.form-nav {
+  display: flex;
+  gap: var(--gap-inline);
+  margin-top: clamp(3rem, 7vw, 4.5rem);
+}
+
+.btn {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  color: var(--c-text);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-ghost:hover {
+  background: var(--glass-bg-strong);
+}
+
+.btn-solid {
+  background: var(--c-text);
+  border-color: var(--c-text);
+  color: var(--c-bg);
+}
+
+.btn-solid:hover {
+  background: var(--c-accent);
+  border-color: var(--c-accent);
+}
+
+.btn-accent {
+  background: var(--c-accent);
+  border-color: var(--c-accent);
+  color: var(--c-bg);
+}
+
+.btn-accent:hover {
+  background: var(--c-accent-hover);
+  border-color: var(--c-accent-hover);
+}
+
+/* ==========================================================================
+   제출 시트 — 아래에서 올라오고, 잡아서 내릴 수 있다
+   ========================================================================== */
+
+dialog {
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: clamp(2.5rem, 6vw, 3.5rem) 2rem 2rem;
+  max-width: 22rem;
+  width: calc(100vw - 3rem);
+  text-align: center;
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  backdrop-filter: blur(30px) saturate(150%);
+  box-shadow: 0 24px 64px rgba(28, 35, 37, 0.16);
+  color: var(--c-text);
+}
+
+dialog::backdrop {
+  background: rgba(28, 35, 37, 0.28);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.done-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin: 0 auto var(--gap-block);
+  border: 1px solid var(--c-accent);
+  border-radius: 999px;
+  color: var(--c-accent);
+  font-size: 1rem;
+}
+
+dialog h2 {
+  margin: 0 0 var(--gap-inline);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.done-desc {
+  margin: 0 0 clamp(2rem, 5vw, 2.5rem);
+  font-size: 0.85rem;
+  line-height: 1.85;
+  color: var(--c-muted);
+}
+
+dialog .btn {
+  width: 100%;
+}
+
+/* 제출 시트 — 잡을 수 있다는 걸 손잡이로 알린다 */
+.sheet-grabber {
+  width: 2.2rem;
+  height: 4px;
+  margin: -1.2rem auto 1.4rem;
+  border-radius: 999px;
+  background: var(--c-muted);
+  opacity: 0.4;
+}
+
+dialog {
+  /* 드래그가 스크롤로 새지 않게, 그리고 합성 레이어로 올린다 */
+  touch-action: none;
+  will-change: transform;
+}
+
+/* 시트가 내려가는 만큼 스크림도 함께 옅어진다 — 진행이 계속 보여야 한다 */
+dialog::backdrop {
+  background: rgba(28, 35, 37, calc(0.28 * var(--sheet-progress, 1)));
+}
+
+/* 폼 버튼도 누르는 즉시 반응한다 (기존 .is-pressed 관례와 동일) */
+.btn,
+.file-btn {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    transform 0.1s ease-out;
+  touch-action: manipulation;
+}
+
+.btn.is-pressed,
+.file-btn.is-pressed {
+  transform: scale(0.975);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn.is-pressed,
+  .file-btn.is-pressed {
+    transform: none;
+  }
+
+  .sheet-grabber {
+    display: none;
+  }
+
+  dialog {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .form-nav {
+    flex-direction: column-reverse;
+  }
+
+  .summary > div {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}
+
+/* ==========================================================================
+   보정
+   ========================================================================== */
+
+/* hidden 속성은 UA 스타일시트의 display:none으로 동작하는데, 작성자가 쓴
+   display 선언이 그것을 이긴다. .save-banner가 display:flex라 hidden이 걸려도
+   빈 배너가 보였다. 앞으로 같은 실수를 막기 위해 전역으로 못박는다. */
+[hidden] {
+  display: none !important;
+}
+
+/* 헤더가 sticky(77.5px)라서 앵커로 이동하면 제목이 헤더 밑에 깔린다.
+   지원 폼의 단계 이동도 scrollIntoView를 쓰므로 같은 문제를 겪는다. */
+.section[id] {
+  scroll-margin-top: 6rem;
+}
