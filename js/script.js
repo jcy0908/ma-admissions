@@ -14,11 +14,17 @@ import {
   prefersReducedMotion,
 } from './fluid.js';
 
+// HTML은 완성된 본문을 먼저 제공한다. 동작 코드가 실제로 도착한 뒤에만
+// 실험·필터처럼 JavaScript가 필요한 조작부를 노출한다.
+document.documentElement.classList.add('enhanced');
+
 // ==========================================================================
 // 1. 즉각 반응 — 반응은 click이 아니라 pointerdown에서
 // ==========================================================================
 
-document.querySelectorAll('.header-cta, .hero-scroll, .plate-credit, .wordmark, .site-nav a').forEach((el) => {
+document.querySelectorAll(
+  '.header-cta, .hero-scroll, .plate-credit, .wordmark, .site-nav a, .lens-filter button, .lab-reset'
+).forEach((el) => {
   el.addEventListener('pointerdown', () => el.classList.add('is-pressed'));
   ['pointerup', 'pointercancel', 'pointerleave'].forEach((evt) =>
     el.addEventListener(evt, () => el.classList.remove('is-pressed'))
@@ -131,8 +137,12 @@ if (strip && track) {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
     e.preventDefault();
     index = Math.max(0, Math.min(snapPoints.length - 1, index + (e.key === 'ArrowRight' ? 1 : -1)));
-    if (prefersReducedMotion()) trackSpring.setValue(snapPoints[index]);
-    else trackSpring.setTarget(snapPoints[index]);
+    if (prefersReducedMotion()) {
+      trackSpring.setValue(0);
+      strip.scrollTo({ left: Math.abs(snapPoints[index]), behavior: 'auto' });
+    } else {
+      trackSpring.setTarget(snapPoints[index]);
+    }
   });
 
   measure();
@@ -153,22 +163,141 @@ if (strip && track) {
 // ==========================================================================
 
 const header = document.getElementById('site-header');
-if (header) {
-  let ticking = false;
-  const sync = () => {
-    header.classList.toggle('is-overlapping', window.scrollY > 4);
-    ticking = false;
-  };
-  addEventListener(
-    'scroll',
-    () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(sync);
+const hero = document.querySelector('.hero');
+const scrollStory = document.querySelector('[data-scroll-story]');
+const storyTurns = scrollStory ? [...scrollStory.querySelectorAll('.turn')] : [];
+const reducedMotionQuery = matchMedia('(prefers-reduced-motion: reduce)');
+let storyInView = !('IntersectionObserver' in window);
+let pageMotionTicking = false;
+let heroMotionSettled = false;
+
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+const syncPageMotion = () => {
+  header?.classList.toggle('is-overlapping', window.scrollY > 4);
+
+  if (reducedMotionQuery.matches) {
+    hero?.style.removeProperty('--hero-shift');
+    hero?.style.removeProperty('--hero-opacity');
+    storyTurns.forEach((turn) => {
+      turn.style.removeProperty('--turn-focus');
+      turn.style.removeProperty('--turn-shift');
+      turn.style.removeProperty('--turn-opacity');
+      turn.style.removeProperty('--turn-body-opacity');
+    });
+    pageMotionTicking = false;
+    return;
+  }
+
+  if (hero) {
+    const heroHeight = Math.max(hero.offsetHeight, 1);
+    if (window.scrollY <= heroHeight || !heroMotionSettled) {
+      const progress = clamp(window.scrollY / heroHeight, 0, 1);
+      hero.style.setProperty('--hero-shift', `${(progress * 28).toFixed(2)}px`);
+      hero.style.setProperty('--hero-opacity', (1 - progress * 0.34).toFixed(3));
+      heroMotionSettled = progress === 1;
+    }
+  }
+
+  if (storyInView && storyTurns.length) {
+    const viewportAnchor = window.innerHeight * 0.42;
+    storyTurns.forEach((turn) => {
+      const rect = turn.getBoundingClientRect();
+      const turnAnchor = rect.top + Math.min(rect.height * 0.32, window.innerHeight * 0.32);
+      const focus = clamp(1 - Math.abs(turnAnchor - viewportAnchor) / (window.innerHeight * 0.82), 0, 1);
+      turn.style.setProperty('--turn-focus', focus.toFixed(3));
+      turn.style.setProperty('--turn-shift', `${((1 - focus) * 12).toFixed(2)}px`);
+      turn.style.setProperty('--turn-opacity', (0.82 + focus * 0.18).toFixed(3));
+      turn.style.setProperty('--turn-body-opacity', '1');
+    });
+  }
+
+  pageMotionTicking = false;
+};
+
+const requestPageMotion = () => {
+  if (pageMotionTicking) return;
+  pageMotionTicking = true;
+  requestAnimationFrame(syncPageMotion);
+};
+
+addEventListener('scroll', requestPageMotion, { passive: true });
+addEventListener('resize', requestPageMotion, { passive: true });
+reducedMotionQuery.addEventListener?.('change', requestPageMotion);
+
+if (scrollStory && 'IntersectionObserver' in window) {
+  new IntersectionObserver(
+    ([entry]) => {
+      storyInView = entry.isIntersecting;
+      if (storyInView) requestPageMotion();
     },
-    { passive: true }
+    { rootMargin: '35% 0px' }
+  ).observe(scrollStory);
+}
+
+requestPageMotion();
+
+// 현재 읽는 장을 내비게이션에 조용히 표시한다. 본문 구조 자체는 바꾸지 않는다.
+if ('IntersectionObserver' in window) {
+  const navLinks = [...document.querySelectorAll('.site-nav a[href^="#"]')];
+  const navSections = navLinks
+    .map((link) => ({ link, section: document.querySelector(link.getAttribute('href')) }))
+    .filter(({ section }) => section);
+  const visibleSections = new Set();
+
+  const syncCurrentSection = () => {
+    const current = navSections
+      .filter(({ section }) => visibleSections.has(section))
+      .sort((a, b) =>
+        Math.abs(a.section.getBoundingClientRect().top - window.innerHeight * 0.28)
+        - Math.abs(b.section.getBoundingClientRect().top - window.innerHeight * 0.28)
+      )[0];
+
+    if (!current) return;
+    navLinks.forEach((link) => {
+      if (link === current.link) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  };
+
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) visibleSections.add(entry.target);
+        else visibleSections.delete(entry.target);
+      });
+      syncCurrentSection();
+    },
+    { rootMargin: '-18% 0px -62% 0px', threshold: 0 }
   );
-  sync();
+
+  navSections.forEach(({ section }) => sectionObserver.observe(section));
+}
+
+// 사진은 HTML에서 즉시 존재한다. JS가 정상 동작하고 모션을 허용한 경우에만
+// 한 번의 짧은 재료화(reveal)를 더한다.
+if (!reducedMotionQuery.matches && 'IntersectionObserver' in window) {
+  const media = [...document.querySelectorAll('.plate-media')];
+  media.forEach((item) => {
+    const rect = item.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 1.08 && rect.bottom > -window.innerHeight * 0.08) {
+      item.classList.add('is-visible');
+    }
+  });
+  document.documentElement.classList.add('motion-ready');
+
+  const mediaObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    },
+    { rootMargin: '12% 0px', threshold: 0.08 }
+  );
+
+  media.filter((item) => !item.classList.contains('is-visible')).forEach((item) => mediaObserver.observe(item));
 }
 
 // ==========================================================================
