@@ -6,13 +6,26 @@
 //   3. 풍경의 성질을 수치로 바꾸는 번역 실험
 //   4. 열여덟 지역을 다시 읽는 디자인 렌즈
 
-import {
-  Spring,
-  project,
-  rubberband,
-  VelocityTracker,
-  prefersReducedMotion,
-} from './fluid.js';
+// 물리(스프링·모멘텀 투영·러버밴딩·속도 추적)는 C++로 쓰여 WebAssembly로
+// 빌드된 모듈이 맡습니다(js/fluid.wasm, 5KB). 받지 못하면 같은 API의 JS
+// 구현으로 되돌아가고 움직임은 달라지지 않습니다.
+//
+// 두 경로가 같은 값을 낸다는 것은 tools/wasm_equivalence.mjs가 확인합니다.
+// C++ 원본은 jcy0908/fluid-landing의 cpp/에 있습니다.
+let engine = 'JavaScript';
+let fluid;
+try {
+  fluid = await import('./fluid-wasm.js');
+  await fluid.loadFluidWasm();
+  engine = 'WebAssembly (C++)';
+} catch (err) {
+  fluid = await import('./fluid.js');
+}
+
+const { Spring, project, rubberband, VelocityTracker, prefersReducedMotion } = fluid;
+
+// 무엇이 이 화면을 움직이는지 콘솔에 남깁니다. 숨길 이유가 없습니다.
+console.info(`MA — 모션 엔진: ${engine}`);
 
 // ==========================================================================
 // 1. 즉각 반응 — 반응은 click이 아니라 pointerdown에서

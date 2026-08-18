@@ -57,6 +57,31 @@
 - 라이트·다크 모드, 고대비, 모션 축소, 투명도 축소, 인쇄 스타일 대응
 - JavaScript가 꺼져도 모든 본문과 지역 정보가 보이는 점진적 향상 구조
 
+## 모션 물리 — C++ / WebAssembly
+
+스프링, 모멘텀 투영, 러버밴딩, 속도 추적은 C++로 작성되어 WebAssembly로
+빌드된 모듈(`js/fluid.wasm`, 5.4KB)이 맡습니다. Emscripten을 쓰지 않고 clang의
+wasm32 타깃과 `wasm-ld`만으로 빌드해 런타임도 글루 코드도 없습니다.
+
+| | |
+| --- | --- |
+| wasm (C++) | 값이 어떻게 변하는지 — 물리 |
+| JavaScript | `requestAnimationFrame`, 가시성, 콜백 — 시계를 얻는 방법 |
+
+받지 못하면 같은 API의 JS 구현(`js/fluid.js`)으로 되돌아가고 움직임은
+달라지지 않습니다.
+
+```bash
+node tools/wasm_equivalence.mjs
+```
+
+두 구현을 같은 가상 시계로 돌려 프레임마다 대조합니다. 네 시나리오
+240프레임과 순수 함수까지 20개 항목, 허용 오차 상대 `1e-9`.
+
+C++ 원본과 빌드 스크립트는 [jcy0908/fluid-landing](https://github.com/jcy0908/fluid-landing)의
+`cpp/`에 있습니다. 이 저장소에는 빌드 산출물과 대조 테스트만 둡니다 — 두
+구현이 갈라지면 위 테스트가 그 자리에서 깨집니다.
+
 ## 실행
 
 빌드 과정과 패키지 설치가 필요 없습니다.
