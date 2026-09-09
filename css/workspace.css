@@ -270,3 +270,41 @@ h1,h2,h3,p { text-wrap:pretty; }
 @media(prefers-reduced-motion:reduce) {
  .index-list li,.region-photo-open,.region-detail summary { transition:none; }
 }
+
+/* The same regional imagery follows a place into plans and saved collections. */
+.journey-recommend { min-width:0; padding:0 0 .8rem; border-top:0; border-bottom:1px solid var(--rule-soft); }
+.journey-recommend-photo { display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; border-radius:var(--radius-control); margin-bottom:.7rem; }
+.journey-recommend-copy { display:block; min-width:0; }
+.journey-recommend[aria-pressed=true] .journey-recommend-photo { outline:2px solid var(--ink); outline-offset:3px; }
+.journey-photo-note { grid-column:1/-1; margin:0; color:var(--ink-soft); font-size:.6875rem; line-height:1.6; }
+.journey-photo-note a { text-underline-offset:3px; }
+.workspace-photo { width:100%; min-width:0; margin:0 0 1.5rem; }
+.workspace-photo .region-photo-open { border-radius:var(--radius-surface); }
+.workspace-photo img { display:block; width:100%; max-width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; filter:none; }
+.workspace-photo figcaption { margin:.65rem 0 0; line-height:1.5; }
+.workspace-photo figcaption strong { display:block; color:var(--ink); font-size:.8125rem; font-weight:500; }
+.journey-plan-photo { margin-bottom:1.75rem; }
+.journey-plan-photo img { max-height:18rem; }
+#bc-journey-photo:not(:empty) { margin-top:1rem; }
+.bc-saved-trip-photo img { aspect-ratio:4/3; }
+.bc-list>.bc-saved-region { align-items:center; padding:.85rem 0; border-bottom:1px solid var(--rule-soft); }
+.bc-saved-region-main { flex:1; min-width:0; }
+.bc .bc-saved-region-link { display:flex; align-items:center; gap:1rem; min-width:0; font-size:1rem; }
+.bc-saved-region-link .workspace-thumbnail { display:block; flex:none; width:88px; height:66px; object-fit:cover; border-radius:var(--radius-control); }
+.bc-saved-region-link span { min-width:0; overflow-wrap:anywhere; }
+.bc .workspace-photo-source { display:block; width:fit-content; margin:.35rem 0 0 104px; color:var(--ink-soft); font-size:.625rem; text-underline-offset:3px; }
+.bc-list>.bc-saved-empty { display:block; padding:.8rem 0 0; border:0; }
+.bc-empty-photo { margin-bottom:1rem; }
+.bc-empty-photo img { max-height:14rem; }
+.bc .workspace-photo .region-photo-credit { font-size:.6875rem; }
+.bc .workspace-photo .region-photo-credit a { color:var(--ink-soft); font-size:inherit; text-decoration:underline; }
+@media(max-width:420px) {
+ .bc-saved-region-link .workspace-thumbnail { width:72px; height:58px; }
+ .bc .bc-saved-region-link { gap:.75rem; }
+ .bc .workspace-photo-source { margin-left:84px; }
+ .journey-recommend-photo { aspect-ratio:1; }
+}
+@media print {
+ .journey-photo-note { display:none; }
+ .journey-plan-photo { max-width:22rem; break-inside:avoid; }
+}
