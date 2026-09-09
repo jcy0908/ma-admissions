@@ -99,3 +99,34 @@ python3 -m http.server 8000
 
 생성형 AI를 사용하지 않은 단독 제작물로 주장하지 않습니다. 사진 역시 제작자가 직접
 촬영한 것으로 주장하지 않으며, 모든 공개 이미지의 출처를 개별 표기합니다.
+
+## 회원가입 · 로그인 (Supabase Auth)
+
+헤더의 회원가입 버튼에서 이메일 회원가입, 로그인, 현재 기기 로그아웃,
+비밀번호 재설정을 이용합니다. 기존 본문은 로그인 없이 그대로 볼 수 있습니다.
+브라우저 인증 SDK는 `@supabase/supabase-js@2.116.0`으로 고정했습니다.
+`js/auth.js`에는 공개용 publishable key만 포함하며 관리자 키는 사용하지 않습니다.
+사용자는 Supabase Auth에 저장되고 별도 공개 회원 테이블은 만들지 않습니다.
+
+### 배포 전 인증 설정
+
+Supabase 프로젝트 `vwvkonfvwdkdvnjedbnx`의 Authentication 설정에서 다음을 확인합니다.
+
+1. URL Configuration의 Site URL을 실제 운영 주소로 설정합니다.
+2. Redirect URLs에 운영 주소의 `/`와 `/index.html`,
+   `https://jcy0908.github.io/ma-admissions/`,
+   `https://jcy0908.github.io/ma-admissions/index.html`을 등록합니다.
+3. 이메일 확인을 사용할 경우, 일반 방문자에게 발송 가능한 Custom SMTP를 연결합니다.
+   Supabase 기본 메일 서버는 프로젝트 팀원 주소에만 발송하며 제한이 있으므로
+   공개 회원가입용 메일 서버로 사용할 수 없습니다.
+4. 실제 메일함으로 가입 → 인증 → 로그인 → 새로고침 → 로그아웃과
+   비밀번호 재설정 링크 → 새 비밀번호 로그인 과정을 확인합니다.
+
+참고: https://supabase.com/docs/guides/auth/auth-smtp
+
+### Vercel
+
+프레임워크는 Other, 빌드 명령과 설치 명령은 비워 둡니다.
+`vercel.json`은 정적 배포를 지원하고, 이미지가 배포에 포함되지 않은 경우
+기존 GitHub Pages의 `/img/` 자료를 가져오는 rewrite를 제공합니다.
+GitHub Pages에서도 동일한 HTML/CSS/JavaScript가 동작합니다.

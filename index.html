@@ -23,6 +23,7 @@
 <meta name="theme-color" content="#eef1f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1c2325" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="css/style.css?v=20260818-apple-web">
+<link rel="stylesheet" href="css/auth.css?v=20260909">
 </head>
 <body id="top">
 
@@ -44,7 +45,10 @@
     <a href="#regions">지역</a>
     <a href="#making">비평</a>
   </nav>
-  <a class="header-cta" href="#brief"><span>프로젝트 보기</span><i aria-hidden="true">↘</i></a>
+  <div class="account-actions">
+    <a class="header-cta" href="#brief"><span>프로젝트 보기</span><i aria-hidden="true">↘</i></a>
+    <button class="account-button" id="account-button" type="button" aria-haspopup="dialog" aria-controls="auth-dialog">회원가입</button>
+  </div>
 </header>
 
 <main id="content" tabindex="-1">
@@ -653,6 +657,40 @@
     생성형 AI는 구조 대안, 문장 작성·검토, 코드 구현·리뷰에 사용했고 최종 판단과 승인은 제작자가 맡았습니다.
   </p>
 </footer>
+
+
+<dialog class="auth-dialog" id="auth-dialog" aria-labelledby="auth-title" aria-describedby="auth-description">
+  <div class="auth-heading">
+    <h2 id="auth-title">회원가입</h2>
+    <button class="auth-close" id="auth-close" type="button" aria-label="닫기">×</button>
+  </div>
+  <p class="auth-description" id="auth-description">이메일로 MA 계정을 만드세요.</p>
+  <form class="auth-form" id="auth-form" method="post">
+    <label class="auth-field">이메일
+      <input id="auth-email" type="email" name="email" autocomplete="email" inputmode="email" maxlength="254" required>
+    </label>
+    <label class="auth-field">비밀번호
+      <input id="auth-password" type="password" name="password" autocomplete="new-password" minlength="8" maxlength="128" aria-describedby="auth-password-hint" required>
+      <span class="auth-note" id="auth-password-hint">8자 이상 입력해 주세요.</span>
+    </label>
+    <label class="auth-field">비밀번호 확인
+      <input id="auth-confirmation" type="password" name="password-confirmation" autocomplete="new-password" minlength="8" maxlength="128" required>
+    </label>
+    <button class="auth-primary" id="auth-submit" type="submit">계정 만들기</button>
+  </form>
+  <div id="auth-account" hidden>
+    <p class="auth-email" id="auth-account-email"></p>
+    <button class="auth-primary" id="auth-logout" type="button">로그아웃</button>
+  </div>
+  <p class="auth-status" id="auth-status" role="status" aria-live="polite" aria-atomic="true"></p>
+  <div class="auth-links">
+    <button class="auth-link" id="auth-switch" type="button">이미 계정이 있나요? 로그인</button>
+    <button class="auth-link" id="auth-reset" type="button" hidden>비밀번호 찾기</button>
+  </div>
+</dialog>
+<noscript><p class="auth-note">회원가입과 로그인에는 JavaScript가 필요합니다.</p></noscript>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js" crossorigin="anonymous"></script>
+<script defer src="js/auth.js?v=20260909"></script>
 
 <script type="module" src="js/script.js?v=20260818-apple-web"></script>
 </body>
