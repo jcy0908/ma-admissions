@@ -198,6 +198,7 @@
       'sb_publishable_P-wSRxT8hvg3ETN2LgTCSA_PpSCbMyy',
       { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'implicit' } }
     );
+    window.MA_SUPABASE_CLIENT = client;
     // Synchronous callback: avoid auth API calls inside this subscription.
     client.auth.onAuthStateChange((event, session) => {
       user = session?.user || null;
