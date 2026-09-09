@@ -74,7 +74,7 @@
   }
   async function toggle(kind,id){const arr=state[kind];await save({...state,[kind]:arr.includes(id)?arr.filter(x=>x!==id):[...arr,id]},arr.includes(id)?'보관함에서 해제했습니다.':'보관함에 담았습니다.');}
   function download(name,content,type='application/json'){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-  function openAuth(mode){authMode=mode||'signup';renderAuth();if(!dialog.open)dialog.showModal();}
+  function openAuth(mode){authMode=mode||(authMode==='reset'?'reset':'signup');renderAuth();if(!dialog.open)dialog.showModal();}
   function authMessage(s){const e=$('#bc-auth-message');if(e)e.textContent=s;}
   function renderAuth(){
     if(user&&authMode!=='reset'){dialog.innerHTML=`<div class="bc-head"><h2 id="bc-auth-title">내 계정</h2><button class="bc-close" data-close aria-label="닫기">×</button></div><p class="bc-note">${esc(user.email)}</p><p class="bc-auth-message" id="bc-auth-message" role="status"></p><div class="bc-stack" style="margin-top:22px"><button class="bc-btn" id="bc-reload">계정 기록 다시 불러오기</button><button class="bc-btn" id="bc-import">이 기기의 방문자 기록 가져오기</button><button class="bc-btn" id="bc-export">내 기록 내려받기</button><button class="bc-btn" id="bc-signout">로그아웃</button></div><p class="bc-note bc-modal-foot">네 사이트에서 같은 이메일과 비밀번호를 사용할 수 있습니다. 사이트 주소가 다르면 각각 로그인해 주세요.</p>`;
@@ -93,20 +93,21 @@
   }
   function redirectUrl(){const u=new URL(config.home||'./',location.href);u.search='';u.hash='';return u.href;}
   async function submitAuth(event){
-    event.preventDefault();if(!client||!authReady){authMessage('로그인 연결을 준비하지 못했습니다. 페이지를 새로고침하고 다시 시도해 주세요.');return;}
+    event.preventDefault();const actionMode=authMode;if(!client||!authReady){authMessage('로그인 연결을 준비하지 못했습니다. 페이지를 새로고침하고 다시 시도해 주세요.');return;}
     const form=event.currentTarget,button=$('button[type=submit]',form),fd=new FormData(form);button.disabled=true;authMessage('연결 중…');
     try{const email=String(fd.get('email')||'').trim(),password=String(fd.get('password')||'');let result;
-      if(authMode==='signup')result=await client.auth.signUp({email,password,options:{emailRedirectTo:redirectUrl()}});
-      else if(authMode==='forgot')result=await client.auth.resetPasswordForEmail(email,{redirectTo:redirectUrl()});
-      else if(authMode==='reset')result=await client.auth.updateUser({password});
+      if(actionMode==='signup')result=await client.auth.signUp({email,password,options:{emailRedirectTo:redirectUrl()}});
+      else if(actionMode==='forgot')result=await client.auth.resetPasswordForEmail(email,{redirectTo:redirectUrl()});
+      else if(actionMode==='reset')result=await client.auth.updateUser({password});
       else result=await client.auth.signInWithPassword({email,password});
       if(result.error)throw result.error;
-      if(authMode==='forgot')authMessage('등록된 주소라면 재설정 메일이 발송됩니다. 받은 편지함을 확인해 주세요.');
-      else if(authMode==='reset'){authMode='login';dialog.close();loadAccount(result.data.user);toast('비밀번호를 변경했습니다.');}
-      else if(authMode==='signup'&&!result.data.session)authMessage('인증 메일을 확인해 주세요. 메일 인증을 완료한 뒤 로그인할 수 있습니다.');
+      if(actionMode==='forgot')authMessage('등록된 주소라면 재설정 메일이 발송됩니다. 받은 편지함을 확인해 주세요.');
+      else if(actionMode==='reset'){authMode='login';dialog.close();loadAccount(result.data.user);toast('비밀번호를 변경했습니다.');}
+      else if(actionMode==='signup'&&!result.data.session)authMessage('인증 메일을 확인해 주세요. 메일 인증을 완료한 뒤 로그인할 수 있습니다.');
       else{dialog.close();celebrate();toast('로그인했습니다. 내 기록을 불러옵니다.');}
     }catch(error){authMessage(safeError(error));}finally{button.disabled=false;}
   }
+  dialog.addEventListener('close',()=>{$$('input[type=password]',dialog).forEach(input=>input.value='');});
   dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
   document.addEventListener('click',e=>{if(e.target.closest('[data-bc-auth]'))openAuth();});
   $('#bc-open-studio').onclick=()=>{studio.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});};
@@ -178,7 +179,7 @@
   function loadSdk(){return new Promise((resolve,reject)=>{if(window.supabase?.createClient)return resolve();const script=document.createElement('script');script.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js';script.crossOrigin='anonymous';const timer=setTimeout(()=>reject(new Error('SDK timeout')),15000);script.onload=()=>{clearTimeout(timer);resolve();};script.onerror=()=>{clearTimeout(timer);reject(new Error('SDK load failed'));};document.head.append(script);});}
   async function connect(){
     try{await loadSdk();client=window.MA_SUPABASE_CLIENT || window.supabase.createClient(config.supabaseUrl,config.supabasePublishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-      client.auth.onAuthStateChange((event,session)=>{authReady=true;if(event==='PASSWORD_RECOVERY'){if(window.MA_SUPABASE_CLIENT){setTimeout(()=>loadAccount(session?.user||null),0);return;}authMode='reset';openAuth('reset');return;}const next=session?.user||null;if(authMode!=='reset'&&(next?.id!==user?.id||event==='INITIAL_SESSION'))setTimeout(()=>loadAccount(next),0);});
+      client.auth.onAuthStateChange((event,session)=>{authReady=true;if(event==='PASSWORD_RECOVERY'){if(window.MA_SUPABASE_CLIENT){setTimeout(()=>loadAccount(session?.user||null),0);return;}authMode='reset';setTimeout(()=>loadAccount(session?.user||null),0);openAuth('reset');return;}const next=session?.user||null;if(event==='SIGNED_OUT'){authMode='login';setTimeout(()=>{loadAccount(null);if(dialog.open)renderAuth();},0);return;}if(next?.id!==user?.id||event==='INITIAL_SESSION')setTimeout(()=>loadAccount(next),0);});
       const {error}=await client.auth.getSession();if(error)throw error;authReady=true;
       const hash=new URLSearchParams(location.hash.slice(1));if(hash.has('error_description')){openAuth('login');authMessage('인증 링크가 만료되었거나 사용할 수 없습니다. 다시 로그인하거나 비밀번호 찾기를 이용해 주세요.');history.replaceState(null,'',location.pathname+location.search);}
     }catch(e){authReady=false;$('#bc-storage-note').textContent='현재 계정 연결이 원활하지 않습니다. 로그인 없이 쓰는 기능은 이 기기에 저장됩니다.';}
