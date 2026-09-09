@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko" data-palette="aurora">
+<html lang="ko" data-palette="sand">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MA — 강원도 18개 지역을 인터페이스로 번역한 웹 스터디</title>
-<meta name="description" content="공개 사진과 지형 자료에서 강원도 18개 시군의 색·간격·질감을 읽고, 이를 반응형 웹 인터페이스의 규칙으로 번역한 정찬용의 자발적 디자인 스터디.">
+<title>MA — 강원의 풍경과 여행 계획</title>
+<meta name="description" content="강원의 풍경을 읽고 나만의 여행을 계획하세요. 지역 추천, 날짜별 일정 편집, 예상 경비, 개인 기록과 공유를 한곳에서.">
 <link rel="canonical" href="https://jcy0908.github.io/ma-admissions/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="MA — 강원도 18개 지역을 인터페이스로 번역한 웹 스터디">
+<meta property="og:title" content="MA — 강원의 풍경과 여행 계획">
 <meta property="og:description" content="풍경의 인상을 색·간격·경계·리듬이라는 인터페이스 규칙으로 바꾸는 과정을 기록했습니다.">
 <meta property="og:url" content="https://jcy0908.github.io/ma-admissions/">
 <meta property="og:image" content="https://jcy0908.github.io/ma-admissions/img/pyeongchang-daegwallyeong.jpg">
@@ -16,7 +16,7 @@
 <meta property="og:image:height" content="900">
 <meta property="og:image:alt" content="평창 대관령의 능선 풍경">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MA — 강원도를 인터페이스로 번역한 웹 스터디">
+<meta name="twitter:title" content="MA — 강원의 풍경과 여행 계획">
 <meta name="twitter:description" content="18개 지역, 9개 공개 사진, 7개 CSS 장면, 7개 재료로 구성한 반응형 웹 케이스 스터디.">
 <meta name="twitter:image" content="https://jcy0908.github.io/ma-admissions/img/pyeongchang-daegwallyeong.jpg">
 <meta name="twitter:image:alt" content="평창 대관령의 능선 풍경">
@@ -24,8 +24,9 @@
 <meta name="theme-color" content="#1c2325" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="css/style.css?v=20260818-apple-web">
 <link rel="stylesheet" href="css/auth.css?v=20260909">
-<link rel="stylesheet" href="css/palette.css?v=20260909-2">
 <link rel="stylesheet" href="member/studio.css?v=20260909">
+<link rel="stylesheet" href="css/palette.css?v=20260909-3">
+<link rel="stylesheet" href="css/journey.css?v=20260909-3">
 </head>
 <body id="top">
 
@@ -41,11 +42,12 @@
 <header class="site-header" id="site-header">
   <a class="wordmark" href="#top">MA<span class="wordmark-sub">間 · Material · Mind</span></a>
   <nav class="site-nav" aria-label="주요 섹션">
-    <a href="#brief">질문</a>
+    <a href="#journey">여행 계획</a>
+    <a href="#brief">기록</a>
     <a href="#translation">방법</a>
     <a href="#lab">실험</a>
     <a href="#regions">지역</a>
-    <a href="#making">비평</a>
+
   </nav>
   <div class="account-actions">
     <a class="header-cta" href="#brief"><span>프로젝트 보기</span><i aria-hidden="true">↘</i></a>
@@ -69,26 +71,43 @@
     </div>
 
     <div class="hero-body">
-      <p class="hero-eyebrow">강원특별자치도 · 江原</p>
-      <h1 id="hero-title">안개는<br><em>유리가</em> 된다</h1>
-      <p class="hero-tagline">
-        산·물·도시가 만든 열여덟 표정을<br class="br-wide">
-        화면으로 옮기는 법.
-      </p>
-      <p class="hero-meta">Self-initiated responsive web study · 2026 · HTML / CSS / JavaScript</p>
-      <ul class="project-scale" aria-label="프로젝트 규모">
-        <li><strong>18</strong><span>지역</span></li>
-        <li><strong>9</strong><span>공개 사진</span></li>
-        <li><strong>7</strong><span>CSS 장면</span></li>
-        <li><strong>7</strong><span>재료</span></li>
-        <li><strong>0</strong><span>프레임워크</span></li>
-      </ul>
+      <p class="hero-eyebrow">MA · 강원의 풍경과 시간</p>
+      <h1 id="hero-title">머무를 곳과,<br><em>비워둘 시간.</em></h1>
+      <p class="hero-tagline">풍경을 고르고, 하루의 속도를 정하세요.<br>나에게 맞는 여행을 차분히 기록합니다.</p>
+      <div class="hero-links"><a class="hero-primary" href="#journey">여행 계획하기</a><a class="hero-secondary" href="#brief">풍경의 기록 읽기</a></div>
     </div>
+    <figure class="hero-still">
+      <img src="img/cheorwon-hantan.jpg" alt="철원 한탄강의 바위와 물길" width="1200" height="800" fetchpriority="high">
+      <figcaption><span>철원 · 한탄강</span><a href="https://commons.wikimedia.org/wiki/File:Hantan_river_jandogil_(2026-05)_(13).jpg" target="_blank" rel="noopener">Sadopaul · CC BY-SA 4.0</a></figcaption>
+    </figure>
 
     <a class="hero-scroll" href="#gangwon">
       <span>읽기</span>
       <i aria-hidden="true"></i>
     </a>
+  </section>
+
+  <section class="journey" id="journey" aria-labelledby="journey-title">
+    <div class="journey-heading"><p class="section-label">01 / 여행의 밑그림</p><h2 id="journey-title">어떤 하루를 남길까요.</h2><p>장소와 속도를 고르면, 직접 고칠 수 있는 일정이 만들어집니다.</p></div>
+    <div class="journey-layout">
+      <form class="journey-form" id="journey-form">
+        <label>여행지<select name="region"><option value="auto">취향에 맞게 추천받기</option><option value="chuncheon">춘천</option><option value="gangneung">강릉</option><option value="sokcho">속초</option><option value="wonju">원주</option><option value="cheorwon">철원</option><option value="yeongwol">영월</option></select></label>
+        <div class="journey-fields"><label>첫날<input type="date" name="start" required></label><label>마지막 날<input type="date" name="end" required></label></div>
+        <div class="journey-fields"><label>전체 인원<input type="number" name="people" min="1" max="12" value="2" required></label><label>전체 예산 · 원<input type="number" name="budget" min="0" max="100000000" step="1000" value="300000" required></label></div>
+        <fieldset><legend>좋아하는 시간</legend><div class="journey-chips"><label><input type="checkbox" name="style" value="nature" checked>자연</label><label><input type="checkbox" name="style" value="water" checked>물과 바다</label><label><input type="checkbox" name="style" value="culture">문화와 역사</label><label><input type="checkbox" name="style" value="cafe">카페</label><label><input type="checkbox" name="style" value="food">먹거리</label></div></fieldset>
+        <div class="journey-fields"><label>하루의 속도<select name="pace"><option value="slow">여유롭게 · 장소 2곳</option><option value="normal">적당하게 · 장소 3곳</option><option value="full">알차게 · 장소 4곳</option></select></label><label>이동수단<select name="transport"><option value="public">대중교통</option><option value="car">자동차</option><option value="walk">도보 중심</option><option value="taxi">택시</option></select></label></div>
+        <label class="journey-check"><input type="checkbox" name="avoidWalk">가파르거나 오래 걷는 코스 제외</label>
+        <label>꼭 가고 싶은 곳 <span class="journey-muted">선택</span><input name="must" maxlength="300" placeholder="쉼표로 구분해 주세요"></label>
+        <button class="journey-primary" type="submit">나의 일정 만들기</button>
+        <p class="journey-muted">1~7일 일정 · 회원가입 없이도 만들 수 있어요.</p>
+      </form>
+      <div class="journey-workspace">
+        <div id="journey-recommendations" class="journey-recommendations" aria-label="취향에 맞는 지역"></div>
+        <div id="journey-result"><div class="journey-empty"><p class="journey-index">MA / JOURNEY</p><h3>아직 비어 있는 하루.</h3><p>왼쪽에서 여행 조건을 고르세요.<br>계획은 만들고 나서도 얼마든지 바꿀 수 있습니다.</p><button class="journey-text" type="button" id="journey-load">저장한 일정 불러오기</button></div></div>
+        <p id="journey-status" class="journey-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <p class="journey-footnote">공개 관광 정보를 바탕으로 구성한 일정 초안입니다. 운영시간·실제 이동시간·요금을 조회한 결과는 아니며, 계획용 비용은 직접 조정할 수 있습니다.</p>
   </section>
 
   <!-- 프로젝트 질문과 범위 -->
@@ -663,13 +682,13 @@
 
 
 <dialog class="auth-dialog palette-dialog" id="palette-dialog" aria-labelledby="palette-title">
-  <div class="auth-heading"><h2 id="palette-title">나만의 색으로</h2><button class="auth-close" id="palette-close" type="button" aria-label="색상 설정 닫기">×</button></div>
-  <p class="auth-description">원하는 분위기를 선택하세요. 이 브라우저에 저장됩니다.</p>
+  <div class="auth-heading"><h2 id="palette-title">표면의 온도</h2><button class="auth-close" id="palette-close" type="button" aria-label="색상 설정 닫기">×</button></div>
+  <p class="auth-description">빛과 재료의 온도를 고르세요. 선택은 이 브라우저에 남습니다.</p>
   <div class="palette-options" role="group" aria-label="사이트 색상">
-    <button class="palette-option" type="button" data-palette-choice="aurora" aria-pressed="true"><span class="palette-preview preview-aurora" aria-hidden="true"></span><strong>오로라</strong><small>보라 · 청록 · 핑크</small></button>
-    <button class="palette-option" type="button" data-palette-choice="ocean" aria-pressed="false"><span class="palette-preview preview-ocean" aria-hidden="true"></span><strong>오션</strong><small>블루 · 민트 · 바이올렛</small></button>
-    <button class="palette-option" type="button" data-palette-choice="sunset" aria-pressed="false"><span class="palette-preview preview-sunset" aria-hidden="true"></span><strong>선셋</strong><small>오렌지 · 로즈 · 라일락</small></button>
-    <button class="palette-option" type="button" data-palette-choice="original" aria-pressed="false"><span class="palette-preview preview-original" aria-hidden="true"></span><strong>기존 색상</strong><small>안개 · 돌 · 이끼</small></button>
+    <button class="palette-option" type="button" data-palette-choice="sand" aria-pressed="true"><span class="palette-preview preview-sand" aria-hidden="true"></span><strong>모래</strong><small>밝은 바탕 · 부드러운 돌빛</small></button>
+    <button class="palette-option" type="button" data-palette-choice="moss" aria-pressed="false"><span class="palette-preview preview-moss" aria-hidden="true"></span><strong>이끼</strong><small>옅은 녹색 · 깊은 잎빛</small></button>
+    <button class="palette-option" type="button" data-palette-choice="ink" aria-pressed="false"><span class="palette-preview preview-ink" aria-hidden="true"></span><strong>먹빛</strong><small>차가운 회색 · 푸른 먹색</small></button>
+    <button class="palette-option" type="button" data-palette-choice="clay" aria-pressed="false"><span class="palette-preview preview-clay" aria-hidden="true"></span><strong>흙</strong><small>붉은 기의 흙 · 마른 나무</small></button>
   </div>
   <p class="auth-status" id="palette-status" role="status" aria-live="polite"></p>
 </dialog>
@@ -710,10 +729,11 @@
 <noscript><p class="auth-note">회원가입과 로그인에는 JavaScript가 필요합니다.</p></noscript>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js" crossorigin="anonymous"></script>
 <script defer src="js/auth.js?v=20260909-2"></script>
-<script defer src="js/palette.js?v=20260909-2"></script>
+<script defer src="js/palette.js?v=20260909-3"></script>
 
 <script type="module" src="js/script.js?v=20260818-apple-web"></script>
 <script src="member/config.js?v=20260909" defer></script>
-<script src="member/studio.js?v=20260909" defer></script>
+<script src="member/studio.js?v=20260909-3" defer></script>
+<script type="module" src="js/journey.js?v=20260909-3"></script>
 </body>
 </html>

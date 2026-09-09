@@ -8,7 +8,7 @@
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
-  const empty = () => ({ bookmarks: [], read: [], checklist: [], notes: {}, preset: null, rsvp: null });
+  const empty = () => ({ bookmarks: [], read: [], checklist: [], notes: {}, preset: null, rsvp: null, journey: null });
   const normalize = v => ({...empty(), ...(v && typeof v === 'object' && !Array.isArray(v) ? v : {}), bookmarks: Array.isArray(v?.bookmarks) ? v.bookmarks.filter(x => typeof x === 'string') : [], read: Array.isArray(v?.read) ? v.read.filter(x => typeof x === 'string') : [], checklist: Array.isArray(v?.checklist) ? v.checklist.filter(x => typeof x === 'string') : [], notes: v?.notes && typeof v.notes === 'object' && !Array.isArray(v.notes) ? v.notes : {} });
   const guestKey = `bootcamp:${site}:guest:v1`;
   function guest() { try { return normalize(JSON.parse(localStorage.getItem(guestKey))); } catch { return empty(); } }
@@ -25,7 +25,7 @@
   studio.id = 'bc-studio'; studio.className = 'bc bc-studio'; studio.dataset.site = site;
   studio.setAttribute('aria-labelledby', 'bc-title');
   studio.innerHTML = `<div class="bc-head"><div><p class="bc-eyebrow">${eyebrow}</p><h2 id="bc-title">${title}</h2><p class="bc-sub">${description}</p></div><span class="bc-status" id="bc-storage-status">이 기기에 저장</span></div><div id="bc-content"></div><div class="bc-row" style="margin-top:24px"><button class="bc-btn bc-btn-primary" data-bc-auth>회원가입 · 로그인</button><p class="bc-note" id="bc-storage-note">로그인하면 내 기록을 다른 기기에서도 이어볼 수 있어요.</p></div>`;
-  const anchor = site === 'invitation' ? $('#location') : $('.hero');
+  const anchor = site === 'invitation' ? $('#location') : site === 'ma-admissions' ? ($('#journey') || $('.hero')) : $('.hero');
   if (anchor) anchor.insertAdjacentElement(site === 'invitation' ? 'beforebegin' : 'afterend', studio);
   else ($('main') || document.body).prepend(studio);
   const floating = document.createElement('div');floating.className = 'bc bc-float';floating.dataset.site = site;
@@ -35,7 +35,7 @@
   const dialog = document.createElement('dialog');dialog.className='bc bc-dialog';dialog.dataset.site=site;dialog.setAttribute('aria-labelledby','bc-auth-title');document.body.append(dialog);
   const panel = $('#bc-content');
   function toast(message) { clearTimeout(toastTimer);toastEl.textContent=message;toastEl.hidden=false;toastTimer=setTimeout(()=>toastEl.hidden=true,4500); }
-  function celebrate() { if(matchMedia('(prefers-reduced-motion: reduce)').matches)return; for(let i=0;i<18;i++){const p=document.createElement('i');p.className='bc-spark';p.style.cssText=`left:${50+(Math.random()-.5)*20}%;top:45%;background:${['#adc4ff','#e2c091','#b0d8bd'][i%3]};--dx:${(Math.random()-.5)*330}px;--dy:${70+Math.random()*200}px`;document.body.append(p);setTimeout(()=>p.remove(),950);} }
+  function celebrate() { if(site==='ma-admissions')return; if(matchMedia('(prefers-reduced-motion: reduce)').matches)return; for(let i=0;i<18;i++){const p=document.createElement('i');p.className='bc-spark';p.style.cssText=`left:${50+(Math.random()-.5)*20}%;top:45%;background:${['#adc4ff','#e2c091','#b0d8bd'][i%3]};--dx:${(Math.random()-.5)*330}px;--dy:${70+Math.random()*200}px`;document.body.append(p);setTimeout(()=>p.remove(),950);} }
   function safeError(error) {
     const code=error?.code || '';const msg=String(error?.message||'');
     if(code==='invalid_credentials'||/Invalid login credentials/i.test(msg))return '이메일 또는 비밀번호를 확인해 주세요.';
@@ -79,7 +79,7 @@
   function renderAuth(){
     if(user&&authMode!=='reset'){dialog.innerHTML=`<div class="bc-head"><h2 id="bc-auth-title">내 계정</h2><button class="bc-close" data-close aria-label="닫기">×</button></div><p class="bc-note">${esc(user.email)}</p><p class="bc-auth-message" id="bc-auth-message" role="status"></p><div class="bc-stack" style="margin-top:22px"><button class="bc-btn" id="bc-reload">계정 기록 다시 불러오기</button><button class="bc-btn" id="bc-import">이 기기의 방문자 기록 가져오기</button><button class="bc-btn" id="bc-export">내 기록 내려받기</button><button class="bc-btn" id="bc-signout">로그아웃</button></div><p class="bc-note bc-modal-foot">네 사이트에서 같은 이메일과 비밀번호를 사용할 수 있습니다. 사이트 주소가 다르면 각각 로그인해 주세요.</p>`;
       $('#bc-reload').onclick=()=>{if(saving)return authMessage('저장이 끝난 뒤 다시 시도해 주세요.');loadAccount(user);};$('#bc-export').onclick=()=>download(`${site}-my-data.json`,JSON.stringify(state,null,2));
-      $('#bc-import').onclick=async()=>{const local=guest();const merged={...state,bookmarks:[...new Set([...state.bookmarks,...local.bookmarks])],read:[...new Set([...state.read,...local.read])],checklist:[...new Set([...state.checklist,...local.checklist])],notes:{...local.notes,...state.notes},preset:state.preset||local.preset,rsvp:state.rsvp||local.rsvp};if(await save(merged,'방문자 기록을 계정에 합쳤습니다.'))authMessage('가져왔습니다. 기존 계정 기록을 우선 보존했습니다.');};
+      $('#bc-import').onclick=async()=>{const local=guest();const merged={...state,bookmarks:[...new Set([...state.bookmarks,...local.bookmarks])],read:[...new Set([...state.read,...local.read])],checklist:[...new Set([...state.checklist,...local.checklist])],notes:{...local.notes,...state.notes},preset:state.preset||local.preset,rsvp:state.rsvp||local.rsvp,journey:state.journey||local.journey};if(await save(merged,'방문자 기록을 계정에 합쳤습니다.'))authMessage('가져왔습니다. 기존 계정 기록을 우선 보존했습니다.');};
       $('#bc-signout').onclick=async()=>{if(saving)return authMessage('저장이 끝난 뒤 다시 시도해 주세요.');const {error}=await client.auth.signOut({scope:'local'});if(error)authMessage(safeError(error));else {dialog.close();toast('로그아웃했습니다.');}};
     }else{
       const isSignup=authMode==='signup',forgot=authMode==='forgot',reset=authMode==='reset';
@@ -109,11 +109,15 @@
   }
   dialog.addEventListener('close',()=>{$$('input[type=password]',dialog).forEach(input=>input.value='');});
   dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
-  document.addEventListener('click',e=>{if(e.target.closest('[data-bc-auth]'))openAuth();});
+  document.addEventListener('click',e=>{if(e.target.closest('[data-bc-auth]')){if(site==='ma-admissions'&&!user&&document.getElementById('account-button'))document.getElementById('account-button').click();else openAuth();}});
   $('#bc-open-studio').onclick=()=>{studio.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});};
 
   let renderFeature=()=>{};
-  function renderDynamic(){renderFeature();renderStatus();}
+  function renderDynamic(){renderFeature();renderStatus();if(site==='ma-admissions')window.dispatchEvent(new CustomEvent('ma:workspace-change'));}
+  if(site==='ma-admissions')window.MA_JOURNEY_STORAGE={
+    snapshot:()=>({owner:user?.id||'guest',authSettled:authReady,ready:!user||cloudLoaded,journey:state.journey?JSON.parse(JSON.stringify(state.journey)):null}),
+    save:async(journey)=>save({...state,journey:JSON.parse(JSON.stringify(journey))},'여행 계획을 저장했습니다.'),
+  };
   function inputPreset(ids,values){ids.forEach((id,i)=>{const input=document.getElementById(id);if(input&&Number.isFinite(Number(values[i]))){const n=Math.min(Number(input.max||Infinity),Math.max(Number(input.min||-Infinity),Number(values[i])));input.value=String(n);input.dispatchEvent(new Event('input',{bubbles:true}));}});}
   function getPreset(ids){return ids.map(id=>Number(document.getElementById(id)?.value||0));}
   function fluid(){
