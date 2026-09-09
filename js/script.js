@@ -379,7 +379,7 @@ if (lensButtons.length && regionRows.length && regionStatus) {
 
     regionRows.forEach((row) => {
       const lenses = (row.dataset.lenses || '').split(/\s+/).filter(Boolean);
-      const visible = (lens === 'all' || lenses.includes(lens)) && (row.querySelector('b')?.textContent||'').toLowerCase().includes(query);
+      const visible = (lens === 'all' || lenses.includes(lens)) && ['ko','en','ja'].some(locale => (window.MA_I18N?.t(row.dataset.regionName || row.querySelector('b')?.textContent || '',locale) || row.querySelector('b')?.textContent || '').toLowerCase().includes(query));
       row.hidden = !visible;
       if (visible) visibleCount += 1;
     });
@@ -399,7 +399,7 @@ if (lensButtons.length && regionRows.length && regionStatus) {
   window.addEventListener('ma:reveal-region',()=>{if(search)search.value='';applyLens('all','전체');});
   lensButtons.forEach((button) => {
     button.addEventListener('click', () => {
-      applyLens(button.dataset.lens || 'all', button.textContent.trim());
+      applyLens(button.dataset.lens || 'all', button.dataset.lensLabel || button.textContent.trim());
     });
   });
 }

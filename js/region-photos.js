@@ -15,11 +15,12 @@
     const image = link.querySelector('img');
     trigger = link;
     photo.src = link.href;
-    photo.alt = image.alt;
+    photo.alt = image.dataset.originalAlt || image.alt;
     photo.width = Number(image.getAttribute('width'));
     photo.height = Number(image.getAttribute('height'));
-    title.textContent = image.alt;
-    caption.replaceChildren(link.closest('figure').querySelector('.region-photo-credit').cloneNode(true));
+    title.textContent = image.dataset.originalAlt || image.alt;
+    const credit = link.closest('figure').querySelector('.region-photo-credit');
+    caption.replaceChildren(window.MA_I18N?.cloneSource(credit) || credit.cloneNode(true));
     previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     dialog.showModal();

@@ -29,6 +29,7 @@
 <link rel="stylesheet" href="css/palette.css?v=20260909-phi-1">
 <link rel="stylesheet" href="css/journey.css?v=20260909-4">
 <link rel="stylesheet" href="css/workspace.css?v=20260909-workspace-photos-1">
+<link rel="stylesheet" href="css/language.css?v=20260909-1">
 </head>
 <body id="top">
 
@@ -49,6 +50,14 @@
     <a href="#saved" data-view-link="saved">보관함</a>
   </nav>
   <div class="account-actions">
+    <details class="language-menu" id="language-menu">
+      <summary aria-label="언어 선택"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-5 5-5 13 0 18M12 3c5 5 5 13 0 18"/></svg><span id="language-current" translate="no" lang="ko">한국어</span></summary>
+      <div class="language-options" role="group" aria-label="언어 선택">
+        <button type="button" data-language="ko" lang="ko" translate="no" aria-pressed="true">한국어</button>
+        <button type="button" data-language="ja" lang="ja" translate="no" aria-pressed="false">日本語</button>
+        <button type="button" data-language="en" lang="en" translate="no" aria-pressed="false">English</button>
+      </div>
+    </details>
     <button class="account-button" id="account-button" type="button" aria-haspopup="dialog" aria-controls="auth-dialog">회원가입</button>
   </div>
 </header>
@@ -792,7 +801,7 @@
     <button class="auth-primary" id="auth-submit" type="submit">계정 만들기</button>
   </form>
   <div id="auth-account" hidden>
-    <p class="auth-email" id="auth-account-email"></p>
+    <p class="auth-email" id="auth-account-email" translate="no"></p>
     <button class="auth-primary" id="auth-logout" type="button">로그아웃</button>
   </div>
   <p class="auth-status" id="auth-status" role="status" aria-live="polite" aria-atomic="true"></p>
@@ -802,21 +811,23 @@
   </div>
 </dialog>
 <noscript><p class="auth-note">회원가입과 로그인에는 JavaScript가 필요합니다.</p></noscript>
+<script src="js/locales.js?v=20260909-1" defer></script>
+<script src="js/i18n.js?v=20260909-1" defer></script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js" crossorigin="anonymous"></script>
-<script defer src="js/auth.js?v=20260909-2"></script>
+<script defer src="js/auth.js?v=20260909-i18n-1"></script>
 <script defer src="js/palette.js?v=20260909-4"></script>
 
-<script type="module" src="js/script.js?v=20260909-landscape-2"></script>
-<script src="js/workspace-photos.js?v=20260909-1" defer></script>
+<script type="module" src="js/script.js?v=20260909-i18n-1"></script>
+<script src="js/workspace-photos.js?v=20260909-i18n-1" defer></script>
 <script src="member/config.js?v=20260909" defer></script>
-<script src="member/studio.js?v=20260909-workspace-photos-1" defer></script>
-<script type="module" src="js/journey.js?v=20260909-workspace-photos-1"></script>
+<script src="member/studio.js?v=20260909-i18n-1" defer></script>
+<script type="module" src="js/journey.js?v=20260909-i18n-1"></script>
 <script src="js/workspace.js?v=20260909-landscape-2" defer></script>
 <dialog id="region-photo-dialog" class="region-photo-dialog" aria-labelledby="region-photo-title">
   <div class="region-photo-dialog-head"><h2 id="region-photo-title">지역의 풍경</h2><button type="button" data-photo-close autofocus>닫기</button></div>
   <figure><img id="region-photo-large" alt="" decoding="async"><figcaption id="region-photo-caption"></figcaption></figure>
 </dialog>
-<script src="js/region-photos.js?v=20260909-1" defer></script>
-<script src="js/landscape-study.js?v=20260909-1" defer></script>
+<script src="js/region-photos.js?v=20260909-i18n-1" defer></script>
+<script src="js/landscape-study.js?v=20260909-i18n-1" defer></script>
 </body>
 </html>

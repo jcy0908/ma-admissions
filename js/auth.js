@@ -148,7 +148,7 @@
   form.addEventListener('submit', event => {
     event.preventDefault();
     if ((mode === 'signup' || mode === 'update') && password.value !== confirmation.value) {
-      confirmation.setCustomValidity('비밀번호가 일치하지 않습니다.');
+      confirmation.setCustomValidity(window.MA_I18N?.t('비밀번호가 일치하지 않습니다.') || '비밀번호가 일치하지 않습니다.');
       confirmation.reportValidity();
       return;
     }
@@ -213,6 +213,8 @@
   } catch {
     client = null;
   }
+
+  window.addEventListener('ma:language-change', () => { if (confirmation.validity.customError) confirmation.setCustomValidity(window.MA_I18N?.t('비밀번호가 일치하지 않습니다.') || '비밀번호가 일치하지 않습니다.'); });
 
   const authError = new URLSearchParams(window.location.hash.slice(1)).get('error_description');
   if (authError) {

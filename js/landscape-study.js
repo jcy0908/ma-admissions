@@ -12,23 +12,23 @@
     rhythm: { fog:28, spacing:40, rule:1, accent:2, note:'반복되는 풍경에서 읽는 간격을 떠올려 봅니다.' }
   };
   function choose(name) {
-    const row = regions.find(item => item.querySelector('b')?.textContent === name);
+    const row = regions.find(item => (item.dataset.regionName || item.querySelector('b')?.textContent) === name);
     const source = row?.querySelector('.region-photo');
     if (!source) return;
     const preset = presets[row.dataset.lenses.split(' ')[0]] || presets.water;
     const image = source.querySelector('img');
     const photo = document.getElementById('study-photo');
     photo.src = source.querySelector('[data-photo-view]').getAttribute('href');
-    photo.alt = image.alt;
+    photo.alt = image.dataset.originalAlt || image.alt;
     photo.width = Number(image.getAttribute('width'));
     photo.height = Number(image.getAttribute('height'));
-    const place = source.querySelector('figcaption strong').textContent;
+    const place = row.dataset.placeName || source.querySelector('figcaption strong').textContent;
     document.getElementById('study-region-label').textContent = name;
     document.getElementById('study-place-title').textContent = place;
     document.getElementById('study-context').textContent = `${name} · ${place} — ${preset.note}`;
-    document.querySelector('.lab-preview-copy').textContent = row.querySelector('.region-detail > span').textContent;
+    document.querySelector('.lab-preview-copy').textContent = row.dataset.regionDescription || row.querySelector('.region-detail > span').textContent;
     const credit = document.getElementById('study-credit');
-    credit.replaceChildren(...[...source.querySelector('.region-photo-credit').childNodes].map(node => node.cloneNode(true)));
+    credit.replaceChildren(...[...source.querySelector('.region-photo-credit').childNodes].map(node => window.MA_I18N?.cloneSource(node) || node.cloneNode(true)));
     credit.append(' · 미리보기에서 밝기·흐림 조절');
     const back = document.getElementById('study-region-return');
     back.setAttribute('href', `#${row.id || `region-${regions.indexOf(row)}`}`);
