@@ -130,3 +130,15 @@ Supabase 프로젝트 `vwvkonfvwdkdvnjedbnx`의 Authentication 설정에서 다�
 `vercel.json`은 정적 배포를 지원하고, 이미지가 배포에 포함되지 않은 경우
 기존 GitHub Pages의 `/img/` 자료를 가져오는 rewrite를 제공합니다.
 GitHub Pages에서도 동일한 HTML/CSS/JavaScript가 동작합니다.
+
+## Google 로그인과 색상 테마
+
+- 헤더의 색상 버튼으로 오로라·오션·선셋·기존 색상을 선택할 수 있습니다.
+- 선택값은 브라우저에 저장되며 시스템 다크 모드도 지원합니다.
+- Google 버튼은 Supabase의 Google provider 활성화 여부를 확인한 다음 OAuth로 연결합니다.
+- Google Cloud의 웹 애플리케이션 OAuth 클라이언트를 만들고 Supabase Google provider에
+  Client ID와 Client Secret을 설정해야 실제 로그인이 가능합니다. Secret은 브라우저 코드에 넣지 않습니다.
+- Google의 Authorized redirect URI는 `https://vwvkonfvwdkdvnjedbnx.supabase.co/auth/v1/callback`입니다.
+- 사이트 URL은 기존 인증 설정의 Redirect URLs에도 허용해야 합니다.
+- 현재 실제 Google 계정 로그인은 관리자 설정 완료 후 검증해야 합니다.
+- 설정 참고: https://supabase.com/docs/guides/auth/social-login/auth-google

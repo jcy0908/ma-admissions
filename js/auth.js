@@ -12,6 +12,7 @@
   const switchButton = document.getElementById('auth-switch');
   const resetButton = document.getElementById('auth-reset');
   const logoutButton = document.getElementById('auth-logout');
+  const googleButton = document.getElementById('auth-google');
   const title = document.getElementById('auth-title');
   const description = document.getElementById('auth-description');
   const account = document.getElementById('auth-account');
@@ -76,6 +77,7 @@
     switchButton.hidden = signedIn || update;
     switchButton.textContent = login ? '처음이신가요? 회원가입' : '이미 계정이 있나요? 로그인';
     resetButton.hidden = !login;
+    document.getElementById('auth-social').hidden = !(signup || login);
   }
 
   function open(next) {
@@ -86,7 +88,7 @@
   function setBusy(value) {
     busy = value;
     form.setAttribute('aria-busy', String(value));
-    [submit, switchButton, resetButton, logoutButton].forEach(el => { el.disabled = value; });
+    [submit, switchButton, resetButton, logoutButton, googleButton].forEach(el => { el.disabled = value; });
   }
 
   async function run(action) {
@@ -107,6 +109,32 @@
 
   // Remove fragments and queries: redirects must stay on this site's origin/path.
   const callbackUrl = new URL(window.location.pathname, window.location.origin).href;
+  googleButton.addEventListener('click', () => run(async () => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    let settings;
+    try {
+      const response = await fetch('https://vwvkonfvwdkdvnjedbnx.supabase.co/auth/v1/settings', {
+        headers: { apikey: 'sb_publishable_P-wSRxT8hvg3ETN2LgTCSA_PpSCbMyy' },
+        signal: controller.signal,
+      });
+      if (!response.ok) throw new Error('Auth settings unavailable');
+      settings = await response.json();
+    } finally { clearTimeout(timeout); }
+    if (!settings.external?.google) {
+      notice('Google 로그인 연결을 준비 중입니다. 현재는 이메일 회원가입을 이용해 주세요.', true);
+      return;
+    }
+    const { data, error } = await client.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: callbackUrl, skipBrowserRedirect: true, queryParams: { prompt: 'select_account' } },
+    });
+    if (error) throw error;
+    const destination = new URL(data.url);
+    if (destination.origin !== 'https://vwvkonfvwdkdvnjedbnx.supabase.co') throw new Error('Unexpected auth origin');
+    notice('Google 계정 선택 화면으로 이동합니다…');
+    window.location.assign(destination.href);
+  }));
   button.addEventListener('click', () => open(recovery ? 'update' : user ? 'account' : 'signup'));
   document.getElementById('auth-close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => {

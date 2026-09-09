@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-palette="aurora">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +24,7 @@
 <meta name="theme-color" content="#1c2325" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="css/style.css?v=20260818-apple-web">
 <link rel="stylesheet" href="css/auth.css?v=20260909">
+<link rel="stylesheet" href="css/palette.css?v=20260909-2">
 </head>
 <body id="top">
 
@@ -47,6 +48,7 @@
   </nav>
   <div class="account-actions">
     <a class="header-cta" href="#brief"><span>프로젝트 보기</span><i aria-hidden="true">↘</i></a>
+    <button class="account-button palette-button" id="palette-button" type="button" aria-haspopup="dialog" aria-controls="palette-dialog"><span class="palette-dot" aria-hidden="true"></span>색상</button>
     <button class="account-button" id="account-button" type="button" aria-haspopup="dialog" aria-controls="auth-dialog">회원가입</button>
   </div>
 </header>
@@ -659,12 +661,28 @@
 </footer>
 
 
+<dialog class="auth-dialog palette-dialog" id="palette-dialog" aria-labelledby="palette-title">
+  <div class="auth-heading"><h2 id="palette-title">나만의 색으로</h2><button class="auth-close" id="palette-close" type="button" aria-label="색상 설정 닫기">×</button></div>
+  <p class="auth-description">원하는 분위기를 선택하세요. 이 브라우저에 저장됩니다.</p>
+  <div class="palette-options" role="group" aria-label="사이트 색상">
+    <button class="palette-option" type="button" data-palette-choice="aurora" aria-pressed="true"><span class="palette-preview preview-aurora" aria-hidden="true"></span><strong>오로라</strong><small>보라 · 청록 · 핑크</small></button>
+    <button class="palette-option" type="button" data-palette-choice="ocean" aria-pressed="false"><span class="palette-preview preview-ocean" aria-hidden="true"></span><strong>오션</strong><small>블루 · 민트 · 바이올렛</small></button>
+    <button class="palette-option" type="button" data-palette-choice="sunset" aria-pressed="false"><span class="palette-preview preview-sunset" aria-hidden="true"></span><strong>선셋</strong><small>오렌지 · 로즈 · 라일락</small></button>
+    <button class="palette-option" type="button" data-palette-choice="original" aria-pressed="false"><span class="palette-preview preview-original" aria-hidden="true"></span><strong>기존 색상</strong><small>안개 · 돌 · 이끼</small></button>
+  </div>
+  <p class="auth-status" id="palette-status" role="status" aria-live="polite"></p>
+</dialog>
+
 <dialog class="auth-dialog" id="auth-dialog" aria-labelledby="auth-title" aria-describedby="auth-description">
   <div class="auth-heading">
     <h2 id="auth-title">회원가입</h2>
     <button class="auth-close" id="auth-close" type="button" aria-label="닫기">×</button>
   </div>
   <p class="auth-description" id="auth-description">이메일로 MA 계정을 만드세요.</p>
+  <div class="auth-social" id="auth-social">
+    <button class="auth-google" id="auth-google" type="button"><span class="google-mark" aria-hidden="true">G</span>Google로 계속하기</button>
+    <p class="auth-divider">또는 이메일</p>
+  </div>
   <form class="auth-form" id="auth-form" method="post">
     <label class="auth-field">이메일
       <input id="auth-email" type="email" name="email" autocomplete="email" inputmode="email" maxlength="254" required>
@@ -690,7 +708,8 @@
 </dialog>
 <noscript><p class="auth-note">회원가입과 로그인에는 JavaScript가 필요합니다.</p></noscript>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js" crossorigin="anonymous"></script>
-<script defer src="js/auth.js?v=20260909"></script>
+<script defer src="js/auth.js?v=20260909-2"></script>
+<script defer src="js/palette.js?v=20260909-2"></script>
 
 <script type="module" src="js/script.js?v=20260818-apple-web"></script>
 </body>
