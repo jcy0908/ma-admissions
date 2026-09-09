@@ -347,11 +347,11 @@ if (labForm && labPreview && labStatus) {
     if (outputs.rule) outputs.rule.textContent = `${rule}px`;
     if (outputs.accent) outputs.accent.textContent = `${accent} / ${marks.length}`;
 
-    controls.fog?.setAttribute('aria-valuetext', `안개 농도 ${fog}퍼센트`);
-    controls.spacing?.setAttribute('aria-valuetext', `능선 간격 ${spacing}픽셀`);
-    controls.rule?.setAttribute('aria-valuetext', `서리 선 ${rule}픽셀`);
-    controls.accent?.setAttribute('aria-valuetext', `이끼색 ${accent}개`);
-    labStatus.textContent = `안개 ${fog}%, 간격 ${spacing}px, 선 ${rule}px, 이끼색 ${accent}개`;
+    controls.fog?.setAttribute('aria-valuetext', `빛의 농도 ${fog}퍼센트`);
+    controls.spacing?.setAttribute('aria-valuetext', `글 사이 여백 ${spacing}픽셀`);
+    controls.rule?.setAttribute('aria-valuetext', `구분선 두께 ${rule}픽셀`);
+    controls.accent?.setAttribute('aria-valuetext', `포인트 ${accent}개`);
+    labStatus.textContent = `빛 ${fog}%, 여백 ${spacing}px, 선 ${rule}px, 포인트 ${accent}개`;
   };
 
   labForm.addEventListener('input', syncLab);

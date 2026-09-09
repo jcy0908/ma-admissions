@@ -23,6 +23,7 @@
       if (target?.closest('#plan-view')) view = 'journey';
       else if (target?.closest('#saved-view')) view = 'saved';
       else if (archive?.contains(target)) archive.open = true;
+      if (target?.id === 'lab') target.open = true;
       if (target?.matches('#regions .index-list li')) {
         window.dispatchEvent(new CustomEvent('ma:reveal-region'));
         const detail = target.querySelector('details');
