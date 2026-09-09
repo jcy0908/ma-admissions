@@ -15,7 +15,7 @@
   let state = guest(), user = null, client = null, saving = false, authReady = false, authMode = 'signup', toastTimer, sessionEpoch = 0, cloudLoaded = false, revision = null;
   const titles = {
     'fluid-landing': ['Motion playground', '내 손끝에 맞는 움직임.', '세 가지 모션을 비교하고, 마음에 드는 설정을 내 실험실에 저장하세요.'],
-    'ma-admissions': ['My Gangwon collection', '나만의 강원을 모으다.', '풍경의 성질로 지역을 고르고, 마음에 남은 장소와 디자인 설정을 간직하세요.'],
+    'ma-admissions': ['MY COLLECTION', '보관함', '담아둔 지역과 저장한 여행을 이어보세요.'],
     'my-blog': ['Personal reading room', '읽고, 남기고, 다시 발견하기.', '관심 있는 글을 찾고 나만의 서재에 모아보세요.'],
     'invitation': ['With our favorite people', '함께할 순간을 기다립니다.', '참석 여부를 남기고, 소중한 날을 캘린더에 담아주세요.']
   };
@@ -26,11 +26,13 @@
   studio.setAttribute('aria-labelledby', 'bc-title');
   studio.innerHTML = `<div class="bc-head"><div><p class="bc-eyebrow">${eyebrow}</p><h2 id="bc-title">${title}</h2><p class="bc-sub">${description}</p></div><span class="bc-status" id="bc-storage-status">이 기기에 저장</span></div><div id="bc-content"></div><div class="bc-row" style="margin-top:24px"><button class="bc-btn bc-btn-primary" data-bc-auth>회원가입 · 로그인</button><p class="bc-note" id="bc-storage-note">로그인하면 내 기록을 다른 기기에서도 이어볼 수 있어요.</p></div>`;
   const anchor = site === 'invitation' ? $('#location') : site === 'ma-admissions' ? ($('#journey') || $('.hero')) : $('.hero');
-  if (anchor) anchor.insertAdjacentElement(site === 'invitation' ? 'beforebegin' : 'afterend', studio);
+  if (site === 'ma-admissions' && $('#saved-mount')) $('#saved-mount').append(studio);
+  else if (anchor) anchor.insertAdjacentElement(site === 'invitation' ? 'beforebegin' : 'afterend', studio);
   else ($('main') || document.body).prepend(studio);
   const floating = document.createElement('div');floating.className = 'bc bc-float';floating.dataset.site = site;
   floating.innerHTML = `<button class="bc-btn" id="bc-open-studio">${site==='invitation'?'참석 응답':'내 공간'}</button><button class="bc-btn bc-btn-primary" data-bc-auth>회원가입</button>`;
   document.body.append(floating);
+  if(site==='ma-admissions')floating.hidden=true;
   const toastEl = document.createElement('div');toastEl.className='bc bc-toast';toastEl.hidden=true;toastEl.setAttribute('role','status');toastEl.setAttribute('aria-live','polite');document.body.append(toastEl);
   const dialog = document.createElement('dialog');dialog.className='bc bc-dialog';dialog.dataset.site=site;dialog.setAttribute('aria-labelledby','bc-auth-title');document.body.append(dialog);
   const panel = $('#bc-content');
@@ -135,14 +137,11 @@
   }
   function gangwon(){
     const regions=$$('#regions .index-list li').map((el,i)=>({el,id:`region-${i}`,name:$('b',el)?.textContent||'',description:$('span',el)?.textContent||'',lenses:el.dataset.lenses||''}));
-    panel.innerHTML=`<div class="bc-grid"><div class="bc-card"><h3>오늘 끌리는 풍경은?</h3><div class="bc-row" id="bc-region-filters">${[['all','모든 풍경'],['water','물'],['terrain','산과 지형'],['rhythm','리듬'],['material','재료'],['boundary','경계']].map(([v,n])=>`<button class="bc-btn bc-chip" data-lens="${v}" aria-pressed="${v==='all'}">${n}</button>`).join('')}</div><label class="bc-field" style="margin-top:16px">지역 찾기<input id="bc-region-search" type="search" placeholder="춘천, 횡성, 바다…"></label><ul class="bc-list" id="bc-region-results"></ul><p class="bc-note" id="bc-region-count" role="status"></p></div><div class="bc-card"><p class="bc-eyebrow">My collection</p><p class="bc-stat"><span id="bc-region-saved-count">0</span><small> / 18 지역</small></p><ul class="bc-list" id="bc-region-saved"></ul><h3 style="margin-top:22px">풍경을 닮은 인터페이스</h3><p class="bc-note" style="margin:12px 0">번역 실험의 안개·간격·선·색 설정을 저장하세요.</p><div class="bc-row"><a class="bc-btn" href="#lab">번역 실험</a><button class="bc-btn" id="bc-save-design">실험값 저장</button><button class="bc-btn" id="bc-load-design">불러오기</button></div></div></div>`;
-    let lens='all';
-    function list(){const q=$('#bc-region-search').value.trim().toLowerCase();const found=regions.filter(r=>(lens==='all'||r.lenses.split(' ').includes(lens))&&(r.name+' '+r.description).toLowerCase().includes(q));$('#bc-region-results').innerHTML=found.slice(0,6).map(r=>`<li><div><strong>${esc(r.name)}</strong><p class="bc-note">${esc(r.description)}</p></div><button class="bc-btn bc-chip" data-bookmark="${r.id}" aria-label="${esc(r.name)} 즐겨찾기" aria-pressed="${state.bookmarks.includes(r.id)}">${state.bookmarks.includes(r.id)?'담음':'담기'}</button></li>`).join('');$('#bc-region-count').textContent=found.length?`${found.length}곳 중 ${Math.min(found.length,6)}곳 표시 · 전체 지역은 아래에서 볼 수 있어요.`:'검색 조건에 맞는 지역이 없습니다.';}
-    $$('#bc-region-filters button').forEach(b=>b.onclick=()=>{lens=b.dataset.lens;$$('#bc-region-filters button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));list();});$('#bc-region-search').oninput=list;
+    panel.innerHTML=`<div class="bc-collection-layout"><section class="bc-card"><div class="bc-collection-heading"><h3>담아둔 지역 <span id="bc-region-saved-count">0</span></h3><a class="bc-btn" href="#regions">지역 둘러보기</a></div><ul class="bc-list" id="bc-region-saved"></ul></section><section class="bc-card"><h3>저장한 여행</h3><p class="bc-note" id="bc-journey-summary"></p><a class="bc-btn" href="#journey">여행 계획 열기</a></section></div><details class="bc-design-settings"><summary>저장한 디자인 실험</summary><p class="bc-note">풍경 기록의 실험 설정을 이어서 사용할 수 있습니다.</p><div class="bc-row"><a class="bc-btn" href="#lab">실험 열기</a><button class="bc-btn" id="bc-save-design">현재 설정 저장</button><button class="bc-btn" id="bc-load-design">설정 불러오기</button></div></details>`;
     const ids=['lab-fog','lab-spacing','lab-rule','lab-accent'];$('#bc-save-design').onclick=()=>save({...state,preset:{values:getPreset(ids)}},'디자인 실험값을 저장했습니다.');$('#bc-load-design').onclick=()=>{if(!Array.isArray(state.preset?.values))return toast('저장된 실험값이 없습니다.');inputPreset(ids,state.preset.values);toast('디자인 실험값을 불러왔습니다.');};
-    regions.forEach(r=>{const b=document.createElement('button');b.className='bc-inline-save';b.dataset.bookmark=r.id;b.setAttribute('aria-label',r.name+' 즐겨찾기');b.textContent='담기';r.el.append(b);});
+    regions.forEach(r=>{const b=document.createElement('button');b.className='bc-inline-save';b.dataset.bookmark=r.id;b.setAttribute('aria-label',r.name+' 즐겨찾기');b.textContent='담기';r.el.id=r.id;r.el.append(b);});
     document.addEventListener('click',e=>{const b=e.target.closest('[data-bookmark]');if(b)toggle('bookmarks',b.dataset.bookmark);});
-    renderFeature=()=>{list();const selected=regions.filter(r=>state.bookmarks.includes(r.id));$('#bc-region-saved-count').textContent=selected.length;$('#bc-region-saved').innerHTML=selected.length?selected.map(r=>`<li><span>${esc(r.name)}</span><button class="bc-btn bc-chip" data-bookmark="${r.id}" aria-label="${esc(r.name)} 즐겨찾기 해제">해제</button></li>`).join(''):'<li class="bc-note">마음에 드는 지역의 담기를 눌러보세요.</li>';regions.forEach(r=>{const b=$('[data-bookmark]',r.el);b.textContent=state.bookmarks.includes(r.id)?'담음 ✓':'담기';b.setAttribute('aria-pressed',String(state.bookmarks.includes(r.id)));});};
+    renderFeature=()=>{const selected=regions.filter(r=>state.bookmarks.includes(r.id));$('#bc-region-saved-count').textContent=selected.length;$('#bc-journey-summary').textContent=state.journey?.title||'저장한 여행이 아직 없습니다.';$('#bc-region-saved').innerHTML=selected.length?selected.map(r=>`<li><a href="#region-${regions.indexOf(r)}">${esc(r.name)}</a><button class="bc-btn bc-chip" data-bookmark="${r.id}" aria-label="${esc(r.name)} 즐겨찾기 해제">해제</button></li>`).join(''):'<li class="bc-note">마음에 드는 지역의 담기를 눌러보세요.</li>';regions.forEach(r=>{const b=$('[data-bookmark]',r.el);b.textContent=state.bookmarks.includes(r.id)?'담음 ✓':'담기';b.setAttribute('aria-pressed',String(state.bookmarks.includes(r.id)));});};
   }
   function blog(){
     const postPage=document.body.classList.contains('page-post');

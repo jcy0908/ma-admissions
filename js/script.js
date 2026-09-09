@@ -239,7 +239,7 @@ requestPageMotion();
 
 // 현재 읽는 장을 내비게이션에 조용히 표시한다. 본문 구조 자체는 바꾸지 않는다.
 if ('IntersectionObserver' in window) {
-  const navLinks = [...document.querySelectorAll('.site-nav a[href^="#"]')];
+  const navLinks = [...document.querySelectorAll('.site-nav a[href^="#"]:not([data-view-link])')];
   const navSections = navLinks
     .map((link) => ({ link, section: document.querySelector(link.getAttribute('href')) }))
     .filter(({ section }) => section);
@@ -370,12 +370,16 @@ const regionRows = [...document.querySelectorAll('.index-list li[data-lenses]')]
 const regionStatus = document.getElementById('region-filter-status');
 
 if (lensButtons.length && regionRows.length && regionStatus) {
+  let activeLens='all', activeLabel='전체';
+  const search=document.getElementById('region-search');
   const applyLens = (lens, label) => {
+    activeLens=lens;activeLabel=label;
+    const query=(search?.value||'').trim().toLowerCase();
     let visibleCount = 0;
 
     regionRows.forEach((row) => {
       const lenses = (row.dataset.lenses || '').split(/\s+/).filter(Boolean);
-      const visible = lens === 'all' || lenses.includes(lens);
+      const visible = (lens === 'all' || lenses.includes(lens)) && (row.querySelector('b')?.textContent||'').toLowerCase().includes(query);
       row.hidden = !visible;
       if (visible) visibleCount += 1;
     });
@@ -386,11 +390,13 @@ if (lensButtons.length && regionRows.length && regionStatus) {
       button.setAttribute('aria-pressed', String(active));
     });
 
-    regionStatus.textContent = lens === 'all'
+    regionStatus.textContent = query ? `${visibleCount} / 18개 지역 · 검색 결과` : lens === 'all'
       ? `${visibleCount}개 지역 모두 표시 중`
       : `${label} 렌즈로 ${visibleCount}개 지역 표시 중`;
   };
 
+  search?.addEventListener('input',()=>applyLens(activeLens,activeLabel));
+  window.addEventListener('ma:reveal-region',()=>{if(search)search.value='';applyLens('all','전체');});
   lensButtons.forEach((button) => {
     button.addEventListener('click', () => {
       applyLens(button.dataset.lens || 'all', button.textContent.trim());

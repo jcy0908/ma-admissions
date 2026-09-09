@@ -1,8 +1,8 @@
-/* Material palettes: quiet surfaces, distinct ink and one restrained accent. */
-:root, :root[data-palette="sand"] { --paper:#f3f1eb; --paper-deep:#e6e3da; --paper-light:#faf9f5; --ink:#30332d; --ink-soft:#62675c; --accent:#5b664b; --accent-deep:#424d34; --stone:#989d91; --soil:#71695a; --rule:#858a7b; --rule-soft:#cdd0c5; --glass:#f3f1ebed; --lab-surface:#f3f1ebbf; --lab-fog-rgb:243 241 235; --button-ink:#fff; }
-:root[data-palette="moss"] { --paper:#eff0e9; --paper-deep:#dce0d3; --paper-light:#f7f8f2; --ink:#2d372b; --ink-soft:#5a6654; --accent:#4d6541; --accent-deep:#354b2c; --glass:#eff0e9ed; }
-:root[data-palette="ink"] { --paper:#ebece8; --paper-deep:#daddd7; --paper-light:#f6f7f3; --ink:#303a3b; --ink-soft:#596668; --accent:#4f696b; --accent-deep:#344e50; --glass:#ebece8ed; }
-:root[data-palette="clay"] { --paper:#f2ede6; --paper-deep:#e6dcd0; --paper-light:#faf6f0; --ink:#403831; --ink-soft:#756454; --accent:#825943; --accent-deep:#623e2c; --glass:#f2ede6ed; }
+/* Neutral surfaces. Color identifies a choice, saved item, or useful status. */
+:root { --paper:#f7f7f7; --paper-deep:#ebebeb; --paper-light:#fff; --ink:#242424; --ink-soft:#626262; --accent:#2766aa; --accent-deep:#164d85; --stone:#929292; --soil:#686868; --rule:#999; --rule-soft:#dedede; --glass:#f7f7f7f2; --lab-surface:#f7f7f7cc; --lab-fog-rgb:247 247 247; --button-ink:#fff; }
+:root[data-palette="green"] { --accent:#397452; --accent-deep:#28553b; }
+:root[data-palette="blue"] { --accent:#365cbe; --accent-deep:#264395; }
+:root[data-palette="amber"] { --accent:#966322; --accent-deep:#704812; }
 body { background:var(--paper); }
 .site-header { min-height:5.25rem; box-shadow:none; border-bottom:1px solid var(--rule-soft); backdrop-filter:blur(8px); }
 .wordmark { font-family:Georgia,'Times New Roman',serif; font-size:1.6rem; font-weight:400; letter-spacing:.02em; }
@@ -41,10 +41,10 @@ body { background:var(--paper); }
 .palette-option[aria-pressed="true"] { outline:2px solid var(--accent); outline-offset:2px; }
 .palette-option small { color:var(--ink-soft); font-size:.875rem; }
 .palette-preview { display:block; height:2.3rem; margin-bottom:.3rem; }
-.preview-sand { background:linear-gradient(90deg,#e6e1d5 0 67%,#a7aa9c 67% 84%,#5b664b 84%); }
-.preview-moss { background:linear-gradient(90deg,#dfe4d6 0 67%,#a4ae92 67% 84%,#4d6541 84%); }
-.preview-ink { background:linear-gradient(90deg,#daddd7 0 67%,#97a3a1 67% 84%,#4f696b 84%); }
-.preview-clay { background:linear-gradient(90deg,#e6dcd0 0 67%,#b8a48c 67% 84%,#825943 84%); }
+.preview-mono { background:linear-gradient(90deg,#eee 0 78%,#333 78% 91%,#2766aa 91%); }
+.preview-green { background:linear-gradient(90deg,#eee 0 85%,#397452 85%); }
+.preview-blue { background:linear-gradient(90deg,#eee 0 85%,#365cbe 85%); }
+.preview-amber { background:linear-gradient(90deg,#eee 0 85%,#966322 85%); }
 .auth-social { margin:1.5rem 0 0; }
 .auth-google { display:flex; justify-content:center; align-items:center; gap:.7rem; width:100%; min-height:48px; border:1px solid var(--rule); border-radius:2px; color:var(--ink); background:var(--paper); font:inherit; cursor:pointer; }
 .auth-google:hover { background:var(--paper-deep); }
@@ -69,9 +69,9 @@ body { background:var(--paper); }
 @media(max-width:900px) { .hero { min-height:31rem; gap:1.3rem; } .hero-still { grid-column:8 / -1; } .hero h1 { font-size:clamp(2.6rem,6vw,4rem); } }
 @media(max-width:760px) { .site-header { grid-template-columns:minmax(0,1fr) auto; padding-top:.5rem; } .site-nav { grid-column:1 / -1; grid-row:2; } .account-actions { grid-column:2; grid-row:1; } .wordmark-sub { display:none; } .hero { display:grid; grid-template-columns:1fr; padding-block:3rem; min-height:auto; } .hero-body { grid-column:1; } .hero-still { display:none; } .hero h1 { font-size:clamp(2.7rem,9vw,4rem); } }
 @media(prefers-color-scheme:dark) {
- :root, :root[data-palette="sand"] { --paper:#23261f; --paper-deep:#34392f; --paper-light:#2b3027; --ink:#eae9df; --ink-soft:#babfb0; --accent:#b2bd98; --accent-deep:#d2dabf; --glass:#23261fed; --rule:#858e77; --rule-soft:#49513f; --button-ink:#242b1d; --lab-surface:#23261fbf; --lab-fog-rgb:35 38 31; }
- :root[data-palette="moss"] { --paper:#21271e; --paper-deep:#313c2b; --paper-light:#293225; --ink:#e9edde; --ink-soft:#b7c3ac; --accent:#b2c697; --accent-deep:#cbdab8; --glass:#21271eed; }
- :root[data-palette="ink"] { --paper:#22292a; --paper-deep:#303d3e; --paper-light:#293334; --ink:#e4edeb; --ink-soft:#b2c4c2; --accent:#a3c2bd; --accent-deep:#c3dad6; --glass:#22292aed; }
- :root[data-palette="clay"] { --paper:#2e2722; --paper-deep:#42372d; --paper-light:#372e27; --ink:#f0e7dc; --ink-soft:#c8b9a4; --accent:#d4ae89; --accent-deep:#e4c5a8; --glass:#2e2722ed; }
+ :root { --paper:#191919; --paper-deep:#2b2b2b; --paper-light:#202020; --ink:#eee; --ink-soft:#b0b0b0; --accent:#8ab7ef; --accent-deep:#b1cffa; --glass:#191919f2; --rule:#777; --rule-soft:#383838; --button-ink:#171717; --lab-surface:#191919cc; --lab-fog-rgb:25 25 25; }
+ :root[data-palette="green"] { --accent:#92c6a1; --accent-deep:#b1ddbc; }
+ :root[data-palette="blue"] { --accent:#a1b5fa; --accent-deep:#c6d1ff; }
+ :root[data-palette="amber"] { --accent:#dfb87f; --accent-deep:#f0d4ab; }
 }
 @media print { .palette-dialog,.bc-float { display:none!important; } .hero h1 { color:#000; background:none; } }
