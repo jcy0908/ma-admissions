@@ -27,3 +27,82 @@ Object.assign(window.MA_TRANSLATIONS || (window.MA_TRANSLATIONS = {}), {
   '열여덟 지역의 서로 다른 표정을 만나보세요.':['Discover the distinct character of eighteen places.','18の地域、それぞれの表情に出会う。'],
   '어디로 떠나볼까요?':['Where will you go?','どこへ出かけましょう？']
 });
+
+Object.assign(window.MA_TRANSLATIONS, {
+  "산양 여행친구 산이": [
+    "San-i, your goral travel companion",
+    "旅のおとも、ゴーラルのサニ"
+  ],
+  "산이에게 여행 이야기 듣기": [
+    "Hear a travel story from San-i",
+    "サニの旅のお話を聞く"
+  ],
+  "카메라와 배낭을 메고 강원을 여행하는 산양 산이": [
+    "San-i the goral exploring Gangwon with a camera and backpack",
+    "カメラとリュックで江原を旅するゴーラルのサニ"
+  ],
+  "안녕, 난 산이야.": [
+    "Hi, I’m San-i.",
+    "こんにちは、サニだよ。"
+  ],
+  "오늘은 어디로 가볼까?": [
+    "Where shall we go today?",
+    "今日はどこへ行こう？"
+  ],
+  "같이 여행 만들기": [
+    "Let’s plan a trip",
+    "一緒に旅を計画"
+  ],
+  "산이 · 강원 여행친구": [
+    "San-i · your travel friend",
+    "サニ・旅のおとも"
+  ],
+  "설악산 · 공룡능선": [
+    "Seoraksan · Dinosaur Ridge",
+    "雪岳山・恐竜稜線"
+  ],
+  "원주 · 치악산": [
+    "Wonju · Chiaksan",
+    "原州・雉岳山"
+  ],
+  "삼척 · 해안": [
+    "Samcheok · coast",
+    "三陟・海岸"
+  ],
+  "안녕, 난 산이야. 오늘은 어디로 가볼까?": [
+    "Hi, I’m San-i. Where shall we go today?",
+    "こんにちは、サニだよ。今日はどこへ行こう？"
+  ],
+  "급할 거 없어. 능선 하나씩 천천히 만나보자.": [
+    "No rush. Let’s take these ridges one at a time.",
+    "急がなくていいよ。稜線をひとつずつ楽しもう。"
+  ],
+  "마음에 드는 곳이 있으면 보관함에 담아둬!": [
+    "Found a favorite place? Save it for later!",
+    "気になる場所は保存しておこう！"
+  ],
+  "잠깐, 숲의 소리에 귀를 기울여봐.": [
+    "Wait a moment. Listen to the forest.",
+    "ちょっと待って。森の音を聞いてみて。"
+  ],
+  "여기서는 조금 느리게 걸어도 괜찮아.": [
+    "It’s okay to walk a little slower here.",
+    "ここではゆっくり歩いても大丈夫。"
+  ],
+  "숲에서 쉬었다가, 우리 다음 풍경도 만나볼까?": [
+    "Rest in the forest, then find our next view?",
+    "森で休んだら、次の風景に会いに行こうか？"
+  ],
+  "파도 소리 들으러 갈래? 바다 쪽으로 가보자.": [
+    "Shall we listen to the waves? Let’s head to the sea.",
+    "波の音を聞きに行く？海へ行こう。"
+  ],
+  "카메라도 좋지만, 눈으로 오래 담아둬.": [
+    "Take a picture, then linger and take it all in.",
+    "写真もいいけど、目にも焼き付けてね。"
+  ],
+  "바다 보고 나면 뭐 할까? 같이 여행을 짜보자.": [
+    "What comes after the sea? Let’s plan our trip.",
+    "海のあとはどうする？一緒に旅を計画しよう。"
+  ]
+});

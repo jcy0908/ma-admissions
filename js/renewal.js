@@ -7,6 +7,8 @@
   const canvas = document.getElementById('landscape-code');
   const texture = document.getElementById('landscape-texture');
   const pause = document.getElementById('landscape-pause');
+  const guide = document.getElementById('goral-button');
+  const guideLine = document.getElementById('guide-line');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const scenes = {
     ridge: ['01 / 03', '능선 너머, 새로운 시선', '산을 넘고,', '바다에 닿다.'],
@@ -14,11 +16,24 @@
     sea: ['03 / 03', '동쪽 끝, 가장 푸른 순간', '파도를 따라,', '마음이 흐르다.']
   };
   const t = value => window.MA_I18N?.t(value) || value;
+  const photographs = {
+    ridge: {src:'assets/seoraksan-ridge.webp',place:'설악산 · 공룡능선',credit:'Taewangkorea · CC BY-SA 4.0 ↗',url:'https://commons.wikimedia.org/wiki/File:Dinosaur_Ridge_of_Seoraksan.jpg'},
+    forest: {src:'img/wonju-chiaksan.jpg',place:'원주 · 치악산',credit:'gary4now · CC BY 3.0 ↗',url:'https://commons.wikimedia.org/wiki/File:Chiaksan_National_Park,_Korea.jpg'},
+    sea: {src:'img/samcheok-coast.jpg',place:'삼척 · 해안',credit:'pcamp · CC BY 2.0 ↗',url:'https://commons.wikimedia.org/wiki/File:Korea-Samcheok-Beach-01.jpg'}
+  };
+  const guideMessages = {
+    ridge:['안녕, 난 산이야. 오늘은 어디로 가볼까?','급할 거 없어. 능선 하나씩 천천히 만나보자.','마음에 드는 곳이 있으면 보관함에 담아둬!'],
+    forest:['잠깐, 숲의 소리에 귀를 기울여봐.','여기서는 조금 느리게 걸어도 괜찮아.','숲에서 쉬었다가, 우리 다음 풍경도 만나볼까?'],
+    sea:['파도 소리 들으러 갈래? 바다 쪽으로 가보자.','카메라도 좋지만, 눈으로 오래 담아둬.','바다 보고 나면 뭐 할까? 같이 여행을 짜보자.']
+  };
   let scene = 'ridge';
   let stopped = reducedMotion.matches;
   let digital = false;
   let inView = true;
   let queuedDraw = 0;
+  let messageIndex = 0;
+  let greetingTimer;
+  function showGuide() { guideLine.textContent = t(guideMessages[scene][messageIndex]); }
   function syncMotion() {
     stage.classList.toggle('is-paused', stopped || !inView || document.hidden);
     pause.setAttribute('aria-pressed', String(stopped));
@@ -28,6 +43,11 @@
   function showScene() {
     const copy = scenes[scene];
     stage.dataset.scene = scene;
+    const landscape = photographs[scene];
+    if (photo.getAttribute('src') !== landscape.src) photo.src = landscape.src;
+    document.getElementById('landscape-place').textContent = t(landscape.place);
+    const credit = document.getElementById('landscape-credit');
+    credit.href = landscape.url; credit.textContent = landscape.credit;
     stage.querySelector('.scene-number').textContent = copy[0];
     ['scene-eyebrow', 'scene-title', 'scene-emphasis'].forEach((id, i) => {
       document.getElementById(id).textContent = t(copy[i + 1]);
@@ -36,6 +56,7 @@
       button.setAttribute('aria-pressed', String(button.dataset.sceneChoice === scene));
     });
     if (digital) scheduleDraw();
+    showGuide();
   }
   function drawLandscape() {
     queuedDraw = 0;
@@ -56,8 +77,8 @@
     const scale = Math.max(width / photo.naturalWidth, height / photo.naturalHeight);
     const cropWidth = width / scale;
     const cropHeight = height / scale;
-    const x = scene === 'sea' ? .9 : scene === 'forest' ? .3 : width < 760 ? .4 : .5;
-    const y = scene === 'forest' ? .8 : .4;
+    const x = scene === 'sea' ? (width < 760 ? .9 : .6) : width < 760 ? .4 : .5;
+    const y = scene === 'ridge' ? .4 : .55;
     sampleCtx.drawImage(photo, (photo.naturalWidth - cropWidth) * x, (photo.naturalHeight - cropHeight) * y,
       cropWidth, cropHeight, 0, 0, columns, rows);
     let pixels;
@@ -80,7 +101,7 @@
   }
   function scheduleDraw() { if (!queuedDraw) queuedDraw = requestAnimationFrame(drawLandscape); }
   stage.querySelectorAll('[data-scene-choice]').forEach(button => {
-    button.addEventListener('click', () => { scene = button.dataset.sceneChoice; showScene(); });
+    button.addEventListener('click', () => { scene = button.dataset.sceneChoice; messageIndex = 0; showScene(); });
   });
   texture.addEventListener('click', () => {
     digital = !digital;
@@ -89,6 +110,12 @@
     scheduleDraw();
   });
   pause.addEventListener('click', () => { stopped = !stopped; syncMotion(); });
+  guide.addEventListener('click', () => {
+    messageIndex = (messageIndex + 1) % guideMessages[scene].length; showGuide();
+    guide.classList.remove('is-greeting');
+    requestAnimationFrame(() => guide.classList.add('is-greeting'));
+    clearTimeout(greetingTimer); greetingTimer = setTimeout(() => guide.classList.remove('is-greeting'),700);
+  });
   reducedMotion.addEventListener('change', event => { stopped = event.matches; syncMotion(); });
   document.addEventListener('visibilitychange', syncMotion);
   window.addEventListener('ma:language-change', () => { showScene(); syncMotion(); });

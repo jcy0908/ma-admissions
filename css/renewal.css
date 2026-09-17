@@ -41,16 +41,17 @@ main { width:100%; max-width:none; padding:0 0 2rem; }
   border:14px solid var(--night); border-top:0; border-radius:0 0 22px 22px;
   overflow:hidden; display:flex; flex-direction:column; padding:25px 34px 10px;
 }
-.expedition::before { content:""; position:absolute; z-index:-1; inset:0; border:1px solid #b6d6d540; border-radius:9px; pointer-events:none; }
-.expedition::after { content:""; position:absolute; z-index:-1; inset:0; pointer-events:none;
-  background:linear-gradient(90deg,#041b2260,transparent 75%),linear-gradient(0deg,#031a22e8,transparent 48%,#051b2230); }
-.landscape-art { position:absolute; z-index:-2; inset:0; overflow:hidden; border-radius:9px; background:#123139; }
+.expedition::before { content:""; position:absolute; z-index:3; inset:0; border:1px solid #b6d6d540; border-radius:9px; pointer-events:none; }
+.expedition::after { content:""; position:absolute; z-index:1; inset:0; pointer-events:none;
+  background:linear-gradient(90deg,#041b2280,transparent 80%),linear-gradient(0deg,#031a22e8,transparent 60%,#051b2218); }
+.expedition-topline,.expedition-copy,.expedition-bottom,.expedition-colophon { position:relative; z-index:2; }
+.landscape-art { position:absolute; z-index:0; inset:0; overflow:hidden; border-radius:9px; background:#123139; }
 .landscape-art img { width:100%; height:100%; object-fit:cover; object-position:50% 40%; transform:scale(1.07);
   animation:landscape-drift 28s ease-in-out infinite alternate; transition:filter 1.2s ease,object-position 1.5s ease; }
 .landscape-art canvas { position:absolute; inset:0; width:100%; height:100%; opacity:0; transition:opacity .8s ease; }
 .expedition.is-digital .landscape-art canvas { opacity:.94; }
-.expedition[data-scene=forest] .landscape-art img { --landscape-zoom:1.55; transform-origin:30% 80%; object-position:30% 80%; filter:sepia(.17) hue-rotate(325deg) saturate(.7) brightness(.78); }
-.expedition[data-scene=sea] .landscape-art img { --landscape-zoom:1.42; transform-origin:90% 35%; object-position:90% 35%; filter:saturate(1.15) brightness(1.13); }
+.expedition[data-scene=forest] .landscape-art img { object-position:50% 55%; filter:saturate(.85); }
+.expedition[data-scene=sea] .landscape-art img { object-position:60% 55%; filter:saturate(.85); }
 .expedition.is-paused .landscape-art img { animation-play-state:paused; }
 @keyframes landscape-drift { from { transform:scale(var(--landscape-zoom,1.07)) translate3d(-.4%,.3%,0); } to { transform:scale(calc(var(--landscape-zoom,1.07) + .09)) translate3d(.6%,-.5%,0); } }
 .expedition-topline { display:flex; justify-content:space-between; align-items:center; gap:1rem; }
@@ -82,6 +83,20 @@ main { width:100%; max-width:none; padding:0 0 2rem; }
 .expedition-scroll { display:flex; align-items:center; gap:20px; font-size:11px; padding-bottom:20px; white-space:nowrap; }
 .expedition-scroll i { display:grid; place-items:center; width:36px; height:36px; border:1px solid #aacbc480; border-radius:50%; font-style:normal; font-size:18px; }
 .expedition-colophon { display:flex; align-items:center; justify-content:space-between; gap:1rem; font:8px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace; color:#c4d7d4; padding-top:15px; }
+.landscape-photo-credit { display:flex; gap:12px; flex-wrap:wrap; }
+.landscape-photo-credit a { text-decoration:underline; text-underline-offset:3px; }
+.trail-guide { position:absolute; z-index:3; right:5%; bottom:116px; width:280px; }
+#goral-button { display:block; position:relative; width:100%; padding:0; border:0; background:none; cursor:pointer; color:var(--night); transform-origin:50% 90%; }
+#goral-button img { display:block; width:100%; height:auto; filter:drop-shadow(0 5px 2px #031a2226); transition:transform .2s; }
+#goral-button:hover img { transform:rotate(3deg) translateY(-4px); }
+#goral-button.is-greeting img { animation:goral-greeting .65s ease-in-out; }
+@keyframes goral-greeting { 0%,100%{transform:rotate(0)} 30%{transform:rotate(-6deg) translateY(-9px)} 65%{transform:rotate(4deg) translateY(-4px)} }
+.guide-nametag { display:block; width:max-content; max-width:100%; padding:6px 10px; margin:-7px auto 0; background:var(--mist); color:var(--night); font-size:10px; transform:rotate(-3deg); }
+.guide-bubble { position:absolute; right:210px; top:18px; width:180px; padding:17px 18px 11px; background:var(--mist); color:var(--night); transform:rotate(-3deg); }
+.guide-bubble::after { content:""; position:absolute; right:-10px; top:38px; border-top:10px solid transparent; border-bottom:10px solid transparent; border-left:11px solid var(--mist); }
+.guide-bubble p { margin:0 0 14px; font-size:13px; line-height:1.7; letter-spacing:-.035em; word-break:keep-all; min-height:44px; }
+.guide-bubble a { display:flex; justify-content:space-between; align-items:center; border-top:1px solid #acbbb4; min-height:37px; gap:10px; padding-top:7px; font-size:11px; }
+.guide-bubble a:hover { color:#236264; }
 .landscape-intro,#regions,.landscape-study,.archive,#plan-view,#saved-view,.site-footer { width:calc(100% - 112px); max-width:1280px; margin-inline:auto; }
 .landscape-intro { display:grid; grid-template-columns:1fr 1fr; align-items:end; gap:22px 50px; padding:90px 0 70px; }
 .intro-index { grid-column:1/-1; margin:0 0 8px; color:#526762; font:10px ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:.12em; }
@@ -144,6 +159,9 @@ html:lang(ja) .expedition h1 { font-size:clamp(55px,6.3vw,103px); }
   .site-header { padding-inline:23px; }
   .landscape-intro,#regions,.landscape-study,.archive,.site-footer,#content #plan-view,#content #saved-view { width:calc(100% - 64px); }
   .index-list { gap:28px 20px; }
+  .trail-guide { width:225px; right:2%; bottom:120px; }
+  .guide-bubble { right:80px; top:-100px; width:170px; }
+  .guide-bubble::after { right:20px; top:auto; bottom:-10px; border:0; border-left:10px solid transparent; border-right:10px solid transparent; border-top:11px solid var(--mist); }
 }
 @media(max-width:760px) {
   html { scroll-padding-top:115px; }
@@ -160,7 +178,7 @@ html:lang(ja) .expedition h1 { font-size:clamp(55px,6.3vw,103px); }
   .landscape-controls { gap:4px; }
   .landscape-controls button { font-size:9px; padding:6px 7px; min-height:32px; }
   #landscape-pause { min-width:32px; font-size:14px; }
-  .expedition-copy { max-width:100%; padding:56px 0 110px; margin:auto 0; }
+  .expedition-copy { max-width:100%; padding:35px 0 130px; margin:auto 0; }
   .expedition-kicker { font-size:10px; gap:13px; margin-bottom:18px; }
   .scene-number { font-size:8px; }
   .expedition h1 { font-size:clamp(43px,10.3vw,77px); line-height:1.19; letter-spacing:-.07em; }
@@ -180,6 +198,14 @@ html:lang(ja) .expedition h1 { font-size:clamp(55px,6.3vw,103px); }
   .expedition-scroll i { width:26px; height:26px; font-size:13px; }
   .expedition-colophon { display:block; font-size:7px; padding-top:10px; }
   .expedition-colophon>span:last-child { display:none; }
+  .landscape-photo-credit { gap:5px; }
+  .trail-guide { width:158px; right:8px; bottom:109px; }
+  .guide-bubble { width:142px; right:127px; top:34px; padding:9px 12px 6px; transform:rotate(-2deg); }
+  .guide-bubble::after { top:25px; bottom:auto; right:-9px; border:0; border-top:9px solid transparent; border-bottom:9px solid transparent; border-left:10px solid var(--mist); }
+  .guide-bubble p { font-size:10px; line-height:1.5; margin-bottom:5px; min-height:30px; }
+  .guide-bubble a { font-size:9px; min-height:31px; padding-top:4px; }
+  .guide-nametag { font-size:8px; padding:4px 7px; }
+  .expedition-scroll { display:none; }
   .landscape-art img { object-position:40% 50%; }
   .expedition[data-scene=sea] .landscape-art img { object-position:90% 50%; }
   .landscape-intro,#regions,.landscape-study,.archive,.site-footer,#content #plan-view,#content #saved-view { width:calc(100% - 40px); }
@@ -218,6 +244,8 @@ html:lang(ja) .expedition h1 { font-size:clamp(55px,6.3vw,103px); }
 @media(prefers-reduced-motion:reduce) {
   .landscape-art img { animation:none; transform:scale(var(--landscape-zoom,1.07)); }
   .landscape-art img,.landscape-art canvas,.scene-selector button,.index-list li>.region-photo img { transition:none; }
+  #goral-button img { transition:none; }
+  #goral-button.is-greeting img { animation:none; }
 }
 @media print {
   :root { --paper:#fff; --ink:#000; --ink-soft:#444; }
