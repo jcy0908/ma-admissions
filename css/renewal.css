@@ -4,7 +4,7 @@
   --ink:#132c2e; --ink-soft:#596866; --accent:#236264; --accent-deep:#16484a;
   --rule:#889d96; --rule-soft:#c5cec6; --glass:#f0f1e9; --success:#397452; --button-ink:#fff;
   --lab-surface:#e7eae1; --lab-fog-rgb:240 241 233;
-  --radius-control:5px; --radius-surface:8px; --radius-dialog:16px;
+  --radius-control:14px; --radius-surface:24px; --radius-dialog:28px;
   --night:#061c22; --mist:#f2f5e9; --ice:#b3d8d5; --page:90rem;
 }
 :root[data-palette=green] { --accent:#397452; --accent-deep:#28553b; }
@@ -251,4 +251,33 @@ html:lang(ja) .expedition h1 { font-size:clamp(55px,6.3vw,103px); }
   :root { --paper:#fff; --ink:#000; --ink-soft:#444; }
   .site-header,.expedition,.landscape-intro { display:none!important; }
   #content #plan-view { width:100%; }
+}
+
+/* Soft, consistent corners requested for the renewed travel identity. */
+.wordmark { border-radius:17px; }
+.expedition { border-radius:0 0 34px 34px; }
+.expedition::before,.landscape-art { border-radius:27px; }
+.edition-label { border-radius:10px; }
+.landscape-controls button { border-radius:999px; }
+.scene-selector { border:0; gap:9px; }
+.scene-selector button { border:1px solid #c1dad754; border-radius:19px; }
+.scene-selector button+button { border-left:1px solid #c1dad754; }
+.scene-selector button[aria-pressed=true] { border-color:var(--mist); }
+.guide-bubble { border-radius:24px; }
+.guide-nametag { border-radius:999px; }
+.index-list li>.region-photo .region-photo-open,.journey-recommend-photo { border-radius:22px; }
+.region-photo-open::after { border-radius:999px; padding:4px 8px; }
+.region-search input { border:1px solid var(--rule-soft); border-radius:14px; background:var(--paper-light); padding:12px 15px; }
+.lens-filter button { border-radius:999px; }
+.landscape-study,.archive>summary { border-radius:24px; }
+.study-choices button,.study-choices img { border-radius:12px; }
+@media(max-width:760px) {
+  .wordmark { border-radius:13px; }
+  .expedition { border-radius:0 0 27px 27px; }
+  .expedition::before,.landscape-art { border-radius:20px; }
+  .edition-label { border-radius:7px; }
+  .scene-selector { gap:6px; }
+  .scene-selector button { border-radius:13px; }
+  .guide-bubble { border-radius:18px; }
+  .index-list li>.region-photo .region-photo-open { border-radius:17px; }
 }
