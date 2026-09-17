@@ -1109,9 +1109,6 @@ html.enhanced .lab-controls {
   grid-column: 4 / -1;
 }
 
-.section > noscript {
-  display: contents;
-}
 
 /* CSS landscape */
 .landscape {
