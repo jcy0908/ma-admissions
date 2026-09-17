@@ -8,8 +8,28 @@
   const attributeSources = new WeakMap();
   const attributes = ['placeholder', 'aria-label', 'aria-valuetext', 'title', 'alt'];
   const normal = value => String(value).replace(/\s+/g, ' ').trim();
-  let language = 'ko';
-  try { const saved = localStorage.getItem(key); if (locales.includes(saved)) language = saved; } catch { /* In-page switching still works. */ }
+  function languageFromURL() {
+    const locale = new URLSearchParams(window.location.search).get('lang');
+    return locales.includes(locale) ? locale : null;
+  }
+  function rememberedLanguage() {
+    try {
+      const saved = localStorage.getItem(key);
+      if (locales.includes(saved)) return saved;
+    } catch { /* Direct language links also work when storage is unavailable. */ }
+    return 'ko';
+  }
+  // A shared link always wins over this browser's previous language choice.
+  let language = languageFromURL() || rememberedLanguage();
+  function syncLanguageURL(locale) {
+    try {
+      const url = new URL(window.location.href);
+      if (url.searchParams.get('lang') === locale) return;
+      url.searchParams.set('lang', locale);
+      // Keep the current view, other parameters, history state and unsaved inputs.
+      window.history.replaceState(window.history.state, '', url.pathname + url.search + url.hash);
+    } catch { /* Keep in-page switching usable if history updates are blocked. */ }
+  }
 
   function t(value, locale = language) {
     const raw = String(value ?? '');
@@ -130,6 +150,7 @@
     if (!locales.includes(locale)) return;
     language = locale;
     document.documentElement.lang = locale;
+    syncLanguageURL(locale);
     if (remember) { try { localStorage.setItem(key, locale); } catch { /* Optional persistence. */ } }
     document.querySelectorAll('[data-language]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.language === locale)));
     document.getElementById('language-current').textContent = {ko:'한국어', en:'English', ja:'日本語'}[locale];
@@ -149,8 +170,15 @@
   menu.addEventListener('keydown', event => {
     if (event.key === 'Escape') { event.preventDefault(); menu.open = false; menu.querySelector('summary').focus(); }
   });
-  window.addEventListener('storage', event => { if (event.key === key) select(locales.includes(event.newValue) ? event.newValue : 'ko', false); });
-  select(language, false);
+  window.addEventListener('storage', event => {
+    // A language change in another tab must not override this tab's explicit link.
+    if ((event.key === key || event.key === null) && !languageFromURL()) select(rememberedLanguage(), false);
+  });
+  window.addEventListener('popstate', () => {
+    const locale = languageFromURL() || rememberedLanguage();
+    if (locale !== language) select(locale, false);
+  });
+  select(language, Boolean(languageFromURL()));
   // Classic defer and module scripts may complete in different orders.
   document.addEventListener('DOMContentLoaded', refresh, {once:true});
 })();
