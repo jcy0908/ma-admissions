@@ -29,33 +29,137 @@ Object.assign(window.MA_TRANSLATIONS || (window.MA_TRANSLATIONS = {}), {
 });
 
 Object.assign(window.MA_TRANSLATIONS, {
-  "산양 여행친구 산이": [
-    "San-i, your goral travel companion",
-    "旅のおとも、ゴーラルのサニ"
+  "풍경 사이, 머무는 여행": [
+    "A journey between landscapes",
+    "風景の間に、旅のひととき"
   ],
-  "산이에게 여행 이야기 듣기": [
-    "Hear a travel story from San-i",
-    "サニの旅のお話を聞く"
+  "강원, 느리게 걷는 여행": [
+    "Gangwon, at your own pace",
+    "江原、ゆっくり歩く旅"
   ],
-  "카메라와 배낭을 메고 강원을 여행하는 산양 산이": [
-    "San-i the goral exploring Gangwon with a camera and backpack",
-    "カメラとリュックで江原を旅するゴーラルのサニ"
+  "풍경 사이에,": [
+    "Between landscapes,",
+    "風景の間に、"
   ],
-  "안녕, 난 산이야.": [
-    "Hi, I’m San-i.",
-    "こんにちは、サニだよ。"
+  "잠시 머무르다.": [
+    "a moment to stay.",
+    "ひととき佇む。"
   ],
-  "오늘은 어디로 가볼까?": [
-    "Where shall we go today?",
-    "今日はどこへ行こう？"
+  "일정을 채우기보다, 마음에 남을 한 곳.": [
+    "Find a place to remember, with room to breathe.",
+    "予定を埋めるより、心に残る一か所。"
   ],
-  "같이 여행 만들기": [
-    "Let’s plan a trip",
-    "一緒に旅を計画"
+  "산과 숲, 바다 사이에서 나의 강원을 찾아요.": [
+    "Make Gangwon your own, among mountains, forests and sea.",
+    "山と森、海の間で自分だけの江原を。"
   ],
-  "산이 · 강원 여행친구": [
-    "San-i · your travel friend",
-    "サニ・旅のおとも"
+  "열여덟 곳 둘러보기": [
+    "Explore eighteen places",
+    "18の地域をめぐる"
+  ],
+  "산이 남긴 여백": [
+    "Room among the ridges",
+    "山々の余白"
+  ],
+  "숲을 걷는 시간": [
+    "Time in the forest",
+    "森を歩く時間"
+  ],
+  "바다가 놓인 자리": [
+    "A place by the sea",
+    "海のある場所"
+  ],
+  "문자로 보는 풍경": [
+    "Landscape in type",
+    "文字で見る風景"
+  ],
+  "산": [
+    "Mountains",
+    "山"
+  ],
+  "숲": [
+    "Forest",
+    "森"
+  ],
+  "바다": [
+    "Sea",
+    "海"
+  ],
+  "열여덟 고장, 저마다의 쉼.": [
+    "Eighteen places. A different kind of rest.",
+    "18の地域、それぞれの安らぎ。"
+  ],
+  "어디에서": [
+    "Where will you",
+    "どこで"
+  ],
+  "쉬어갈까요?": [
+    "take a breath?",
+    "ひと休みしましょうか？"
+  ],
+  "마음이 가는 곳부터": [
+    "Start where your heart leads",
+    "心が向く場所から"
+  ],
+  "이 고장의 반가운 얼굴": [
+    "Meet the local faces",
+    "この町の親しみある顔"
+  ],
+  "지역의 이야기를 담은 공식 캐릭터를 만나보세요.": [
+    "Meet official characters with a story of their own.",
+    "地域の物語を伝える公式キャラクターたち。"
+  ],
+  "횡성의 한우를 닮은 반가운 얼굴.": [
+    "A friendly face inspired by Hoengseong Hanwoo.",
+    "横城の韓牛をかたどった親しみある顔。"
+  ],
+  "횡성 · 한우리": [
+    "Hoengseong · Hanuri",
+    "横城・ハヌリ"
+  ],
+  "고성 · 금강누리": [
+    "Goseong · Geumgangnuri",
+    "高城・クムガンヌリ"
+  ],
+  "삼척 · 삼척동자": [
+    "Samcheok · Samcheokdongja",
+    "三陟・サムチョクドンジャ"
+  ],
+  "동해 · 파도동자": [
+    "Donghae · Padodongja",
+    "東海・パドドンジャ"
+  ],
+  "횡성군 공식 캐릭터 ↗": [
+    "Official · Hoengseong County ↗",
+    "横城郡公式キャラクター ↗"
+  ],
+  "고성군 공식 캐릭터 ↗": [
+    "Official · Goseong County ↗",
+    "高城郡公式キャラクター ↗"
+  ],
+  "삼척시 공식 캐릭터 ↗": [
+    "Official · Samcheok City ↗",
+    "三陟市公式キャラクター ↗"
+  ],
+  "동해시 공식 캐릭터 ↗": [
+    "Official · Donghae City ↗",
+    "東海市公式キャラクター ↗"
+  ],
+  "횡성 둘러보기": [
+    "Explore Hoengseong",
+    "横城をめぐる"
+  ],
+  "고성 둘러보기": [
+    "Explore Goseong",
+    "高城をめぐる"
+  ],
+  "삼척 둘러보기": [
+    "Explore Samcheok",
+    "三陟をめぐる"
+  ],
+  "동해 둘러보기": [
+    "Explore Donghae",
+    "東海をめぐる"
   ],
   "설악산 · 공룡능선": [
     "Seoraksan · Dinosaur Ridge",
@@ -69,40 +173,30 @@ Object.assign(window.MA_TRANSLATIONS, {
     "Samcheok · coast",
     "三陟・海岸"
   ],
-  "안녕, 난 산이야. 오늘은 어디로 가볼까?": [
-    "Hi, I’m San-i. Where shall we go today?",
-    "こんにちは、サニだよ。今日はどこへ行こう？"
+  "설악산 공룡능선의 겹겹이 이어진 산": [
+    "Layered mountain ridges of Seoraksan",
+    "雪岳山・恐竜稜線の重なる山並み"
   ],
-  "급할 거 없어. 능선 하나씩 천천히 만나보자.": [
-    "No rush. Let’s take these ridges one at a time.",
-    "急がなくていいよ。稜線をひとつずつ楽しもう。"
+  "모래색 바탕 · 먹색과 돌빛": [
+    "Sand, charcoal and stone",
+    "砂色・墨色・石の色"
   ],
-  "마음에 드는 곳이 있으면 보관함에 담아둬!": [
-    "Found a favorite place? Save it for later!",
-    "気になる場所は保存しておこう！"
+  "이끼": [
+    "Moss",
+    "苔"
   ],
-  "잠깐, 숲의 소리에 귀를 기울여봐.": [
-    "Wait a moment. Listen to the forest.",
-    "ちょっと待って。森の音を聞いてみて。"
+  "돌빛": [
+    "Stone",
+    "石"
   ],
-  "여기서는 조금 느리게 걸어도 괜찮아.": [
-    "It’s okay to walk a little slower here.",
-    "ここではゆっくり歩いても大丈夫。"
+  "선택과 저장에 이끼색": [
+    "Moss accents",
+    "苔色のアクセント"
   ],
-  "숲에서 쉬었다가, 우리 다음 풍경도 만나볼까?": [
-    "Rest in the forest, then find our next view?",
-    "森で休んだら、次の風景に会いに行こうか？"
-  ],
-  "파도 소리 들으러 갈래? 바다 쪽으로 가보자.": [
-    "Shall we listen to the waves? Let’s head to the sea.",
-    "波の音を聞きに行く？海へ行こう。"
-  ],
-  "카메라도 좋지만, 눈으로 오래 담아둬.": [
-    "Take a picture, then linger and take it all in.",
-    "写真もいいけど、目にも焼き付けてね。"
-  ],
-  "바다 보고 나면 뭐 할까? 같이 여행을 짜보자.": [
-    "What comes after the sea? Let’s plan our trip.",
-    "海のあとはどうする？一緒に旅を計画しよう。"
+  "선택과 저장에 돌빛": [
+    "Stone accents",
+    "石色のアクセント"
   ]
 });
+
+Object.assign(window.MA_TRANSLATIONS, {'글꼴·캐릭터 출처':['Font & character credits','書体・キャラクターの出典']});

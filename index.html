@@ -21,7 +21,7 @@
 <meta name="twitter:description" content="강원도 18개 시·군을 둘러보고 여행 일정과 마음에 드는 지역을 한곳에 모으세요.">
 <meta name="twitter:image" content="https://jcy0908.github.io/ma-admissions/img/pyeongchang-daegwallyeong.jpg">
 <meta name="twitter:image:alt" content="평창 대관령의 능선 풍경">
-<meta name="theme-color" content="#061c22">
+<meta name="theme-color" content="#f7f5ef">
 
 <link rel="stylesheet" href="css/style.css?v=20260818-apple-web">
 <link rel="stylesheet" href="css/auth.css?v=20260909">
@@ -30,8 +30,9 @@
 <link rel="stylesheet" href="css/journey.css?v=20260909-4">
 <link rel="stylesheet" href="css/workspace.css?v=20260909-workspace-photos-1">
 <link rel="stylesheet" href="css/language.css?v=20260909-1">
-<link rel="stylesheet" href="css/renewal.css?v=20260917-3">
+<link rel="stylesheet" href="css/renewal.css?v=20260917-garden-1">
 <link rel="preload" as="image" href="assets/seoraksan-ridge.webp">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/MaruBuri-Regular.woff2" crossorigin>
 </head>
 <body id="top">
 
@@ -45,7 +46,7 @@
 </div>
 
 <header class="site-header" id="site-header">
-  <a class="wordmark" href="#top" aria-label="MA 강원 홈"><span translate="no">M<span class="wordmark-a">A</span></span><span class="wordmark-sub" translate="no">GANGWON</span></a>
+  <a class="wordmark" href="#top" aria-label="MA 강원 홈"><span class="wordmark-name" translate="no">강원<span class="wordmark-seal" aria-hidden="true">間</span></span><span class="wordmark-sub">풍경 사이, 머무는 여행</span></a>
   <nav class="site-nav" aria-label="주요 화면">
     <a href="#regions" data-view-link="regions" aria-current="page">지역</a>
     <a href="#journey" data-view-link="journey">여행 계획</a>
@@ -66,42 +67,42 @@
 
 <main id="content" tabindex="-1">
   <div id="explore-view" data-view="regions">
-<section class="expedition" id="expedition" data-scene="ridge" aria-labelledby="hero-title">
-    <div class="landscape-art" aria-hidden="true">
-      <img id="landscape-image" src="assets/seoraksan-ridge.webp" alt="" width="1920" height="1440" fetchpriority="high" decoding="async">
-      <canvas id="landscape-code"></canvas>
-    </div>
-    <div class="expedition-topline">
-      <span class="edition-label" translate="no">A JOURNEY THROUGH GANGWON</span>
-      <div class="landscape-controls">
-        <button id="landscape-texture" type="button" aria-pressed="false">디지털 풍경</button>
-        <button id="landscape-pause" type="button" aria-pressed="false" aria-label="풍경 움직임 멈추기"><span aria-hidden="true">Ⅱ</span></button>
-      </div>
-    </div>
+<section class="expedition is-paused" id="expedition" data-scene="ridge" aria-labelledby="hero-title">
     <div class="expedition-copy">
-      <p class="expedition-kicker"><span class="scene-number" translate="no">01 / 03</span><span id="scene-eyebrow">능선 너머, 새로운 시선</span></p>
-      <h1 id="hero-title"><span id="scene-title">산을 넘고,</span><br><em id="scene-emphasis">바다에 닿다.</em></h1>
-      <p class="expedition-script" translate="no">Somewhere, Gangwon.</p>
+      <p class="expedition-kicker"><span class="kicker-line" aria-hidden="true"></span><span>강원, 느리게 걷는 여행</span></p>
+      <h1 id="hero-title"><span id="scene-title">풍경 사이에,</span><br><em id="scene-emphasis">잠시 머무르다.</em></h1>
+      <p class="expedition-description">일정을 채우기보다, 마음에 남을 한 곳.<br>산과 숲, 바다 사이에서 나의 강원을 찾아요.</p>
+      <div class="expedition-links"><a class="garden-primary" href="#journey">나의 여행 만들기 <span aria-hidden="true">↗</span></a><a class="garden-secondary" href="#regions">열여덟 곳 둘러보기 <span aria-hidden="true">↓</span></a></div>
+      <div class="garden-ripple" aria-hidden="true"></div>
+      <div id="local-companion" class="local-companion"></div>
     </div>
-    <aside class="trail-guide" aria-label="산양 여행친구 산이">
-      <div class="guide-bubble"><p id="guide-line" aria-live="polite">안녕, 난 산이야.<br>오늘은 어디로 가볼까?</p><a href="#journey">같이 여행 만들기 <span aria-hidden="true">↗</span></a></div>
-      <button id="goral-button" type="button" aria-label="산이에게 여행 이야기 듣기" aria-describedby="guide-line"><img src="assets/goral-traveler.webp" alt="카메라와 배낭을 메고 강원을 여행하는 산양 산이" width="640" height="640" decoding="async"><span class="guide-nametag">산이 · 강원 여행친구</span></button>
-    </aside>
-    <div class="expedition-bottom">
-      <div class="scene-selector" role="group" aria-label="강원의 풍경 선택">
-        <button type="button" data-scene-choice="ridge" aria-pressed="true"><span translate="no">01 / MOUNTAIN</span><strong>겹겹의 산</strong><i aria-hidden="true">↗</i></button>
-        <button type="button" data-scene-choice="forest" aria-pressed="false"><span translate="no">02 / FOREST</span><strong>깊은 숲</strong><i aria-hidden="true">↗</i></button>
-        <button type="button" data-scene-choice="sea" aria-pressed="false"><span translate="no">03 / EAST SEA</span><strong>푸른 동해</strong><i aria-hidden="true">↗</i></button>
+    <div class="expedition-visual">
+      <div class="landscape-art">
+        <img id="landscape-image" src="assets/seoraksan-ridge.webp" alt="설악산 공룡능선의 겹겹이 이어진 산" width="1920" height="1440" fetchpriority="high" decoding="async">
+        <canvas id="landscape-code" aria-hidden="true"></canvas>
+        <span class="photo-note"><span id="scene-eyebrow">산이 남긴 여백</span><span class="scene-number" translate="no">01 / 03</span></span>
+        <div class="landscape-controls"><button id="landscape-texture" type="button" aria-pressed="false">문자로 보는 풍경</button><button id="landscape-pause" type="button" aria-pressed="true" aria-label="풍경 움직임 재생하기"><span aria-hidden="true">▷</span></button></div>
       </div>
-      <a class="expedition-scroll" href="#regions"><span>강원 둘러보기</span><i aria-hidden="true">↓</i></a>
+      <div class="expedition-bottom">
+        <div class="scene-selector" role="group" aria-label="강원의 풍경 선택">
+          <button type="button" data-scene-choice="ridge" aria-pressed="true"><span translate="no">01</span><strong>산</strong></button>
+          <button type="button" data-scene-choice="forest" aria-pressed="false"><span translate="no">02</span><strong>숲</strong></button>
+          <button type="button" data-scene-choice="sea" aria-pressed="false"><span translate="no">03</span><strong>바다</strong></button>
+        </div>
+        <span id="landscape-place">설악산 · 공룡능선</span>
+      </div>
+      <div class="expedition-colophon"><a id="landscape-credit" href="https://commons.wikimedia.org/wiki/File:Dinosaur_Ridge_of_Seoraksan.jpg" target="_blank" rel="noopener" translate="no">Taewangkorea · CC BY-SA 4.0 ↗</a></div>
     </div>
-    <div class="expedition-colophon"><span class="landscape-photo-credit"><span id="landscape-place">설악산 · 공룡능선</span><a id="landscape-credit" href="https://commons.wikimedia.org/wiki/File:Dinosaur_Ridge_of_Seoraksan.jpg" target="_blank" rel="noopener" translate="no">Taewangkorea · CC BY-SA 4.0 ↗</a></span><span translate="no">MA — LANDSCAPE ARCHIVE</span></div>
   </section>
   <div class="landscape-intro">
-    <p class="intro-index" translate="no">THE LAND, THE MOMENT.</p>
-    <h2>풍경에서 시작하는<br><em>나만의 강원.</em></h2>
-    <div><p>산맥을 따라, 물길을 따라.<br>열여덟 지역의 서로 다른 표정을 만나보세요.</p><a href="#regions">어디로 떠나볼까요? <span aria-hidden="true">↙</span></a></div>
+    <p class="intro-index">열여덟 고장, 저마다의 쉼.</p>
+    <h2>어디에서<br><em>쉬어갈까요?</em></h2>
+    <div><p>산맥을 따라, 물길을 따라.<br>열여덟 지역의 서로 다른 표정을 만나보세요.</p><a href="#regions">마음이 가는 곳부터 <span aria-hidden="true">↙</span></a></div>
   </div>
+  <section class="local-friends" id="local-friends" aria-labelledby="local-friends-title" hidden>
+    <div class="local-friends-heading"><h2 id="local-friends-title">이 고장의 반가운 얼굴</h2><p>지역의 이야기를 담은 공식 캐릭터를 만나보세요.</p></div>
+    <div id="local-friends-list" class="local-friends-list"></div>
+  </section>
   <!-- 열여덟 곳 -->
   <section class="section" id="regions" aria-labelledby="regions-title">
 
@@ -784,16 +785,16 @@
   <div id="saved-view" data-view="saved"><div id="saved-mount"></div><noscript><p>보관함을 사용하려면 JavaScript를 켜주세요.</p></noscript></div>
 </main>
 
-<footer class="site-footer"><p>MA · 강원의 풍경과 여행<span class="creator-signature">제작자 정찬용(鄭纂湧)</span></p><div><a href="#making">제작 기록·사진 출처</a><button class="account-button palette-button" id="palette-button" type="button" aria-haspopup="dialog" aria-controls="palette-dialog"><span class="palette-dot" aria-hidden="true"></span>포인트 색상</button></div></footer>
+<footer class="site-footer"><p>MA · 강원의 풍경과 여행<span class="creator-signature">제작자 정찬용(鄭纂湧)</span></p><div><a href="#making">제작 기록·사진 출처</a><a href="CREDITS.md" target="_blank" rel="noopener">글꼴·캐릭터 출처</a><button class="account-button palette-button" id="palette-button" type="button" aria-haspopup="dialog" aria-controls="palette-dialog"><span class="palette-dot" aria-hidden="true"></span>포인트 색상</button></div></footer>
 
 
 <dialog class="auth-dialog palette-dialog" id="palette-dialog" aria-labelledby="palette-title">
   <div class="auth-heading"><h2 id="palette-title">포인트 색상</h2><button class="auth-close" id="palette-close" type="button" aria-label="색상 설정 닫기">×</button></div>
   <p class="auth-description">선택·저장·안내에 쓰이는 포인트 색상을 고르세요.</p>
   <div class="palette-options" role="group" aria-label="사이트 색상">
-    <button class="palette-option" type="button" data-palette-choice="mono" aria-pressed="true"><span class="palette-preview preview-mono" aria-hidden="true"></span><strong>기본</strong><small>흰 바탕 · 검정과 회색</small></button>
-    <button class="palette-option" type="button" data-palette-choice="green" aria-pressed="false"><span class="palette-preview preview-green" aria-hidden="true"></span><strong>초록</strong><small>선택과 저장에 초록</small></button>
-    <button class="palette-option" type="button" data-palette-choice="blue" aria-pressed="false"><span class="palette-preview preview-blue" aria-hidden="true"></span><strong>파랑</strong><small>선택과 저장에 파랑</small></button>
+    <button class="palette-option" type="button" data-palette-choice="mono" aria-pressed="true"><span class="palette-preview preview-mono" aria-hidden="true"></span><strong>기본</strong><small>모래색 바탕 · 먹색과 돌빛</small></button>
+    <button class="palette-option" type="button" data-palette-choice="green" aria-pressed="false"><span class="palette-preview preview-green" aria-hidden="true"></span><strong>이끼</strong><small>선택과 저장에 이끼색</small></button>
+    <button class="palette-option" type="button" data-palette-choice="blue" aria-pressed="false"><span class="palette-preview preview-blue" aria-hidden="true"></span><strong>돌빛</strong><small>선택과 저장에 돌빛</small></button>
     <button class="palette-option" type="button" data-palette-choice="amber" aria-pressed="false"><span class="palette-preview preview-amber" aria-hidden="true"></span><strong>황토</strong><small>선택과 저장에 황토</small></button>
   </div>
   <p class="auth-status" id="palette-status" role="status" aria-live="polite"></p>
@@ -834,24 +835,25 @@
 </dialog>
 <noscript><p class="auth-note">회원가입과 로그인에는 JavaScript가 필요합니다.</p></noscript>
 <script src="js/locales.js?v=20260909-1" defer></script>
-<script src="js/renewal-locales.js?v=20260917-3" defer></script>
+<script src="js/renewal-locales.js?v=20260917-garden-1" defer></script>
 <script src="js/i18n.js?v=20260909-1" defer></script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js" crossorigin="anonymous"></script>
 <script defer src="js/auth.js?v=20260909-i18n-1"></script>
-<script defer src="js/palette.js?v=20260909-4"></script>
+<script defer src="js/palette.js?v=20260917-garden-1"></script>
 
 <script type="module" src="js/script.js?v=20260909-i18n-1"></script>
 <script src="js/workspace-photos.js?v=20260909-i18n-1" defer></script>
 <script src="member/config.js?v=20260909" defer></script>
 <script src="member/studio.js?v=20260909-i18n-1" defer></script>
 <script type="module" src="js/journey.js?v=20260909-i18n-1"></script>
-<script src="js/workspace.js?v=20260917-3" defer></script>
+<script src="js/workspace.js?v=20260917-garden-1" defer></script>
 <dialog id="region-photo-dialog" class="region-photo-dialog" aria-labelledby="region-photo-title">
   <div class="region-photo-dialog-head"><h2 id="region-photo-title">지역의 풍경</h2><button type="button" data-photo-close autofocus>닫기</button></div>
   <figure><img id="region-photo-large" alt="" decoding="async"><figcaption id="region-photo-caption"></figcaption></figure>
 </dialog>
 <script src="js/region-photos.js?v=20260909-i18n-1" defer></script>
 <script src="js/landscape-study.js?v=20260909-i18n-1" defer></script>
-<script src="js/renewal.js?v=20260917-3" defer></script>
+<script src="js/mascots.js?v=20260917-garden-1" defer></script>
+<script src="js/renewal.js?v=20260917-garden-1" defer></script>
 </body>
 </html>
