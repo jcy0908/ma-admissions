@@ -18,7 +18,7 @@
     let target = null;
     if (hash.startsWith('trip=') || hash === 'journey') view = 'journey';
     else if (hash === 'saved' || hash === 'bc-studio') view = 'saved';
-    else if (hash && hash !== 'top' && hash !== 'regions') {
+    else if (hash && hash !== 'top') {
       target = document.getElementById(hash);
       if (target?.closest('#plan-view')) view = 'journey';
       else if (target?.closest('#saved-view')) view = 'saved';

@@ -19,3 +19,9 @@
 | `img/yeongwol-donggang.jpg` | 영월 동강 | Jjw | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [Commons](https://commons.wikimedia.org/wiki/File:Dong-gang(river)_flows_near_by_Yeongwol_02.jpg) |
 
 CC BY-SA 라이선스 사진을 재사용할 때는 동일한 조건으로 공유해야 합니다.
+
+## 2026-09 강원 풍경 리뉴얼
+
+`assets/gangwon-landscape.webp`는 이 프로젝트를 위해 생성한 AI 디지털 아트입니다. 강원의 화강암 능선, 소나무 숲, 안개, 동해를 하나의 상상 풍경으로 구성했으며 실제 장소를 촬영한 사진이 아닙니다. 화면 하단에도 이를 표시했습니다. 지역별 실제 사진과 원작자·라이선스 표시는 유지합니다.
+
+사용자가 제공한 영상의 큰 타이포그래피, 작은 캡슐 메뉴, 풍경 중심 화면 구성에서 영감을 얻었습니다. 원본 영상·로고·이미지는 사이트에 재사용하지 않았습니다.
